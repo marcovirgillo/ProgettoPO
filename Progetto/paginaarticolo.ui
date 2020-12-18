@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>paginaArticolo</class>
+ <widget class="QWidget" name="paginaArticolo">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QStackedWidget" name="stackedWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>550</height>
+    </rect>
+   </property>
+   <widget class="QWidget" name="Home">
+    <widget class="QComboBox" name="Tipo">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>430</y>
+       <width>181</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>Conferenza</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Rivista</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLabel" name="labelPrezzo">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>400</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Prezzo</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelNumeroPagine">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>360</y>
+       <width>111</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Numero di pagine</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelConferenzaRivista">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>430</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Conferenza / Rivista</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelKeywords">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>71</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Keywords</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelTitolo">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>47</width>
+       <height>13</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Titolo</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="buttonVisualizza">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>480</y>
+       <width>121</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Visualizza</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="NumeroPagine">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>360</y>
+       <width>181</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="Titolo">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>10</y>
+       <width>181</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="buttonAggiungi">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>480</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Aggiungi</string>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="ArticoliCorrelati">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>200</y>
+       <width>180</width>
+       <height>150</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelArticoliCorrelati">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>190</y>
+       <width>101</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Articoli correlati</string>
+     </property>
+    </widget>
+    <widget class="QDoubleSpinBox" name="Prezzo">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>390</y>
+       <width>181</width>
+       <height>22</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="Keywords">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>40</y>
+       <width>180</width>
+       <height>150</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="pageVisualizza">
+    <widget class="QListWidget" name="listArticoli">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>110</y>
+       <width>330</width>
+       <height>370</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelArticoliInseriti">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>60</y>
+       <width>100</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Articoli inseriti:</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

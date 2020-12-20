@@ -19,6 +19,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #define PAGINAAUTORE_H
 
 #include "gestore.h"
+#include "dialog.h"
 
 #include <QWidget>
 #include <QListWidgetItem>
@@ -38,7 +39,7 @@ public:
 private slots:
     void on_buttonAggiungi_clicked();
 
-    void on_buttonVisualizza_clicked();
+    void on_listAutori_itemDoubleClicked(QListWidgetItem *item);
 
 private:
     Ui::paginaAutore *ui;

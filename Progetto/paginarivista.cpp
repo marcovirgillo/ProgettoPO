@@ -56,13 +56,19 @@ void paginaRivista::on_buttonAggiungi_clicked()
     if(gestore->aggiungiRivista(rivista) == true)
         QMessageBox::information(this, "Success", "Rivista aggiunta con successo!", QMessageBox::Ok);
 
+    QString string_rivista = nome;
+    ui->listRiviste->addItem(string_rivista);
+
     ui->Nome->clear();
     ui->Acronimo->clear();
     ui->Editore->clear();
     ui->Volume->setValue(0);
 }
 
-void paginaRivista::on_buttonVisualizza_clicked()
+void paginaRivista::on_listRiviste_itemDoubleClicked(QListWidgetItem *item)
 {
-    ui->stackedWidget->setCurrentWidget(ui->pageVisualizza);
+    int idx = ui->listRiviste->currentRow();
+    Dialog dialog(gestore, "Rivista", idx);
+    dialog.setModal(true);
+    dialog.exec();
 }

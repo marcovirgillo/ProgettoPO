@@ -34,10 +34,11 @@ class Articolo
         QList<Autore> autori;
         QList<QString> keywords;
         QList<Articolo> articoliCorrelati;
+        QString editore;
 
     public:
         Articolo();
-        Articolo(int _identificativo, QString _titolo, int _numeroPagine, float _prezzo, QList<Autore> _autori, QList<QString> _keywords, QList<Articolo> _articoliCorrelati);
+        Articolo(int _identificativo, QString _titolo, int _numeroPagine, float _prezzo, QList<Autore> _autori, QList<QString> _keywords, QList<Articolo> _articoliCorrelati, QString _editore);
 
         int getIdentificativo() const;
         QString getTitolo() const;
@@ -45,12 +46,14 @@ class Articolo
         float getPrezzo() const;
         QList<QString> getKeywords() const;
         QList<Articolo> getArticoliCorrelati() const;
+        QString getEditore() const;
 
         void setIdentificativo(int _identificativo);
         void setTitolo(QString _titolo);
         void setNumeroPagine(int _numeroPagine);
         void setPrezzo(float _prezzo);
         void setKeywords(QList<QString> _keywords);
+        void setEditore(QString _editore);
 
         bool operator==(const Articolo& _articolo) const;
 };

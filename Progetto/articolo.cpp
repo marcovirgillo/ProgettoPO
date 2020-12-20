@@ -19,7 +19,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 
 Articolo::Articolo() {}
 
-Articolo::Articolo(int _identificativo, QString _titolo, int _numeroPagine, float _prezzo, QList<Autore> _autori, QList<QString> _keywords, QList<Articolo> _articoliCorrelati)
+Articolo::Articolo(int _identificativo, QString _titolo, int _numeroPagine, float _prezzo, QList<Autore> _autori, QList<QString> _keywords, QList<Articolo> _articoliCorrelati, QString _editore)
 {
     identificativo = _identificativo;
     titolo = _titolo;
@@ -28,6 +28,7 @@ Articolo::Articolo(int _identificativo, QString _titolo, int _numeroPagine, floa
     autori = _autori;
     keywords = _keywords;
     articoliCorrelati = _articoliCorrelati;
+    editore = _editore;
 }
 
 int Articolo::getIdentificativo() const { return identificativo; }
@@ -42,6 +43,8 @@ QList<QString> Articolo::getKeywords() const { return keywords; }
 
 QList<Articolo> Articolo::getArticoliCorrelati() const { return articoliCorrelati; }
 
+QString Articolo::getEditore() const { return editore; }
+
 void Articolo::setIdentificativo(int _identificativo) { identificativo = _identificativo; }
 
 void Articolo::setTitolo(QString _titolo) { titolo = _titolo; }
@@ -51,6 +54,8 @@ void Articolo::setNumeroPagine(int _numeroPagine) { numeroPagine = _numeroPagine
 void Articolo::setPrezzo(float _prezzo) { prezzo = _prezzo; }
 
 void Articolo::setKeywords(QList<QString> _keywords) { keywords = _keywords; }
+
+void Articolo::setEditore(QString _editore) { editore = _editore; }
 
 bool Articolo::operator==(const Articolo& _articolo) const
 {

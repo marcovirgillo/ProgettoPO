@@ -42,6 +42,8 @@ MainWindow::MainWindow(QWidget *parent)
     pageRivista = new paginaRivista(gestore);
     ui->stackedWidget->addWidget(pageRivista);
 
+    ui->stackedWidget->setCurrentWidget(ui->Home);
+
 }
 
 MainWindow::~MainWindow()

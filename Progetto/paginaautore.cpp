@@ -19,8 +19,6 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "ui_paginaautore.h"
 
 #include <QMessageBox>
-#include <QDebug>
-#include <QTextStream>
 
 paginaAutore::paginaAutore(Gestore* _gestore, QWidget *parent) :
     QWidget(parent),
@@ -60,12 +58,18 @@ void paginaAutore::on_buttonAggiungi_clicked()
     if(gestore->aggiungiAutore(autore) == true)
         QMessageBox::information(this, "Success", "Autore aggiunto con successo!", QMessageBox::Ok);
 
+    QString string_autore = nome + " " + cognome;
+    ui->listAutori->addItem(string_autore);
+
     ui->Nome->clear();
     ui->Cognome->clear();
     ui->Afferenze->clear();
 }
 
-void paginaAutore::on_buttonVisualizza_clicked()
+void paginaAutore::on_listAutori_itemDoubleClicked(QListWidgetItem *item)
 {
-     ui->stackedWidget->setCurrentWidget(ui->pageVisualizza);
+    int idx = ui->listAutori->currentRow();
+    Dialog dialog(gestore, "Autore", idx);
+    dialog.setModal(true);
+    dialog.exec();
 }

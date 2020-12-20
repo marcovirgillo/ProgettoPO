@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1024</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,29 +18,19 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>550</height>
+     <width>1024</width>
+     <height>718</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="Home">
-    <widget class="QTextEdit" name="Afferenze">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>90</y>
-       <width>211</width>
-       <height>151</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QLabel" name="labelAfferenze">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>90</y>
+       <y>130</y>
        <width>61</width>
        <height>16</height>
       </rect>
@@ -52,8 +42,8 @@
     <widget class="QLineEdit" name="Cognome">
      <property name="geometry">
       <rect>
-       <x>90</x>
-       <y>60</y>
+       <x>100</x>
+       <y>80</y>
        <width>211</width>
        <height>20</height>
       </rect>
@@ -63,7 +53,7 @@
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>60</y>
+       <y>80</y>
        <width>61</width>
        <height>16</height>
       </rect>
@@ -75,7 +65,7 @@
     <widget class="QLineEdit" name="Nome">
      <property name="geometry">
       <rect>
-       <x>90</x>
+       <x>100</x>
        <y>30</y>
        <width>211</width>
        <height>20</height>
@@ -95,28 +85,15 @@
       <string>Nome</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="buttonVisualizza">
-     <property name="geometry">
-      <rect>
-       <x>210</x>
-       <y>270</y>
-       <width>111</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Visualizza</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="buttonAggiungi">
      <property name="enabled">
       <bool>true</bool>
      </property>
      <property name="geometry">
       <rect>
-       <x>80</x>
-       <y>270</y>
-       <width>111</width>
+       <x>160</x>
+       <y>690</y>
+       <width>101</width>
        <height>31</height>
       </rect>
      </property>
@@ -124,32 +101,28 @@
       <string>Aggiungi</string>
      </property>
     </widget>
-   </widget>
-   <widget class="QWidget" name="pageVisualizza">
     <widget class="QListWidget" name="listAutori">
      <property name="geometry">
       <rect>
-       <x>220</x>
-       <y>110</y>
-       <width>330</width>
-       <height>370</height>
+       <x>560</x>
+       <y>30</y>
+       <width>310</width>
+       <height>420</height>
       </rect>
      </property>
     </widget>
-    <widget class="QLabel" name="labelAutoriInseriti">
+    <widget class="QPlainTextEdit" name="Afferenze">
      <property name="geometry">
       <rect>
-       <x>220</x>
-       <y>80</y>
-       <width>81</width>
-       <height>21</height>
+       <x>100</x>
+       <y>140</y>
+       <width>211</width>
+       <height>230</height>
       </rect>
-     </property>
-     <property name="text">
-      <string>Autori inseriti</string>
      </property>
     </widget>
    </widget>
+   <widget class="QWidget" name="page2"/>
   </widget>
  </widget>
  <resources/>

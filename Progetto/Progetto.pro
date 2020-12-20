@@ -12,6 +12,7 @@ SOURCES += \
     articolo.cpp \
     autore.cpp \
     conferenza.cpp \
+    dialog.cpp \
     gestore.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -25,6 +26,7 @@ HEADERS += \
     articolo.h \
     autore.h \
     conferenza.h \
+    dialog.h \
     gestore.h \
     mainwindow.h \
     paginaarticolo.h \
@@ -34,6 +36,7 @@ HEADERS += \
     rivista.h
 
 FORMS += \
+    dialog.ui \
     mainwindow.ui \
     paginaarticolo.ui \
     paginaautore.ui \

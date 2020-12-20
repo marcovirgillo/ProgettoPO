@@ -19,8 +19,10 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #define PAGINACONFERENZA_H
 
 #include "gestore.h"
+#include "dialog.h"
 
 #include <QWidget>
+#include <QListWidgetItem>
 
 namespace Ui {
 class paginaConferenza;
@@ -37,7 +39,7 @@ public:
 private slots:
     void on_buttonAggiungi_clicked();
 
-    void on_buttonVisualizza_clicked();
+    void on_listConferenze_itemDoubleClicked(QListWidgetItem *item);
 
 private:
     Ui::paginaConferenza *ui;

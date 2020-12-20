@@ -15,44 +15,32 @@ You should have received a copy of the GNU General Public License
 along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef PAGINAARTICOLO_H
-#define PAGINAARTICOLO_H
+#ifndef DIALOG_H
+#define DIALOG_H
 
+#include <QDialog>
 #include "gestore.h"
-#include "dialog.h"
-
-#include <QWidget>
-#include <QListWidgetItem>
 
 namespace Ui {
-class paginaArticolo;
+class Dialog;
 }
 
-class paginaArticolo : public QWidget
+class Dialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit paginaArticolo(Gestore* _gestore, QWidget *parent = nullptr);
-    ~paginaArticolo();
-
-private slots:
-    void on_buttonAggiungi_clicked();
-
-    void on_buttonVisualizzaAutori_clicked();
-
-    void on_buttonVisualizzaArticoli_clicked();
-
-    void on_listArticoli_itemDoubleClicked(QListWidgetItem *item);
-
-    void on_buttonConferenze_clicked();
-
-    void on_buttonRiviste_clicked();
+    explicit Dialog(Gestore* _gestore, QString TipoClasse, int _idx, QWidget *parent = nullptr);
+    ~Dialog();
+    void visualizzaAutore();
+    void visualizzaConferenza();
+    void visualizzaRivista();
+    void VisualizzaArticolo();
 
 private:
-    Ui::paginaArticolo *ui;
-
+    Ui::Dialog *ui;
     Gestore* gestore;
+    int idx;
 };
 
-#endif // PAGINAARTICOLO_H
+#endif // DIALOG_H

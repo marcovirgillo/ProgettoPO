@@ -62,6 +62,9 @@ void paginaConferenza::on_buttonAggiungi_clicked()
     if(gestore->aggiungiConferenza(conferenza) == true)
         QMessageBox::information(this, "Success", "Conferenza aggiunta con successo!", QMessageBox::Ok);
 
+    QString string_conferenza = nome;
+    ui->listConferenze->addItem(string_conferenza);
+
     ui->Nome->clear();
     ui->Acronimo->clear();
     ui->Luogo->clear();
@@ -69,7 +72,10 @@ void paginaConferenza::on_buttonAggiungi_clicked()
     ui->NumeroPartecipanti->setValue(0);
 }
 
-void paginaConferenza::on_buttonVisualizza_clicked()
+void paginaConferenza::on_listConferenze_itemDoubleClicked(QListWidgetItem *item)
 {
-     ui->stackedWidget->setCurrentWidget(ui->pageVisualizza);
+    int idx = ui->listConferenze->currentRow();
+    Dialog dialog(gestore, "Conferenza", idx);
+    dialog.setModal(true);
+    dialog.exec();
 }

@@ -33,6 +33,8 @@ class Gestore
         QList<Conferenza> conferenze;
         QList<Rivista> riviste;
         QList<Articolo> articoli;
+        int identificativoAutore;
+        int identificativoArticolo;
 
     public:
         Gestore();
@@ -41,6 +43,9 @@ class Gestore
         QList<Conferenza> getConferenze() const;
         QList<Rivista> getRiviste() const;
         QList<Articolo> getArticoli() const;
+
+        int getIdentificativoAutore();
+        int getIdentificativoArticolo();
 
         bool aggiungiAutore(Autore autore);
         bool aggiungiConferenza(Conferenza conferenza);

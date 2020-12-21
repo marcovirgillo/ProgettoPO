@@ -52,4 +52,3 @@ bool Rivista::operator==(const Rivista& _rivista) const
 {
     return nome == _rivista.nome && editore == _rivista.editore && data == _rivista.data && volume == _rivista.volume;
 }
-

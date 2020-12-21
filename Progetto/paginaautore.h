@@ -36,6 +36,9 @@ public:
     explicit paginaAutore(Gestore* _gestore, QWidget *parent = nullptr);
     ~paginaAutore();
 
+    void clearCampiAutore();
+    void showDialogAutore();
+
 private slots:
     void on_buttonAggiungi_clicked();
 
@@ -43,7 +46,6 @@ private slots:
 
 private:
     Ui::paginaAutore *ui;
-
     Gestore* gestore;
 };
 

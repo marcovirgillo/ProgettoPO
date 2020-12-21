@@ -36,6 +36,9 @@ public:
     explicit paginaConferenza(Gestore* _gestore, QWidget *parent = nullptr);
     ~paginaConferenza();
 
+    void clearCampiConferenza();
+    void showDialogConferenza();
+
 private slots:
     void on_buttonAggiungi_clicked();
 

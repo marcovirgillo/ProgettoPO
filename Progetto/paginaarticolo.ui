@@ -135,7 +135,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -157,7 +157,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -179,7 +179,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -205,21 +205,20 @@
       </item>
      </layout>
     </widget>
+    <widget class="QPushButton" name="buttonAggiungi">
+     <property name="geometry">
+      <rect>
+       <x>220</x>
+       <y>690</y>
+       <width>111</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Aggiungi</string>
+     </property>
+    </widget>
    </widget>
-   <widget class="QWidget" name="page2"/>
-  </widget>
-  <widget class="QPushButton" name="buttonAggiungi">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>690</y>
-     <width>111</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Aggiungi</string>
-   </property>
   </widget>
  </widget>
  <resources/>

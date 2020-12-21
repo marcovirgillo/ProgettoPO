@@ -17,7 +17,11 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "gestore.h"
 
-Gestore::Gestore() {}
+Gestore::Gestore()
+{
+    identificativoArticolo = 0;
+    identificativoAutore = 0;
+}
 
 QList<Autore> Gestore::getAutori() const { return autori; }
 
@@ -26,6 +30,16 @@ QList<Conferenza> Gestore::getConferenze() const { return conferenze; }
 QList<Rivista> Gestore::getRiviste() const { return riviste; }
 
 QList<Articolo> Gestore::getArticoli() const { return articoli; }
+
+int Gestore::getIdentificativoAutore()
+{
+    return identificativoAutore++;
+}
+
+int Gestore::getIdentificativoArticolo()
+{
+    return identificativoArticolo++;
+}
 
 bool Gestore::aggiungiAutore(Autore autore)
 {

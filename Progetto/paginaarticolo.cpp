@@ -19,6 +19,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "ui_paginaarticolo.h"
 
 #include <QMessageBox>
+#include <QtGlobal>
 
 paginaArticolo::paginaArticolo(Gestore* _gestore, QWidget *parent) :
     QWidget(parent),
@@ -28,7 +29,6 @@ paginaArticolo::paginaArticolo(Gestore* _gestore, QWidget *parent) :
     gestore = _gestore;
 
     ui->stackedWidget->setCurrentWidget(ui->Home);
-
 }
 
 paginaArticolo::~paginaArticolo()
@@ -36,15 +36,51 @@ paginaArticolo::~paginaArticolo()
     delete ui;
 }
 
+void paginaArticolo::clearCampiArticolo()
+{
+    ui->Titolo->clear();
+    ui->Keywords->clear();
+    ui->NumeroPagine->setValue(0);
+    ui->Prezzo->setValue(0);
+    ui->listAutori->clear();
+    ui->listArticoliCorrelati->clear();
+    ui->PubblicatoPer->clear();
+
+    ui->buttonConferenze->setAutoExclusive(false);
+    ui->buttonConferenze->setChecked(false);
+    ui->buttonConferenze->setAutoExclusive(true);
+
+    ui->buttonRiviste->setAutoExclusive(false);
+    ui->buttonRiviste->setChecked(false);
+    ui->buttonRiviste->setAutoExclusive(true);
+}
+
+void paginaArticolo::showDialogArticolo()
+{
+    int idx = ui->listArticoli->currentRow();
+    Dialog dialog(gestore, "Articolo", idx);
+    dialog.setModal(true);
+    dialog.exec();
+}
+
 void paginaArticolo::on_buttonAggiungi_clicked()
 {
-    if(ui->Titolo->text().isEmpty() || ui->NumeroPagine->value() == 0 || ui->Keywords->text().isEmpty()  || ui->Prezzo->value() == 0.0)
+
+    bool checkAutoreSelezionato = false;
+    for (int i = 0; i < ui->listAutori->count(); i++)
+        if (ui->listAutori->item(i)->checkState() == Qt::Checked)
+            checkAutoreSelezionato = true;
+
+    if(ui->Titolo->text().isEmpty() || ui->NumeroPagine->value() == 0 || ui->Keywords->text().isEmpty()  || ui->Prezzo->value() == 0.0
+             || checkAutoreSelezionato == false || (!ui->buttonConferenze->isChecked() && !ui->buttonRiviste->isChecked())
+            || ((ui->buttonConferenze->isChecked() || ui->buttonRiviste->isChecked()) && ui->PubblicatoPer->count() == 0) )
         {
             QMessageBox errore(QMessageBox::Critical, "Errore", "Uno o più campi obbligatori sono vuoti", QMessageBox::Ok, this);
             errore.exec();
             return;
         }
 
+        int identificativo = gestore->getIdentificativoArticolo();
         QString titolo = ui->Titolo->text();
 
         QList<QString> lista_keywords;
@@ -56,12 +92,12 @@ void paginaArticolo::on_buttonAggiungi_clicked()
 
         QList<Autore> autori;
         for (int i = 0; i < ui->listAutori->count(); i++)
-            if (ui->listAutori->item(i)->checkState() == true)
+            if (ui->listAutori->item(i)->checkState() == Qt::Checked)
                 autori.push_back(gestore->getAutori().at(i));
 
         QList<Articolo> articoliCorrelati;
         for (int i = 0; i < ui->listArticoliCorrelati->count(); i++)
-            if (ui->listArticoli->item(i)->checkState() == true)
+            if (ui->listArticoliCorrelati->item(i)->checkState() == Qt::Checked)
                 articoliCorrelati.push_back(gestore->getArticoli().at(i));
 
         QString editore;
@@ -76,24 +112,15 @@ void paginaArticolo::on_buttonAggiungi_clicked()
             editore = gestore->getRiviste().at(idx).getNome();
         }
 
-
-        Articolo articolo(0, titolo, numeroPagine, prezzo, autori, lista_keywords, articoliCorrelati, editore);
+        Articolo articolo(identificativo, titolo, numeroPagine, prezzo, autori, lista_keywords, articoliCorrelati, editore);
 
         if(gestore->aggiungiArticolo(articolo) == true)
-            QMessageBox::information(this, "Success", "Articolo aggiunto con successo!", QMessageBox::Ok);
-
-        QString string_articolo = titolo;
-        ui->listArticoli->addItem(string_articolo);
-
-        ui->Titolo->clear();
-        ui->Keywords->clear();
-        ui->NumeroPagine->setValue(0);
-        ui->Prezzo->setValue(0);
-        ui->listAutori->clear();
-        ui->listArticoli->clear();
-        ui->PubblicatoPer->clear();
-        ui->buttonVisualizzaArticoli->setChecked(false);
-         ui->buttonVisualizzaAutori->setChecked(true);
+        {
+            QMessageBox::information(this, "Success", "Articolo aggiunto con successo!", QMessageBox::Ok);    
+            QString string_articolo = "ID: " + QString::number(identificativo) + " " + titolo;
+            ui->listArticoli->addItem(string_articolo);
+        }
+        clearCampiArticolo();
 }
 
 void paginaArticolo::on_buttonVisualizzaAutori_clicked()
@@ -105,9 +132,8 @@ void paginaArticolo::on_buttonVisualizzaAutori_clicked()
     QList<Autore> autori = gestore->getAutori();
     for (auto it = autori.begin(); it != autori.end(); it++)
     {
-        QString string_autore = it->getNome() + " " + it->getCongome();
+        QString string_autore = "ID: " + QString::number(it->getIdentificativo()) + " " + it->getNome() + " " + it->getCongome();
         ui->listAutori->addItem(string_autore);
-
         ui->listAutori->item(idx)->setCheckState(Qt::Unchecked);
         idx++;
     }
@@ -115,19 +141,20 @@ void paginaArticolo::on_buttonVisualizzaAutori_clicked()
 
 void paginaArticolo::on_buttonVisualizzaArticoli_clicked()
 {
-    if(ui->listArticoli->count() != 0)
-        ui->listArticoli->clear();
+    if(ui->listArticoliCorrelati->count() != 0)
+        ui->listArticoliCorrelati->clear();
 
     int idx = 0;
     QList<Articolo> articoli = gestore->getArticoli();
     for (auto it = articoli.begin(); it != articoli.end(); it++)
     {
-        ui->listArticoli->addItem(it->getTitolo());
-
-        ui->listArticoli->item(idx)->setCheckState(Qt::Unchecked);
+        QString string_articolo = "ID: " + QString::number(it->getIdentificativo()) + " "  + it->getTitolo();
+        ui->listArticoliCorrelati->addItem(string_articolo);
+        ui->listArticoliCorrelati->item(idx)->setCheckState(Qt::Unchecked);
         idx++;
     }
 }
+
 void paginaArticolo::on_buttonConferenze_clicked()
 {
     if(ui->PubblicatoPer->count() != 0)
@@ -152,14 +179,11 @@ void paginaArticolo::on_buttonRiviste_clicked()
         QString string_rivista = it->getNome();
         ui->PubblicatoPer->addItem(string_rivista);
     }
-
 }
 
 void paginaArticolo::on_listArticoli_itemDoubleClicked(QListWidgetItem *item)
 {
-    int idx = ui->listArticoli->currentRow();
-    Dialog dialog(gestore, "Articolo", idx);
-    dialog.setModal(true);
-    dialog.exec();
+    Q_UNUSED(item);
+    showDialogArticolo();
 }
 

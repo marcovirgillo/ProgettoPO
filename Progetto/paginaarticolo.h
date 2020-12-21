@@ -36,6 +36,9 @@ public:
     explicit paginaArticolo(Gestore* _gestore, QWidget *parent = nullptr);
     ~paginaArticolo();
 
+    void clearCampiArticolo();
+    void showDialogArticolo();
+
 private slots:
     void on_buttonAggiungi_clicked();
 

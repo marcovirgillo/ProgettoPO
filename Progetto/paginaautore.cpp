@@ -19,6 +19,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "ui_paginaautore.h"
 
 #include <QMessageBox>
+#include <QtGlobal>
 
 paginaAutore::paginaAutore(Gestore* _gestore, QWidget *parent) :
     QWidget(parent),
@@ -34,6 +35,21 @@ paginaAutore::~paginaAutore()
     delete ui;
 }
 
+void paginaAutore::clearCampiAutore()
+{
+    ui->Nome->clear();
+    ui->Cognome->clear();
+    ui->Afferenze->clear();
+}
+
+void paginaAutore::showDialogAutore()
+{
+    int idx = ui->listAutori->currentRow();
+    Dialog dialog(gestore, "Autore", idx);
+    dialog.setModal(true);
+    dialog.exec();
+}
+
 void paginaAutore::on_buttonAggiungi_clicked()
 {
     if(ui->Nome->text().isEmpty() || ui->Cognome->text().isEmpty())
@@ -43,6 +59,7 @@ void paginaAutore::on_buttonAggiungi_clicked()
         return;
     }
 
+    int identificativo = gestore->getIdentificativoAutore();
     QString nome = ui->Nome->text();
     QString cognome = ui->Cognome->text();
 
@@ -53,23 +70,20 @@ void paginaAutore::on_buttonAggiungi_clicked()
         lista_afferenze = afferenze.split("\n");
     }
 
-    Autore autore(0, nome, cognome, lista_afferenze);
+    Autore autore(identificativo, nome, cognome, lista_afferenze);
 
     if(gestore->aggiungiAutore(autore) == true)
+    {
         QMessageBox::information(this, "Success", "Autore aggiunto con successo!", QMessageBox::Ok);
+        QString string_autore = "ID: " + QString::number(identificativo) + " " + nome + " " + cognome;
+        ui->listAutori->addItem(string_autore);
+    }
 
-    QString string_autore = nome + " " + cognome;
-    ui->listAutori->addItem(string_autore);
-
-    ui->Nome->clear();
-    ui->Cognome->clear();
-    ui->Afferenze->clear();
+    clearCampiAutore();
 }
 
 void paginaAutore::on_listAutori_itemDoubleClicked(QListWidgetItem *item)
 {
-    int idx = ui->listAutori->currentRow();
-    Dialog dialog(gestore, "Autore", idx);
-    dialog.setModal(true);
-    dialog.exec();
+    Q_UNUSED(item);
+    showDialogAutore();
 }

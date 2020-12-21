@@ -19,6 +19,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "ui_paginarivista.h"
 
 #include <QMessageBox>
+#include <QtGlobal>
 
 paginaRivista::paginaRivista(Gestore* _gestore, QWidget *parent) :
     QWidget(parent),
@@ -32,6 +33,22 @@ paginaRivista::paginaRivista(Gestore* _gestore, QWidget *parent) :
 paginaRivista::~paginaRivista()
 {
     delete ui;
+}
+
+void paginaRivista::clearCampiRivista()
+{
+    ui->Nome->clear();
+    ui->Acronimo->clear();
+    ui->Editore->clear();
+    ui->Volume->setValue(0);
+}
+
+void paginaRivista::showDialogRivista()
+{
+    int idx = ui->listRiviste->currentRow();
+    Dialog dialog(gestore, "Rivista", idx);
+    dialog.setModal(true);
+    dialog.exec();
 }
 
 void paginaRivista::on_buttonAggiungi_clicked()
@@ -54,21 +71,17 @@ void paginaRivista::on_buttonAggiungi_clicked()
     Rivista rivista(nome, acronimo, editore, data_string, volume);
 
     if(gestore->aggiungiRivista(rivista) == true)
+    {
         QMessageBox::information(this, "Success", "Rivista aggiunta con successo!", QMessageBox::Ok);
+        QString string_rivista = nome;
+        ui->listRiviste->addItem(string_rivista);
+    }
 
-    QString string_rivista = nome;
-    ui->listRiviste->addItem(string_rivista);
-
-    ui->Nome->clear();
-    ui->Acronimo->clear();
-    ui->Editore->clear();
-    ui->Volume->setValue(0);
+    clearCampiRivista();
 }
 
 void paginaRivista::on_listRiviste_itemDoubleClicked(QListWidgetItem *item)
 {
-    int idx = ui->listRiviste->currentRow();
-    Dialog dialog(gestore, "Rivista", idx);
-    dialog.setModal(true);
-    dialog.exec();
+    Q_UNUSED(item);
+    showDialogRivista();
 }

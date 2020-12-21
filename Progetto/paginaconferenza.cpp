@@ -19,6 +19,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "ui_paginaconferenza.h"
 
 #include <QMessageBox>
+#include <QtGlobal>
 
 paginaConferenza::paginaConferenza(Gestore* _gestore, QWidget *parent) :
     QWidget(parent),
@@ -32,6 +33,23 @@ paginaConferenza::paginaConferenza(Gestore* _gestore, QWidget *parent) :
 paginaConferenza::~paginaConferenza()
 {
     delete ui;
+}
+
+void paginaConferenza::clearCampiConferenza()
+{
+    ui->Nome->clear();
+    ui->Acronimo->clear();
+    ui->Luogo->clear();
+    ui->Organizzatori->clear();
+    ui->NumeroPartecipanti->setValue(0);
+}
+
+void paginaConferenza::showDialogConferenza()
+{
+    int idx = ui->listConferenze->currentRow();
+    Dialog dialog(gestore, "Conferenza", idx);
+    dialog.setModal(true);
+    dialog.exec();
 }
 
 void paginaConferenza::on_buttonAggiungi_clicked()
@@ -60,22 +78,17 @@ void paginaConferenza::on_buttonAggiungi_clicked()
     Conferenza conferenza(nome, acronimo, luogo, data_string, numeroPartecipanti, lista_organizzatori);
 
     if(gestore->aggiungiConferenza(conferenza) == true)
+    {
         QMessageBox::information(this, "Success", "Conferenza aggiunta con successo!", QMessageBox::Ok);
+        QString string_conferenza = nome;
+        ui->listConferenze->addItem(string_conferenza);
+    }
 
-    QString string_conferenza = nome;
-    ui->listConferenze->addItem(string_conferenza);
-
-    ui->Nome->clear();
-    ui->Acronimo->clear();
-    ui->Luogo->clear();
-    ui->Organizzatori->clear();
-    ui->NumeroPartecipanti->setValue(0);
+    clearCampiConferenza();
 }
 
 void paginaConferenza::on_listConferenze_itemDoubleClicked(QListWidgetItem *item)
 {
-    int idx = ui->listConferenze->currentRow();
-    Dialog dialog(gestore, "Conferenza", idx);
-    dialog.setModal(true);
-    dialog.exec();
+    Q_UNUSED(item);
+    showDialogConferenza();
 }

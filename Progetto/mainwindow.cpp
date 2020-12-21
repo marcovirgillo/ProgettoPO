@@ -42,6 +42,11 @@ MainWindow::MainWindow(QWidget *parent)
     pageRivista = new paginaRivista(gestore);
     ui->stackedWidget->addWidget(pageRivista);
 
+    connect(ui->buttonHome, &QPushButton::clicked, pageAutore, &paginaAutore::clearCampiAutore);
+    connect(ui->buttonHome, &QPushButton::clicked, pageArticolo, &paginaArticolo::clearCampiArticolo);
+    connect(ui->buttonHome, &QPushButton::clicked, pageConferenza, &paginaConferenza::clearCampiConferenza);
+    connect(ui->buttonHome, &QPushButton::clicked, pageRivista, &paginaRivista::clearCampiRivista);
+
     ui->stackedWidget->setCurrentWidget(ui->Home);
 
 }

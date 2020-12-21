@@ -44,6 +44,7 @@ class Articolo
         QString getTitolo() const;
         int getNumeroPagine() const;
         float getPrezzo() const;
+        QList<Autore> getAutori() const;
         QList<QString> getKeywords() const;
         QList<Articolo> getArticoliCorrelati() const;
         QString getEditore() const;
@@ -52,6 +53,7 @@ class Articolo
         void setTitolo(QString _titolo);
         void setNumeroPagine(int _numeroPagine);
         void setPrezzo(float _prezzo);
+        void setAutori(QList<Autore> _autori);
         void setKeywords(QList<QString> _keywords);
         void setEditore(QString _editore);
 

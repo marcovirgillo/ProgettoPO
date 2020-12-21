@@ -32,6 +32,11 @@ class Dialog : public QDialog
 public:
     explicit Dialog(Gestore* _gestore, QString TipoClasse, int _idx, QWidget *parent = nullptr);
     ~Dialog();
+
+private slots:
+
+    void on_AutoriArticoli_activated(const QString &arg1);
+
     void visualizzaAutore();
     void visualizzaConferenza();
     void visualizzaRivista();
@@ -41,6 +46,7 @@ private:
     Ui::Dialog *ui;
     Gestore* gestore;
     int idx;
+    Articolo _articolo;
 };
 
 #endif // DIALOG_H

@@ -18,6 +18,8 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "dialog.h"
 #include "ui_dialog.h"
 
+#include <QDebug>
+
 Dialog::Dialog(Gestore* _gestore, QString TipoClasse, int _idx, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::Dialog)
@@ -39,7 +41,10 @@ Dialog::Dialog(Gestore* _gestore, QString TipoClasse, int _idx, QWidget *parent)
     if(TipoClasse == "Rivista")
         visualizzaRivista();
     if(TipoClasse == "Articolo")
+    {
+        _articolo = gestore->getArticoli().at(idx);
         VisualizzaArticolo();
+    }
 }
 
 Dialog::~Dialog()
@@ -92,4 +97,36 @@ void Dialog::VisualizzaArticolo()
     ui->stackedWidget->setCurrentWidget(ui->detailsArticolo);
     Articolo articolo = gestore->getArticoli().at(idx);
 
+    ui->Articolo_Identificativo->setText(QString::number(articolo.getIdentificativo()));
+    ui->Articolo_Titolo->setText(articolo.getTitolo());
+    QList<QString> keywords = articolo.getKeywords();
+    for (auto it = keywords.begin(); it != keywords.end(); it++)
+        ui->Articolo_listKeywords->addItem(*it);
+    ui->Articolo_NumeroPagine->setValue(articolo.getNumeroPagine());
+    ui->Articolo_Prezzo->setValue(articolo.getPrezzo());
+    ui->Articolo_PubblicatoPer->setText(articolo.getEditore());
+
+}
+
+void Dialog::on_AutoriArticoli_activated(const QString &arg1)
+{
+    if (arg1 == "Autori")
+    {
+        QList<Autore> autori = _articolo.getAutori();
+
+        for(auto it = autori.begin(); it != autori.end(); it++)
+        {
+            QString string_autore = it ->getNome();
+            ui->listAutoriArticoli->addItem(string_autore);
+        }
+    }
+    else if (arg1 == "Articoli correlati")
+    {
+        QList<Articolo> articoliCorrelati = _articolo.getArticoliCorrelati();
+        for (auto it = articoliCorrelati.begin(); it != articoliCorrelati.end(); it++)
+        {
+            QString string_articolo = it->getTitolo();
+            ui->listAutoriArticoli->addItem(string_articolo);
+        }
+    }
 }

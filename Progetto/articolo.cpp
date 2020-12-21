@@ -39,6 +39,8 @@ int Articolo::getNumeroPagine() const { return numeroPagine; }
 
 float Articolo::getPrezzo() const { return prezzo; }
 
+QList<Autore> Articolo::getAutori() const { return autori; }
+
 QList<QString> Articolo::getKeywords() const { return keywords; }
 
 QList<Articolo> Articolo::getArticoliCorrelati() const { return articoliCorrelati; }
@@ -53,11 +55,13 @@ void Articolo::setNumeroPagine(int _numeroPagine) { numeroPagine = _numeroPagine
 
 void Articolo::setPrezzo(float _prezzo) { prezzo = _prezzo; }
 
+void Articolo::setAutori(QList<Autore> _autori) { autori = _autori; }
+
 void Articolo::setKeywords(QList<QString> _keywords) { keywords = _keywords; }
 
 void Articolo::setEditore(QString _editore) { editore = _editore; }
 
 bool Articolo::operator==(const Articolo& _articolo) const
 {
-    return titolo == _articolo.titolo && numeroPagine == _articolo.numeroPagine && autori == _articolo.autori && prezzo == _articolo.prezzo;
+    return titolo == _articolo.titolo && numeroPagine == _articolo.numeroPagine && autori == _articolo.autori && prezzo == _articolo.prezzo && _articolo.editore == editore;
 }

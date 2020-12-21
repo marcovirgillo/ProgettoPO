@@ -36,6 +36,9 @@ public:
     explicit paginaRivista(Gestore* _gestore, QWidget *parent = nullptr);
     ~paginaRivista();
 
+    void clearCampiRivista();
+    void showDialogRivista();
+
 private slots:
     void on_buttonAggiungi_clicked();
 

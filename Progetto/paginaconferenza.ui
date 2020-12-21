@@ -200,7 +200,6 @@
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="page2"/>
   </widget>
  </widget>
  <resources/>

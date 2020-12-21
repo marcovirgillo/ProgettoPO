@@ -41,6 +41,7 @@ void paginaRivista::clearCampiRivista()
     ui->Acronimo->clear();
     ui->Editore->clear();
     ui->Volume->setValue(0);
+    ui->Data->setCurrentPage(QDate::currentDate().year(), QDate::currentDate().month());
 }
 
 void paginaRivista::showDialogRivista()

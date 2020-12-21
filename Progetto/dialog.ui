@@ -190,6 +190,9 @@
      <property name="readOnly">
       <bool>true</bool>
      </property>
+     <property name="maximum">
+      <number>50000</number>
+     </property>
     </widget>
     <widget class="QLabel" name="Rivista_labelData">
      <property name="geometry">
@@ -335,6 +338,9 @@
      <property name="readOnly">
       <bool>true</bool>
      </property>
+     <property name="maximum">
+      <number>50000</number>
+     </property>
     </widget>
     <widget class="QLabel" name="Articolo_labelNumeroPagine">
      <property name="geometry">
@@ -373,6 +379,9 @@
      </property>
      <property name="readOnly">
       <bool>true</bool>
+     </property>
+     <property name="maximum">
+      <double>50000.000000000000000</double>
      </property>
     </widget>
     <widget class="QLabel" name="Articolo_labelIdentificativo">
@@ -506,6 +515,9 @@
      </property>
      <property name="readOnly">
       <bool>true</bool>
+     </property>
+     <property name="maximum">
+      <number>50000</number>
      </property>
     </widget>
     <widget class="QLabel" name="Conferenza_labelNumeroPartecipanti">

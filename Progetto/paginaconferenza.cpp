@@ -42,6 +42,7 @@ void paginaConferenza::clearCampiConferenza()
     ui->Luogo->clear();
     ui->Organizzatori->clear();
     ui->NumeroPartecipanti->setValue(0);
+    ui->Data->setCurrentPage(QDate::currentDate().year(), QDate::currentDate().month());
 }
 
 void paginaConferenza::showDialogConferenza()

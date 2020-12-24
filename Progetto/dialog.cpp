@@ -43,7 +43,7 @@ Dialog::Dialog(Gestore* _gestore, QString TipoClasse, int _idx, QWidget *parent)
     if(TipoClasse == "Articolo")
     {
         _articolo = gestore->getArticoli().at(idx);
-        VisualizzaArticolo();
+        visualizzaArticolo();
     }
 }
 
@@ -58,7 +58,7 @@ void Dialog::visualizzaAutore()
     Autore autore = gestore->getAutori().at(idx);
     ui->Autore_Identificativo->setText(QString::number(autore.getIdentificativo()));
     ui->Autore_Nome->setText(autore.getNome());
-    ui->Autore_Cognome->setText(autore.getCongome());
+    ui->Autore_Cognome->setText(autore.getCognome());
 
     QList<QString> afferenze = autore.getAfferenze();
     for (auto it = afferenze.begin(); it != afferenze.end(); it++)
@@ -92,7 +92,7 @@ void Dialog::visualizzaRivista()
     ui->Rivista_Data->setText(rivista.getData());
 }
 
-void Dialog::VisualizzaArticolo()
+void Dialog::visualizzaArticolo()
 {
     ui->stackedWidget->setCurrentWidget(ui->detailsArticolo);
     Articolo articolo = gestore->getArticoli().at(idx);
@@ -105,18 +105,22 @@ void Dialog::VisualizzaArticolo()
     ui->Articolo_NumeroPagine->setValue(articolo.getNumeroPagine());
     ui->Articolo_Prezzo->setValue(articolo.getPrezzo());
     ui->Articolo_PubblicatoPer->setText(articolo.getEditore());
+    ui->AutoriArticoli->setItemData(0, 0, Qt::UserRole - 1);
 
 }
 
 void Dialog::on_AutoriArticoli_activated(const QString &arg1)
 {
+    if(ui->listAutoriArticoli->count() != 0)
+        ui->listAutoriArticoli->clear();
+
     if (arg1 == "Autori")
     {
         QList<Autore> autori = _articolo.getAutori();
 
         for(auto it = autori.begin(); it != autori.end(); it++)
         {
-            QString string_autore = it ->getNome();
+            QString string_autore = "ID: " + QString::number(it->getIdentificativo()) + " " + it->getNome() + " " + it->getCognome();
             ui->listAutoriArticoli->addItem(string_autore);
         }
     }
@@ -125,7 +129,7 @@ void Dialog::on_AutoriArticoli_activated(const QString &arg1)
         QList<Articolo> articoliCorrelati = _articolo.getArticoliCorrelati();
         for (auto it = articoliCorrelati.begin(); it != articoliCorrelati.end(); it++)
         {
-            QString string_articolo = it->getTitolo();
+            QString string_articolo = "ID: " + QString::number(it->getIdentificativo()) + " " + it->getTitolo();
             ui->listAutoriArticoli->addItem(string_articolo);
         }
     }

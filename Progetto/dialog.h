@@ -20,6 +20,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QDialog>
 #include "gestore.h"
+#include <QPixmap>
 
 namespace Ui {
 class Dialog;
@@ -40,7 +41,7 @@ private slots:
     void visualizzaAutore();
     void visualizzaConferenza();
     void visualizzaRivista();
-    void VisualizzaArticolo();
+    void visualizzaArticolo();
 
 private:
     Ui::Dialog *ui;

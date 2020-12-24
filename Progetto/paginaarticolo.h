@@ -37,7 +37,7 @@ public:
     ~paginaArticolo();
 
     void clearCampiArticolo();
-    void showDialogArticolo();
+    void showDialog(QString TipoClasse);
 
 private slots:
     void on_buttonAggiungi_clicked();
@@ -51,6 +51,28 @@ private slots:
     void on_buttonConferenze_clicked();
 
     void on_buttonRiviste_clicked();
+
+    void on_page2_buttonSeleziona_clicked();
+
+    void on_buttonVisualizzaArticoliAutore_clicked();
+
+    void on_page2_buttonIndietro_clicked();
+
+    void on_page2_buttonCerca_clicked();
+
+    void on_page3_buttonIndietro_clicked();
+
+    void on_buttonVisualizzaArticoliStruttura_clicked();
+
+    void on_page3_buttonCerca_clicked();
+
+    void clearPage2();
+
+    void clearPage3();
+
+    void disableButton1();
+
+    void disableButton2();
 
 private:
     Ui::paginaArticolo *ui;

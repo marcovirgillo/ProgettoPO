@@ -51,6 +51,10 @@ class Gestore
         bool aggiungiConferenza(Conferenza conferenza);
         bool aggiungiRivista(Rivista rivista);
         bool aggiungiArticolo(Articolo articolo);
+
+        void getArticoliDiUnAutore(QList<Articolo>& articoliAutore, Autore autore) const;
+        void getArticoliDiUnaStruttura(QList<Articolo>& articoliStruttura, QString struttura) const;
+        void getArticoliDiUnarivista(QList<Articolo>& articoliRivista, QString rivista);
 };
 
 #endif // GESTORE_H

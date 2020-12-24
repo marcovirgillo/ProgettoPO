@@ -49,6 +49,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->stackedWidget->setCurrentWidget(ui->Home);
 
+    ui->buttonHome->setDisabled(true);
 }
 
 MainWindow::~MainWindow()
@@ -98,4 +99,11 @@ void MainWindow::on_buttonRivista_clicked()
 void MainWindow::on_buttonHome_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->Home);
+}
+void MainWindow::on_stackedWidget_currentChanged(int arg1)
+{
+    if (arg1 != 0)
+         ui->buttonHome->setDisabled(false);
+    else
+        ui->buttonHome->setDisabled(true);
 }

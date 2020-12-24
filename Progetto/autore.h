@@ -35,7 +35,7 @@ class Autore
 
         int getIdentificativo() const;
         QString getNome() const;
-        QString getCongome() const;
+        QString getCognome() const;
         QList<QString> getAfferenze() const;
 
         void setIdentificativo(int _identificativo);

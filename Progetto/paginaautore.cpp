@@ -27,6 +27,7 @@ paginaAutore::paginaAutore(Gestore* _gestore, QWidget *parent) :
 {
     ui->setupUi(this); 
     gestore = _gestore;
+
     ui->stackedWidget->setCurrentWidget(ui->Home);
 }
 

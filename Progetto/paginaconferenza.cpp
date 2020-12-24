@@ -81,7 +81,7 @@ void paginaConferenza::on_buttonAggiungi_clicked()
     if(gestore->aggiungiConferenza(conferenza) == true)
     {
         QMessageBox::information(this, "Success", "Conferenza aggiunta con successo!", QMessageBox::Ok);
-        QString string_conferenza = nome;
+        QString string_conferenza = nome + " - " + "Data " + data_string;
         ui->listConferenze->addItem(string_conferenza);
     }
 

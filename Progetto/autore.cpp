@@ -31,7 +31,7 @@ int Autore::getIdentificativo() const { return identificativo; }
 
 QString Autore::getNome() const { return nome; }
 
-QString Autore::getCongome() const { return cognome; }
+QString Autore::getCognome() const { return cognome; }
 
 QList<QString> Autore::getAfferenze() const { return afferenze; }
 

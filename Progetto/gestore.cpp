@@ -16,6 +16,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "gestore.h"
+#include <QDebug>
 
 Gestore::Gestore()
 {
@@ -87,4 +88,44 @@ bool Gestore::aggiungiArticolo(Articolo articolo)
     }
     articoli.push_back(articolo);
     return true;
+}
+
+void Gestore::getArticoliDiUnAutore(QList<Articolo>& articoliAutore, Autore autore) const
+{
+    for (auto it = articoli.begin(); it != articoli.end(); it++)
+    {
+       QList<Autore> autori = it->getAutori();
+       int idxAutore = autori.indexOf(autore);
+
+       if (idxAutore != -1)
+       {
+           Articolo tmpArticolo = *it;
+           int idxArticolo = articoliAutore.indexOf(tmpArticolo);
+           if(idxArticolo == -1)
+               articoliAutore.push_back(tmpArticolo);
+       }
+    }
+}
+
+void Gestore::getArticoliDiUnaStruttura(QList<Articolo>& articoliStruttura, QString struttura) const
+{
+    for (auto it = articoli.begin(); it != articoli.end(); it++)
+    {
+       QList<Autore> autori = it->getAutori();
+       for (auto it2 = autori.begin(); it2 != autori.end(); it2++)
+       {
+           QList<QString> afferenze = it2->getAfferenze();
+           int idxArticolo = afferenze.indexOf(struttura);
+           if (idxArticolo != -1)
+           {
+               articoliStruttura.push_back(*it);
+               break;
+           }
+       }
+    }
+}
+
+void Gestore::getArticoliDiUnarivista(QList<Articolo>& articoliRivista, QString rivista)
+{
+
 }

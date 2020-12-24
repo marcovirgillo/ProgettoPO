@@ -74,7 +74,7 @@ void paginaRivista::on_buttonAggiungi_clicked()
     if(gestore->aggiungiRivista(rivista) == true)
     {
         QMessageBox::information(this, "Success", "Rivista aggiunta con successo!", QMessageBox::Ok);
-        QString string_rivista = nome;
+        QString string_rivista = nome + " - " + "Volume " + QString::number(volume);
         ui->listRiviste->addItem(string_rivista);
     }
 

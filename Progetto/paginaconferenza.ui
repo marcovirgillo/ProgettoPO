@@ -202,6 +202,19 @@
       </rect>
      </property>
     </widget>
+    <widget class="QLabel" name="labelConferenzeInserite">
+     <property name="geometry">
+      <rect>
+       <x>560</x>
+       <y>10</y>
+       <width>131</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Conferenze inserite</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>

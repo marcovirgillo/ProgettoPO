@@ -25,6 +25,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "gestore.h"
 
 #include <QMainWindow>
+#include <QPixmap>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -48,6 +49,8 @@ private slots:
     void on_buttonRivista_clicked();
 
     void on_buttonHome_clicked();
+
+    void on_stackedWidget_currentChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;

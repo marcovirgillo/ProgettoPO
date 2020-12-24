@@ -444,6 +444,11 @@
      </property>
      <item>
       <property name="text">
+       <string>Seleziona</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
        <string>Autori</string>
       </property>
      </item>

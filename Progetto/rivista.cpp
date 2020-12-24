@@ -38,6 +38,8 @@ QString Rivista::getData() const { return data; }
 
 int Rivista::getVolume() const { return volume; }
 
+QList<Articolo> Rivista::getArticoliRivista() const { return articoliRivista; }
+
 void Rivista::setNome(QString _nome) { nome = _nome; }
 
 void Rivista::setAcronimo(QString _acronimo) { acronimo = _acronimo; }
@@ -48,7 +50,9 @@ void Rivista::setData(QString _data) { data = _data; }
 
 void Rivista::setVolume(int _volume) { volume = _volume; }
 
+void Rivista::setArticoloIniRivista(Articolo articolo) { articoliRivista.push_back(articolo); }
+
 bool Rivista::operator==(const Rivista& _rivista) const
 {
-    return nome == _rivista.nome && editore == _rivista.editore && data == _rivista.data && volume == _rivista.volume;
+    return nome == _rivista.nome && data == _rivista.data && volume == _rivista.volume;
 }

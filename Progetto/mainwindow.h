@@ -23,7 +23,6 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "paginaconferenza.h"
 #include "paginarivista.h"
 #include "gestore.h"
-
 #include <QMainWindow>
 #include <QPixmap>
 

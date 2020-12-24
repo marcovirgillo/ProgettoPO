@@ -284,21 +284,21 @@
       <item>
        <widget class="QRadioButton" name="Metodo4">
         <property name="text">
-         <string>RadioButton</string>
+         <string>Metodo4</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QRadioButton" name="Metodo5">
         <property name="text">
-         <string>RadioButton</string>
+         <string>Metodo5</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QRadioButton" name="Metodo6">
         <property name="text">
-         <string>RadioButton</string>
+         <string>Metodo6</string>
         </property>
        </widget>
       </item>
@@ -428,7 +428,7 @@
     <widget class="QLineEdit" name="page3_Struttura">
      <property name="geometry">
       <rect>
-       <x>150</x>
+       <x>180</x>
        <y>150</y>
        <width>279</width>
        <height>21</height>
@@ -438,7 +438,7 @@
     <widget class="QPushButton" name="page3_buttonCerca">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>270</x>
        <y>190</y>
        <width>111</width>
        <height>32</height>
@@ -461,7 +461,7 @@
     <widget class="QLabel" name="page3_labelStruttura">
      <property name="geometry">
       <rect>
-       <x>70</x>
+       <x>100</x>
        <y>150</y>
        <width>60</width>
        <height>16</height>
@@ -473,33 +473,11 @@
     </widget>
    </widget>
    <widget class="QWidget" name="pageVisualizzaArticoliRivista">
-    <widget class="QWidget" name="layoutWidget_2">
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>250</y>
-       <width>291</width>
-       <height>251</height>
-      </rect>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_7">
-      <item>
-       <widget class="QListWidget" name="page4_listRiviste"/>
-      </item>
-      <item>
-       <widget class="QPushButton" name="page4_buttonSeleziona">
-        <property name="text">
-         <string>Seleziona</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
     <widget class="QPushButton" name="page4_buttonCerca">
      <property name="geometry">
       <rect>
-       <x>230</x>
-       <y>190</y>
+       <x>260</x>
+       <y>420</y>
        <width>111</width>
        <height>32</height>
       </rect>
@@ -514,7 +492,7 @@
        <x>570</x>
        <y>150</y>
        <width>279</width>
-       <height>351</height>
+       <height>371</height>
       </rect>
      </property>
     </widget>
@@ -534,9 +512,9 @@
     <widget class="QLineEdit" name="page4_NomeRivista">
      <property name="geometry">
       <rect>
-       <x>140</x>
+       <x>180</x>
        <y>150</y>
-       <width>279</width>
+       <width>241</width>
        <height>21</height>
       </rect>
      </property>
@@ -544,7 +522,7 @@
     <widget class="QLabel" name="page4_labelRivista">
      <property name="geometry">
       <rect>
-       <x>90</x>
+       <x>120</x>
        <y>150</y>
        <width>41</width>
        <height>16</height>
@@ -552,6 +530,67 @@
      </property>
      <property name="text">
       <string>Rivista</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="page4_labelVolume">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>190</y>
+       <width>51</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Volume</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="page4_VolumeRivista">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>190</y>
+       <width>81</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="maximum">
+      <number>50000</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="page4_labelData">
+     <property name="geometry">
+      <rect>
+       <x>120</x>
+       <y>230</y>
+       <width>41</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Data</string>
+     </property>
+    </widget>
+    <widget class="QCalendarWidget" name="page4_Data">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>230</y>
+       <width>241</width>
+       <height>155</height>
+      </rect>
+     </property>
+     <property name="autoFillBackground">
+      <bool>true</bool>
+     </property>
+     <property name="verticalHeaderFormat">
+      <enum>QCalendarWidget::NoVerticalHeader</enum>
+     </property>
+     <property name="navigationBarVisible">
+      <bool>true</bool>
+     </property>
+     <property name="dateEditEnabled">
+      <bool>true</bool>
      </property>
     </widget>
    </widget>

@@ -18,6 +18,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef CONFERENZA_H
 #define CONFERENZA_H
 
+#include "articolo.h"
 #include <QString>
 #include <QList>
 
@@ -30,6 +31,7 @@ class Conferenza
         QString data;
         int numeroPartecipanti;
         QList<QString> organizzatori;
+        QList<Articolo> articoliConferenza;
 
     public:
         Conferenza();
@@ -41,6 +43,7 @@ class Conferenza
         QString getData() const;
         int getNumeroPartecipanti() const;
         QList<QString> getOrganizzatori() const;
+        QList<Articolo> getArticoliConferenza() const;
 
         void setNome(QString _nome);
         void setAcronimo(QString _acronimo);
@@ -48,6 +51,7 @@ class Conferenza
         void setData(QString _data);
         void setNumeroPartecipanti(int _numeroPartecipanti);
         void setOrganizzatori(QList<QString> _organizzatori);
+        void setArticoloInConferenza(Articolo articolo);
 
         bool operator==(const Conferenza& _conferenza) const;
 };

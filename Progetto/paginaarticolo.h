@@ -20,9 +20,9 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "gestore.h"
 #include "dialog.h"
-
 #include <QWidget>
 #include <QListWidgetItem>
+#include <QRadioButton>
 
 namespace Ui {
 class paginaArticolo;
@@ -52,6 +52,10 @@ private slots:
 
     void on_buttonRiviste_clicked();
 
+    void disableRadioButton(QRadioButton* radioButton);
+
+    bool listArticoliVuota(QRadioButton* radioButton);
+
     void on_page2_buttonSeleziona_clicked();
 
     void on_buttonVisualizzaArticoliAutore_clicked();
@@ -70,9 +74,13 @@ private slots:
 
     void clearPage3();
 
-    void disableButton1();
+    void on_page4_buttonIndietro_clicked();
 
-    void disableButton2();
+    void clearPage4();
+
+    void on_buttonVisualizzaArticoliRivista_clicked();
+
+    void on_page4_buttonCerca_clicked();
 
 private:
     Ui::paginaArticolo *ui;

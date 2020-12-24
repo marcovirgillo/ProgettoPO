@@ -42,6 +42,35 @@ int Gestore::getIdentificativoArticolo()
     return identificativoArticolo++;
 }
 
+void Gestore::setArticoloPubblicatoPer(Articolo articolo, QString pubblicatoPer)
+{
+    for (auto it = articoli.begin(); it != articoli.end(); it++)
+        if(it->getIdentificativo() == articolo.getIdentificativo())
+            it->setPubblicatoPer(pubblicatoPer);
+}
+
+void Gestore::setArticoloInConferenza(int idx, Articolo articolo)
+{
+    int i = 0;
+    for(auto it = conferenze.begin(); it != conferenze.end(); it++)
+    {
+        if (i == idx)
+            it->setArticoloInConferenza(articolo);
+        i++;
+    }
+}
+
+void Gestore::setArticoloInRivista(int idx, Articolo articolo)
+{
+    int i = 0;
+    for(auto it = riviste.begin(); it != riviste.end(); it++)
+    {
+        if (i == idx)
+            it->setArticoloIniRivista(articolo);
+        i++;
+    }
+}
+
 bool Gestore::aggiungiAutore(Autore autore)
 {
     for (auto it = autori.begin(); it != autori.end(); it++)
@@ -125,7 +154,14 @@ void Gestore::getArticoliDiUnaStruttura(QList<Articolo>& articoliStruttura, QStr
     }
 }
 
-void Gestore::getArticoliDiUnarivista(QList<Articolo>& articoliRivista, QString rivista)
+void Gestore::getArticoliDiUnaRivista(QList<Articolo>& articoliRivista, QString nomeRivista, int volume, QString data)
 {
-
+    for (auto it = riviste.begin(); it != riviste.end(); it++)
+    {
+        if(it->getNome() == nomeRivista && it->getVolume() == volume && it->getData() == data)
+        {
+            articoliRivista = it->getArticoliRivista();
+            break;
+        }
+    }
 }

@@ -104,7 +104,41 @@ void Dialog::visualizzaArticolo()
         ui->Articolo_listKeywords->addItem(*it);
     ui->Articolo_NumeroPagine->setValue(articolo.getNumeroPagine());
     ui->Articolo_Prezzo->setValue(articolo.getPrezzo());
-    ui->Articolo_PubblicatoPer->setText(articolo.getEditore());
+
+    if(articolo.getPubblicatoPer() == "Conferenza")
+    {
+        QList<Conferenza> conferenze = gestore->getConferenze();
+        for (auto it = conferenze.begin(); it != conferenze.end(); it++)
+        {
+            QList<Articolo> articoliConferenza = it->getArticoliConferenza();
+            for (auto it2 = articoliConferenza.begin(); it2 != articoliConferenza.end(); it2++)
+            {
+                if(articolo.getIdentificativo() == it2->getIdentificativo())
+                {
+                    QString string_conferenza =  it->getNome() + " - " + "Data " + it->getData();
+                    ui->Articolo_PubblicatoPer->setText(string_conferenza);
+                    break;
+                }
+            }
+        }
+    }
+    else if(articolo.getPubblicatoPer() == "Rivista")
+    {
+        QList<Rivista> riviste = gestore->getRiviste();
+        for (auto it = riviste.begin(); it != riviste.end(); it++)
+        {
+            QList<Articolo> articoliRivista = it->getArticoliRivista();
+            for (auto it2 = articoliRivista.begin(); it2 != articoliRivista.end(); it2++)
+            {
+                if(articolo.getIdentificativo() == it2->getIdentificativo())
+                {
+                    QString string_rivista = it->getNome() + " - " + "Volume " + QString::number(it->getVolume());
+                    ui->Articolo_PubblicatoPer->setText(string_rivista);
+                    break;
+                }
+            }
+        }
+    }
     ui->AutoriArticoli->setItemData(0, 0, Qt::UserRole - 1);
 
 }

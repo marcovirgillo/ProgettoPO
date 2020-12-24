@@ -18,6 +18,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef RIVISTA_H
 #define RIVISTA_H
 
+#include "articolo.h"
 #include <QString>
 #include <QList>
 
@@ -29,7 +30,9 @@ class Rivista
         QString editore;
         QString data;
         int volume;
-    public:
+        QList<Articolo> articoliRivista;
+
+public:
         Rivista();
         Rivista(QString _nome, QString _acronimo, QString _editore, QString _data, int _volume);
 
@@ -38,12 +41,14 @@ class Rivista
         QString getEditore() const;
         QString getData() const;
         int getVolume() const;
+        QList<Articolo> getArticoliRivista() const;
 
         void setNome(QString _nome);
         void setAcronimo(QString _acronimo);
         void setEditore(QString _editore);
         void setData(QString _data);
         void setVolume(int _volume);
+        void setArticoloIniRivista(Articolo articolo);
 
         bool operator==(const Rivista& _rivista) const;
 };

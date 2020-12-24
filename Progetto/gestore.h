@@ -18,13 +18,12 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef GESTORE_H
 #define GESTORE_H
 
-#include <QString>
-#include <QList>
-
 #include "autore.h"
 #include "conferenza.h"
 #include "rivista.h"
 #include "articolo.h"
+#include <QString>
+#include <QList>
 
 class Gestore
 {
@@ -47,6 +46,11 @@ class Gestore
         int getIdentificativoAutore();
         int getIdentificativoArticolo();
 
+        void setArticoloPubblicatoPer(Articolo articolo, QString pubblicatoPer);
+
+        void setArticoloInConferenza(int idx, Articolo articolo);
+        void setArticoloInRivista(int idx, Articolo articolo);
+
         bool aggiungiAutore(Autore autore);
         bool aggiungiConferenza(Conferenza conferenza);
         bool aggiungiRivista(Rivista rivista);
@@ -54,7 +58,7 @@ class Gestore
 
         void getArticoliDiUnAutore(QList<Articolo>& articoliAutore, Autore autore) const;
         void getArticoliDiUnaStruttura(QList<Articolo>& articoliStruttura, QString struttura) const;
-        void getArticoliDiUnarivista(QList<Articolo>& articoliRivista, QString rivista);
+        void getArticoliDiUnaRivista(QList<Articolo>& articoliRivista, QString nomeRivista, int volume, QString data);
 };
 
 #endif // GESTORE_H

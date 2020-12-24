@@ -20,7 +20,6 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "gestore.h"
 #include "dialog.h"
-
 #include <QWidget>
 #include <QListWidgetItem>
 

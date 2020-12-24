@@ -17,7 +17,6 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "paginaautore.h"
 #include "ui_paginaautore.h"
-
 #include <QMessageBox>
 #include <QtGlobal>
 
@@ -55,7 +54,7 @@ void paginaAutore::on_buttonAggiungi_clicked()
 {
     if(ui->Nome->text().isEmpty() || ui->Cognome->text().isEmpty())
     {
-        QMessageBox errore(QMessageBox::Critical, "Errore", "Uno o più campi obbligatori sono vuoti", QMessageBox::Ok, this);
+        QMessageBox errore(QMessageBox::Critical, "Error", "Uno o più campi obbligatori sono vuoti", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
@@ -79,7 +78,12 @@ void paginaAutore::on_buttonAggiungi_clicked()
         QString string_autore = "ID: " + QString::number(identificativo) + " " + nome + " " + cognome;
         ui->listAutori->addItem(string_autore);
     }
-
+    else
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Autore già presente nella lista", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
     clearCampiAutore();
 }
 

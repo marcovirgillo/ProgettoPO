@@ -41,6 +41,8 @@ int Conferenza::getNumeroPartecipanti() const { return numeroPartecipanti; }
 
 QList<QString> Conferenza::getOrganizzatori() const { return organizzatori; }
 
+QList<Articolo> Conferenza::getArticoliConferenza() const { return articoliConferenza; }
+
 void Conferenza::setNome(QString _nome) { nome = _nome; }
 
 void Conferenza::setAcronimo(QString _acronimo) { acronimo = _acronimo; }
@@ -53,8 +55,9 @@ void Conferenza::setNumeroPartecipanti(int _numeroPartecipanti) { numeroPartecip
 
 void Conferenza::setOrganizzatori(QList<QString> _organizzatori) { organizzatori = _organizzatori; }
 
+void Conferenza::setArticoloInConferenza(Articolo articolo) { articoliConferenza.push_back(articolo); }
+
 bool Conferenza::operator==(const Conferenza& _conferenza) const
 {
-    return nome == _conferenza.nome && luogo == _conferenza.luogo && data == _conferenza.data && organizzatori == _conferenza.organizzatori;
+    return nome == _conferenza.nome && luogo == _conferenza.luogo && data == _conferenza.data;
 }
-

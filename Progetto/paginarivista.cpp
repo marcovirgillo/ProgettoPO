@@ -17,7 +17,6 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "paginarivista.h"
 #include "ui_paginarivista.h"
-
 #include <QMessageBox>
 #include <QtGlobal>
 
@@ -54,10 +53,9 @@ void paginaRivista::showDialogRivista()
 
 void paginaRivista::on_buttonAggiungi_clicked()
 {
-    if(ui->Nome->text().isEmpty() || ui->Acronimo->text().isEmpty() || ui->Editore->text().isEmpty()
-            || ui->Volume->value() == 0)
+    if(ui->Nome->text().isEmpty() || ui->Editore->text().isEmpty() || ui->Volume->value() == 0)
     {
-        QMessageBox errore(QMessageBox::Critical, "Errore", "Uno o più campi obbligatori sono vuoti", QMessageBox::Ok, this);
+        QMessageBox errore(QMessageBox::Critical, "Error", "Uno o più campi obbligatori sono vuoti", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
@@ -77,7 +75,12 @@ void paginaRivista::on_buttonAggiungi_clicked()
         QString string_rivista = nome + " - " + "Volume " + QString::number(volume);
         ui->listRiviste->addItem(string_rivista);
     }
-
+    else
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Rivista già presente nella lista", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
     clearCampiRivista();
 }
 

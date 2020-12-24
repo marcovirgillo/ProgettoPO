@@ -17,7 +17,6 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "paginaconferenza.h"
 #include "ui_paginaconferenza.h"
-
 #include <QMessageBox>
 #include <QtGlobal>
 
@@ -55,10 +54,9 @@ void paginaConferenza::showDialogConferenza()
 
 void paginaConferenza::on_buttonAggiungi_clicked()
 {
-    if(ui->Nome->text().isEmpty() || ui->Acronimo->text().isEmpty() || ui->Luogo->text().isEmpty()
-            || ui->Organizzatori->toPlainText().isEmpty() || ui->NumeroPartecipanti->value() == 0)
+    if(ui->Nome->text().isEmpty() || ui->Luogo->text().isEmpty() || ui->Organizzatori->toPlainText().isEmpty() || ui->NumeroPartecipanti->value() == 0)
     {
-        QMessageBox errore(QMessageBox::Critical, "Errore", "Uno o più campi obbligatori sono vuoti", QMessageBox::Ok, this);
+        QMessageBox errore(QMessageBox::Critical, "Error", "Uno o più campi obbligatori sono vuoti", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
@@ -84,7 +82,12 @@ void paginaConferenza::on_buttonAggiungi_clicked()
         QString string_conferenza = nome + " - " + "Data " + data_string;
         ui->listConferenze->addItem(string_conferenza);
     }
-
+    else
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Conferenza già presente nella lista", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
     clearCampiConferenza();
 }
 

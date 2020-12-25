@@ -56,6 +56,8 @@ private slots:
 
     bool listArticoliVuota(QRadioButton* radioButton);
 
+    void visualizzaArticoliInLista(QList<Articolo> articoli, QListWidget* listArticoli);
+
     void on_page2_buttonSeleziona_clicked();
 
     void on_buttonVisualizzaArticoliAutore_clicked();

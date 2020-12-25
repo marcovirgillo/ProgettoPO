@@ -82,6 +82,7 @@ void paginaAutore::on_buttonAggiungi_clicked()
     {
         QMessageBox errore(QMessageBox::Critical, "Error", "Autore già presente nella lista", QMessageBox::Ok, this);
         errore.exec();
+        clearCampiAutore();
         return;
     }
     clearCampiAutore();

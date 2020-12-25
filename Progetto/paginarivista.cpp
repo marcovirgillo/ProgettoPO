@@ -79,6 +79,7 @@ void paginaRivista::on_buttonAggiungi_clicked()
     {
         QMessageBox errore(QMessageBox::Critical, "Error", "Rivista già presente nella lista", QMessageBox::Ok, this);
         errore.exec();
+        clearCampiRivista();
         return;
     }
     clearCampiRivista();

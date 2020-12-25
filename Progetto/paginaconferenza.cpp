@@ -86,6 +86,7 @@ void paginaConferenza::on_buttonAggiungi_clicked()
     {
         QMessageBox errore(QMessageBox::Critical, "Error", "Conferenza già presente nella lista", QMessageBox::Ok, this);
         errore.exec();
+        clearCampiConferenza();
         return;
     }
     clearCampiConferenza();

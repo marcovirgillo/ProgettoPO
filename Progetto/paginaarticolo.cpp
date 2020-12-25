@@ -125,6 +125,7 @@ void paginaArticolo::on_buttonAggiungi_clicked()
     {
         QMessageBox errore(QMessageBox::Critical, "Error", "Articolo già presente nella lista", QMessageBox::Ok, this);
         errore.exec();
+        clearCampiArticolo();
         return;
     }
     clearCampiArticolo();
@@ -212,6 +213,15 @@ bool paginaArticolo::listArticoliVuota(QRadioButton* radioButton)
     }
     return false;
 }
+
+void paginaArticolo::visualizzaArticoliInLista(QList<Articolo> articoli, QListWidget* listArticoli)
+{
+    for (auto it = articoli.begin(); it != articoli.end(); it++)
+    {
+        QString string_articolo = "ID: " + QString::number(it->getIdentificativo()) + " "  + it->getTitolo();
+        listArticoli->addItem(string_articolo);
+    }
+}
 //Fine inserimento e visualizzazione articolo
 
 // Sezione B - Visualizzare tutti gli articoli di un autore
@@ -282,11 +292,7 @@ void paginaArticolo::on_page2_buttonSeleziona_clicked()
     int idxAutore = ui->page2_listAutori->currentRow();
     QList<Articolo> articoli;
     gestore->getArticoliDiUnAutore(articoli, gestore->getAutori().at(idxAutore));
-    for (auto it = articoli.begin(); it != articoli.end(); it++)
-    {
-        QString string_articolo = "ID: " + QString::number(it->getIdentificativo()) + " "  + it->getTitolo();
-        ui->page2_listArticoli->addItem(string_articolo);
-    }
+    visualizzaArticoliInLista(articoli, ui->page2_listArticoli);
 }
 //Fine metodo
 
@@ -331,12 +337,7 @@ void paginaArticolo::on_page3_buttonCerca_clicked()
         errore.exec();
         return;
     }
-
-    for (auto it = articoli.begin(); it != articoli.end(); it++)
-    {
-        QString string_articolo = "ID: " + QString::number(it->getIdentificativo()) + " "  + it->getTitolo();
-        ui->page3_listArticoli->addItem(string_articolo);
-    }
+    visualizzaArticoliInLista(articoli, ui->page3_listArticoli);
 }
 //Fine metodo
 
@@ -387,12 +388,6 @@ void paginaArticolo::on_page4_buttonCerca_clicked()
         errore.exec();
         return;
     }
-
-    for (auto it = articoli.begin(); it != articoli.end(); it++)
-    {
-        QString string_articolo = "ID: " + QString::number(it->getIdentificativo()) + " "  + it->getTitolo();
-        ui->page4_listArticoli->addItem(string_articolo);
-    }
-
+     visualizzaArticoliInLista(articoli, ui->page4_listArticoli);
 }
 //Fine metodo

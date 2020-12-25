@@ -253,10 +253,10 @@
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>560</x>
+       <x>530</x>
        <y>460</y>
-       <width>379</width>
-       <height>171</height>
+       <width>485</width>
+       <height>181</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -282,23 +282,23 @@
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="Metodo4">
+       <widget class="QRadioButton" name="buttonVisualizzaArticoliEconomiciAutore">
         <property name="text">
-         <string>Metodo4</string>
+         <string>Visualizza gli articoli con il prezzo più alto tra tutti gli articoli di un autore</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="Metodo5">
+       <widget class="QRadioButton" name="buttonVisualizzaGuadagnoAnnualeConferenza">
         <property name="text">
-         <string>Metodo5</string>
+         <string>Visualizza il guadagno annuale di una conferenza</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="Metodo6">
+       <widget class="QRadioButton" name="buttonVisualizzaKeywordsArticoliGuadagnoMax">
         <property name="text">
-         <string>Metodo6</string>
+         <string>Visualizza le keywords la cui somma degli articoli porta al guadagno più alto</string>
         </property>
        </widget>
       </item>

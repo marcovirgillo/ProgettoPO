@@ -37,57 +37,50 @@ public:
     ~paginaArticolo();
 
     void clearCampiArticolo();
-    void showDialog(QString TipoClasse);
+    void showDialogArticolo();
 
 private slots:
     void on_buttonAggiungi_clicked();
-
     void on_buttonVisualizzaAutori_clicked();
-
     void on_buttonVisualizzaArticoli_clicked();
-
+    void on_buttonConferenze_clicked();
+    void on_buttonRiviste_clicked();
     void on_listArticoli_itemDoubleClicked(QListWidgetItem *item);
 
-    void on_buttonConferenze_clicked();
-
-    void on_buttonRiviste_clicked();
-
     void disableRadioButton(QRadioButton* radioButton);
-
     bool listArticoliVuota(QRadioButton* radioButton);
-
     void visualizzaArticoliInLista(QList<Articolo> articoli, QListWidget* listArticoli);
 
+    void on_buttonVisualizzaArticoliAutore_clicked();
+    void clearPage2();
+    void on_page2_buttonIndietro_clicked();
+    void on_page2_buttonCerca_clicked();
     void on_page2_buttonSeleziona_clicked();
 
-    void on_buttonVisualizzaArticoliAutore_clicked();
-
-    void on_page2_buttonIndietro_clicked();
-
-    void on_page2_buttonCerca_clicked();
-
-    void on_page3_buttonIndietro_clicked();
-
     void on_buttonVisualizzaArticoliStruttura_clicked();
-
+    void clearPage3();
+    void on_page3_buttonIndietro_clicked();
     void on_page3_buttonCerca_clicked();
 
-    void clearPage2();
-
-    void clearPage3();
-
-    void on_page4_buttonIndietro_clicked();
-
-    void clearPage4();
-
     void on_buttonVisualizzaArticoliRivista_clicked();
-
+    void clearPage4();
+    void on_page4_buttonIndietro_clicked();
     void on_page4_buttonCerca_clicked();
+
+    void on_buttonVisualizzaArticoliCostosiAutore_clicked();
+    void clearPage5();
+    void on_page5_buttonIndietro_clicked();
+    void on_page5_buttonCerca_clicked();
+    void on_page5_buttonSeleziona_clicked();
+
+    void on_buttonVisualizzaKeywordsArticoliGuadagnoMax_clicked();
+    void clearPage6();
+    void on_page6_buttonIndietro_clicked();
 
 private:
     Ui::paginaArticolo *ui;
-
     Gestore* gestore;
+    QVector<int> idListAutori;
 };
 
 #endif // PAGINAARTICOLO_H

@@ -34,6 +34,7 @@ paginaConferenza::~paginaConferenza()
     delete ui;
 }
 
+// Inserimento e visualizzazione conferenza
 void paginaConferenza::clearCampiConferenza()
 {
     ui->Nome->clear();
@@ -42,6 +43,15 @@ void paginaConferenza::clearCampiConferenza()
     ui->Organizzatori->clear();
     ui->NumeroPartecipanti->setValue(0);
     ui->Data->setCurrentPage(QDate::currentDate().year(), QDate::currentDate().month());
+
+    ui->stackedWidget->setCurrentWidget(ui->Home);
+}
+
+void paginaConferenza::disableRadioButton(QRadioButton* radioButton)
+{
+    radioButton->setAutoExclusive(false);
+    radioButton->setChecked(false);
+    radioButton->setAutoExclusive(true);
 }
 
 void paginaConferenza::showDialogConferenza()
@@ -86,7 +96,6 @@ void paginaConferenza::on_buttonAggiungi_clicked()
     {
         QMessageBox errore(QMessageBox::Critical, "Error", "Conferenza già presente nella lista", QMessageBox::Ok, this);
         errore.exec();
-        clearCampiConferenza();
         return;
     }
     clearCampiConferenza();
@@ -96,4 +105,79 @@ void paginaConferenza::on_listConferenze_itemDoubleClicked(QListWidgetItem *item
 {
     Q_UNUSED(item);
     showDialogConferenza();
+}
+
+bool paginaConferenza::listArticoliVuota(QRadioButton* radioButton)
+{
+    if(gestore->getArticoli().empty() == true)
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima inserire almeno un articolo", QMessageBox::Ok, this);
+        errore.exec();
+        disableRadioButton(radioButton);
+        return true;
+    }
+    return false;
+}
+
+void paginaConferenza::visualizzaArticoliInLista(QList<Articolo> articoli, QListWidget* listArticoli)
+{
+    for (auto it = articoli.begin(); it != articoli.end(); it++)
+    {
+        QString string_articolo = "ID: " + QString::number(it->getIdentificativo()) + " "  + it->getTitolo();
+        listArticoli->addItem(string_articolo);
+    }
+}
+
+//Fine inserimento e visualizzazione conferenza
+
+//Sezione C - Visualizzare il guadagno annuale di una rivista calcolato come la somma dei prezzi degli articoli presentati per quella rivista in un anno
+void paginaConferenza::clearPage2()
+{
+    ui->page2_NomeConferenza->clear();
+    ui->page2_Luogo->clear();
+    ui->page2_Data->setCurrentPage(QDate::currentDate().year(), QDate::currentDate().month());
+    ui->page2_listArticoli->clear();
+    ui->page2_GuadagnoTotale->clear();
+}
+
+void paginaConferenza::on_buttonVisualizzaGuadagnoAnnualeConferenza_clicked()
+{
+    if(listArticoliVuota(ui->buttonVisualizzaGuadagnoAnnualeConferenza) == true)
+        return;
+    clearPage2();
+    ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaGuadagnoAnnualeConferenza);
+    disableRadioButton(ui->buttonVisualizzaGuadagnoAnnualeConferenza);
+}
+
+void paginaConferenza::on_page2_buttonIndietro_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->Home);
+    clearPage2();
+}
+
+void paginaConferenza::on_page2_buttonCerca_clicked()
+{
+    QString nomeConferenza = ui->page2_NomeConferenza->text();
+    QString luogo = ui->page2_Luogo->text();
+    QDate data = ui->page2_Data->selectedDate();
+    QString data_string = (data.toString(Qt::DateFormat::ISODate));
+
+    clearPage2();
+    if(nomeConferenza.isEmpty() == true || luogo.isEmpty() == true)
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Inserisci una rivista valida", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+    QList<Articolo> articoli;
+    int GuadagnoTotale = gestore->getGuadagnoAnnualeConferenza(articoli, nomeConferenza, luogo, data_string);
+
+    if(articoli.isEmpty() == true)
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Nessuna conferenza trovata o la conferenza non ha articoli", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+    visualizzaArticoliInLista(articoli, ui->page2_listArticoli);
+    ui->page2_GuadagnoTotale->setText(QString::number(GuadagnoTotale));
 }

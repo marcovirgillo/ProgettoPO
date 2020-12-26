@@ -119,19 +119,18 @@ bool Gestore::aggiungiArticolo(Articolo articolo)
     return true;
 }
 
-void Gestore::getArticoliDiUnAutore(QList<Articolo>& articoliAutore, Autore autore) const
+void Gestore::getArticoliDiUnAutore(QList<Articolo>& articoliAutore, int idAutore) const
 {
     for (auto it = articoli.begin(); it != articoli.end(); it++)
     {
-       QList<Autore> autori = it->getAutori();
-       int idxAutore = autori.indexOf(autore);
-
-       if (idxAutore != -1)
+       QList<Autore> autoriArticolo = it->getAutori();
+       for (auto it2 = autoriArticolo.begin(); it2 != autoriArticolo.end(); it2++)
        {
-           Articolo tmpArticolo = *it;
-           int idxArticolo = articoliAutore.indexOf(tmpArticolo);
-           if(idxArticolo == -1)
-               articoliAutore.push_back(tmpArticolo);
+           if (it2->getIdentificativo() == idAutore)
+           {
+               articoliAutore.push_back(*it);
+               break;
+           }
        }
     }
 }
@@ -140,12 +139,11 @@ void Gestore::getArticoliDiUnaStruttura(QList<Articolo>& articoliStruttura, QStr
 {
     for (auto it = articoli.begin(); it != articoli.end(); it++)
     {
-       QList<Autore> autori = it->getAutori();
-       for (auto it2 = autori.begin(); it2 != autori.end(); it2++)
+       QList<Autore> autoriStruttura = it->getAutori();
+       for (auto it2 = autoriStruttura.begin(); it2 != autoriStruttura.end(); it2++)
        {
            QList<QString> afferenze = it2->getAfferenze();
-           int idxArticolo = afferenze.indexOf(struttura);
-           if (idxArticolo != -1)
+           if (afferenze.indexOf(struttura) != -1)
            {
                articoliStruttura.push_back(*it);
                break;
@@ -154,7 +152,7 @@ void Gestore::getArticoliDiUnaStruttura(QList<Articolo>& articoliStruttura, QStr
     }
 }
 
-void Gestore::getArticoliDiUnaRivista(QList<Articolo>& articoliRivista, QString nomeRivista, int volume, QString data)
+void Gestore::getArticoliDiUnaRivista(QList<Articolo>& articoliRivista, QString nomeRivista, int volume, QString data) const
 {
     for (auto it = riviste.begin(); it != riviste.end(); it++)
     {
@@ -164,4 +162,78 @@ void Gestore::getArticoliDiUnaRivista(QList<Articolo>& articoliRivista, QString 
             break;
         }
     }
+}
+
+void Gestore::getArticoliCostosiAutore(QList<Articolo>& articoliCostosiAutore, int idAutore) const
+{
+    QList<Articolo> articoliAutore;
+    getArticoliDiUnAutore(articoliAutore, idAutore);
+
+    int prezzoMax = INT_MIN;
+    for (auto it = articoliAutore.begin(); it != articoliAutore.end(); it++)
+        if(it->getPrezzo() > prezzoMax)
+            prezzoMax = it->getPrezzo();
+
+    for (auto it = articoliAutore.begin(); it != articoliAutore.end(); it++)
+        if(prezzoMax == it->getPrezzo())
+            articoliCostosiAutore.push_back(*it);
+}
+
+float Gestore::getGuadagnoAnnualeConferenza(QList<Articolo>& articoliConferenza, QString nomeConferenza, QString luogo, QString data) const
+{
+    for (auto it = conferenze.begin(); it != conferenze.end(); it++)
+    {
+        if(it->getNome() == nomeConferenza && it->getLuogo() == luogo && it->getData() == data)
+        {
+            articoliConferenza = it->getArticoliConferenza();
+            break;
+        }
+    }
+
+    float guadagnoTotale = 0;
+    for (auto it = articoliConferenza.begin(); it != articoliConferenza.end(); it++)
+        guadagnoTotale += it->getPrezzo();
+
+    return guadagnoTotale;
+}
+
+//data una keyword, restituisce la somma dei prezzi degli articoli con quella keyword
+int Gestore::sommaPrezziArticoliStessaKeyword(QString keyword) const
+{
+    int sommaPrezzi = 0;
+    for (auto it = articoli.begin(); it != articoli.end(); it++)
+        if(it->getKeywords().indexOf(keyword) != -1)
+            sommaPrezzi += it->getPrezzo();
+    return sommaPrezzi;
+}
+
+
+int Gestore::getKeywordsCostose(QList<QString>& keywordsCostose) const
+{
+    //calcolo il massimo guadagno che si può ottenere sommando le keywords
+    int guadagnoMax = 0;
+    for (auto it = articoli.begin(); it != articoli.end(); it++)
+    {
+        QList<QString> keywords = it->getKeywords();
+        for (auto it2 = keywords.begin(); it2 != keywords.end(); it2++)
+        {
+            int sommaPrezzi = sommaPrezziArticoliStessaKeyword(*it2);
+            if(sommaPrezzi > guadagnoMax)
+                guadagnoMax = sommaPrezzi;
+        }
+    }
+
+    //avendo il guadagno max che si può ottenere sommando i costi degli articoli di una keyword, cerco le keywords che producono quel guadagno
+    for (auto it = articoli.begin(); it != articoli.end(); it++)
+    {
+        QList<QString> keywords = it->getKeywords();
+        for (auto it2 = keywords.begin(); it2 != keywords.end(); it2++)
+        {
+            int sommaPrezzi = sommaPrezziArticoliStessaKeyword(*it2);
+            if(sommaPrezzi == guadagnoMax)
+                if(keywordsCostose.indexOf(*it2) == -1)
+                    keywordsCostose.push_back(*it2);
+        }
+    }
+    return guadagnoMax;
 }

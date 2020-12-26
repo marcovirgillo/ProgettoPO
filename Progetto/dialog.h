@@ -35,13 +35,11 @@ public:
     ~Dialog();
 
 private slots:
-
-    void on_AutoriArticoli_activated(const QString &arg1);
-
     void visualizzaAutore();
     void visualizzaConferenza();
     void visualizzaRivista();
     void visualizzaArticolo();
+    void on_AutoriArticoli_activated(const QString &arg1);
 
 private:
     Ui::Dialog *ui;

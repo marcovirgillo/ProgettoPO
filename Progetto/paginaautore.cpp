@@ -19,6 +19,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "ui_paginaautore.h"
 #include <QMessageBox>
 #include <QtGlobal>
+#include "mainwindow.h"
 
 paginaAutore::paginaAutore(Gestore* _gestore, QWidget *parent) :
     QWidget(parent),
@@ -68,6 +69,7 @@ void paginaAutore::on_buttonAggiungi_clicked()
     {
         QString afferenze = ui->Afferenze->toPlainText();
         lista_afferenze = afferenze.split("\n");
+        lista_afferenze.sort();
     }
 
     Autore autore(identificativo, nome, cognome, lista_afferenze);
@@ -82,7 +84,6 @@ void paginaAutore::on_buttonAggiungi_clicked()
     {
         QMessageBox errore(QMessageBox::Critical, "Error", "Autore già presente nella lista", QMessageBox::Ok, this);
         errore.exec();
-        clearCampiAutore();
         return;
     }
     clearCampiAutore();

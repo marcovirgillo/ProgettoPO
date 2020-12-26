@@ -17,10 +17,8 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
-#include <QMessageBox>
-
 #include "gestore.h"
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

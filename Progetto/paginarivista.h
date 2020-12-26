@@ -40,12 +40,10 @@ public:
 
 private slots:
     void on_buttonAggiungi_clicked();
-
     void on_listRiviste_itemDoubleClicked(QListWidgetItem *item);
 
 private:
     Ui::paginaRivista *ui;
-
     Gestore* gestore;
 };
 

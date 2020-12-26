@@ -40,22 +40,15 @@ public:
 
 private slots:
     void on_buttonAutore_clicked();
-
     void on_buttonArticolo_clicked();
-
     void on_buttonConferenza_clicked();
-
     void on_buttonRivista_clicked();
-
     void on_buttonHome_clicked();
-
     void on_stackedWidget_currentChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;
-
     Gestore* gestore;
-
     paginaArticolo* pageArticolo;
     paginaAutore* pageAutore;
     paginaConferenza* pageConferenza;

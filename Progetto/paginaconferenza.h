@@ -22,6 +22,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "dialog.h"
 #include <QWidget>
 #include <QListWidgetItem>
+#include <QRadioButton>
 
 namespace Ui {
 class paginaConferenza;
@@ -35,13 +36,21 @@ public:
     explicit paginaConferenza(Gestore* _gestore, QWidget *parent = nullptr);
     ~paginaConferenza();
 
-    void clearCampiConferenza();
     void showDialogConferenza();
+    void clearCampiConferenza();
 
 private slots:
     void on_buttonAggiungi_clicked();
-
     void on_listConferenze_itemDoubleClicked(QListWidgetItem *item);
+
+    void disableRadioButton(QRadioButton* radioButton);
+    bool listArticoliVuota(QRadioButton* radioButton);
+    void visualizzaArticoliInLista(QList<Articolo> articoli, QListWidget* listArticoli);
+
+    void on_buttonVisualizzaGuadagnoAnnualeConferenza_clicked();
+    void clearPage2();
+    void on_page2_buttonIndietro_clicked();
+    void on_page2_buttonCerca_clicked();
 
 private:
     Ui::paginaConferenza *ui;

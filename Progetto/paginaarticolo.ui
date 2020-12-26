@@ -256,7 +256,7 @@
        <x>530</x>
        <y>460</y>
        <width>485</width>
-       <height>181</height>
+       <height>191</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -282,16 +282,9 @@
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="buttonVisualizzaArticoliEconomiciAutore">
+       <widget class="QRadioButton" name="buttonVisualizzaArticoliCostosiAutore">
         <property name="text">
          <string>Visualizza gli articoli con il prezzo più alto tra tutti gli articoli di un autore</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QRadioButton" name="buttonVisualizzaGuadagnoAnnualeConferenza">
-        <property name="text">
-         <string>Visualizza il guadagno annuale di una conferenza</string>
         </property>
        </widget>
       </item>
@@ -591,6 +584,163 @@
      </property>
      <property name="dateEditEnabled">
       <bool>true</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="pageVisualizzaArticoliCostosiAutore">
+    <widget class="QLineEdit" name="page5_CognomeAutore">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>190</y>
+       <width>279</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="page5_labelNomeAutore">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>150</y>
+       <width>41</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Nome</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="page5_NomeAutore">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>150</y>
+       <width>279</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="page5_buttonIndietro">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>101</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Indietro</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>290</y>
+       <width>291</width>
+       <height>251</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_6">
+      <item>
+       <widget class="QListWidget" name="page5_listAutori"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="page5_buttonSeleziona">
+        <property name="text">
+         <string>Seleziona</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QPushButton" name="page5_buttonCerca">
+     <property name="geometry">
+      <rect>
+       <x>230</x>
+       <y>230</y>
+       <width>111</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Cerca</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="page5_labelCognomeAutore">
+     <property name="geometry">
+      <rect>
+       <x>60</x>
+       <y>190</y>
+       <width>60</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Cognome</string>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="page5_listArticoli">
+     <property name="geometry">
+      <rect>
+       <x>570</x>
+       <y>150</y>
+       <width>279</width>
+       <height>391</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="pageVisualizzaKeywordsArticoliGuadagnoMax">
+    <widget class="QPushButton" name="page6_buttonIndietro">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>101</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Indietro</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="page6_Guadagno">
+     <property name="geometry">
+      <rect>
+       <x>260</x>
+       <y>190</y>
+       <width>131</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="page6_labelGuadagno">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>190</y>
+       <width>111</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Guadagno più alto</string>
+     </property>
+    </widget>
+    <widget class="QListWidget" name="page6_listKeywords">
+     <property name="geometry">
+      <rect>
+       <x>470</x>
+       <y>190</y>
+       <width>289</width>
+       <height>321</height>
+      </rect>
      </property>
     </widget>
    </widget>

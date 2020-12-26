@@ -19,8 +19,10 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "ui_paginaarticolo.h"
 #include <QMessageBox>
 #include <QtGlobal>
-//#include <QCommonStyle> va incluso per le frecce sui PushButton
 #include <QDebug>
+//#include <QCommonStyle> va incluso per le frecce sui PushButton
+
+//risolvere problema del seleziona premuto in maniera ossessiva nei metodi
 
 paginaArticolo::paginaArticolo(Gestore* _gestore, QWidget *parent) :
     QWidget(parent),
@@ -35,7 +37,7 @@ paginaArticolo::~paginaArticolo()
 {
     delete ui;
 }
-// Inserimento e visualizzazione articolo
+//Inserimento e visualizzazione articolo
 void paginaArticolo::clearCampiArticolo()
 {
     ui->Titolo->clear();
@@ -46,21 +48,22 @@ void paginaArticolo::clearCampiArticolo()
     ui->listArticoliCorrelati->clear();
     ui->PubblicatoPer->clear();
 
-    ui->buttonConferenze->setAutoExclusive(false);
-    ui->buttonConferenze->setChecked(false);
-    ui->buttonConferenze->setAutoExclusive(true);
-
-    ui->buttonRiviste->setAutoExclusive(false);
-    ui->buttonRiviste->setChecked(false);
-    ui->buttonRiviste->setAutoExclusive(true);
-
+    disableRadioButton(ui->buttonConferenze);
+    disableRadioButton(ui->buttonRiviste);
     ui->stackedWidget->setCurrentWidget(ui->Home);
 }
 
-void paginaArticolo::showDialog(QString TipoClasse)
+void paginaArticolo::disableRadioButton(QRadioButton* radioButton)
+{
+    radioButton->setAutoExclusive(false);
+    radioButton->setChecked(false);
+    radioButton->setAutoExclusive(true);
+}
+
+void paginaArticolo::showDialogArticolo()
 {
     int idx = ui->listArticoli->currentRow();
-    Dialog dialog(gestore, TipoClasse, idx);
+    Dialog dialog(gestore, "Articolo", idx);
     dialog.setModal(true);
     dialog.exec();
 }
@@ -125,7 +128,6 @@ void paginaArticolo::on_buttonAggiungi_clicked()
     {
         QMessageBox errore(QMessageBox::Critical, "Error", "Articolo già presente nella lista", QMessageBox::Ok, this);
         errore.exec();
-        clearCampiArticolo();
         return;
     }
     clearCampiArticolo();
@@ -192,14 +194,7 @@ void paginaArticolo::on_buttonRiviste_clicked()
 void paginaArticolo::on_listArticoli_itemDoubleClicked(QListWidgetItem *item)
 {
     Q_UNUSED(item);
-    showDialog("Articolo");
-}
-
-void paginaArticolo::disableRadioButton(QRadioButton* radioButton)
-{
-    radioButton->setAutoExclusive(false);
-    radioButton->setChecked(false);
-    radioButton->setAutoExclusive(true);
+    showDialogArticolo();
 }
 
 bool paginaArticolo::listArticoliVuota(QRadioButton* radioButton)
@@ -224,13 +219,14 @@ void paginaArticolo::visualizzaArticoliInLista(QList<Articolo> articoli, QListWi
 }
 //Fine inserimento e visualizzazione articolo
 
-// Sezione B - Visualizzare tutti gli articoli di un autore
+//Sezione B - Visualizzare tutti gli articoli di un autore
 void paginaArticolo::clearPage2()
 {
     ui->page2_NomeAutore->clear();
     ui->page2_CognomeAutore->clear();
     ui->page2_listArticoli->clear();
     ui->page2_listAutori->clear();
+    idListAutori.clear();
 }
 
 void paginaArticolo::on_buttonVisualizzaArticoliAutore_clicked()
@@ -270,6 +266,7 @@ void paginaArticolo::on_page2_buttonCerca_clicked()
             check = true;
             QString string_autore = "ID: " + QString::number(it->getIdentificativo()) + " " + it->getNome() + " " + it->getCognome();
             ui->page2_listAutori->addItem(string_autore);
+            idListAutori.push_back(it->getIdentificativo());
         }
     }
     if(check == false)
@@ -288,10 +285,9 @@ void paginaArticolo::on_page2_buttonSeleziona_clicked()
         errore.exec();
         return;
     }
-
-    int idxAutore = ui->page2_listAutori->currentRow();
+    int idAutoreSelezionato = idListAutori[ui->page2_listAutori->currentRow()];
     QList<Articolo> articoli;
-    gestore->getArticoliDiUnAutore(articoli, gestore->getAutori().at(idxAutore));
+    gestore->getArticoliDiUnAutore(articoli, idAutoreSelezionato);
     visualizzaArticoliInLista(articoli, ui->page2_listArticoli);
 }
 //Fine metodo
@@ -391,3 +387,104 @@ void paginaArticolo::on_page4_buttonCerca_clicked()
      visualizzaArticoliInLista(articoli, ui->page4_listArticoli);
 }
 //Fine metodo
+
+//Sezione C - Visualizzare gli articoli con il prezzo più alto tra tutti gli articoli di un autore
+void paginaArticolo::clearPage5()
+{
+    ui->page5_NomeAutore->clear();
+    ui->page5_CognomeAutore->clear();
+    ui->page5_listArticoli->clear();
+    ui->page5_listAutori->clear();
+    idListAutori.clear();
+}
+
+void paginaArticolo::on_buttonVisualizzaArticoliCostosiAutore_clicked()
+{
+    if(listArticoliVuota(ui->buttonVisualizzaArticoliCostosiAutore) == true)
+        return;
+    clearPage5();
+    ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaArticoliCostosiAutore);
+    disableRadioButton(ui->buttonVisualizzaArticoliCostosiAutore);
+}
+
+void paginaArticolo::on_page5_buttonIndietro_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->Home);
+    clearPage5();
+}
+
+void paginaArticolo::on_page5_buttonCerca_clicked()
+{
+    QString nomeAutore = ui->page5_NomeAutore->text();
+    QString cognomeAutore = ui->page5_CognomeAutore->text();
+
+    clearPage5();
+    if(nomeAutore.isEmpty() == true || cognomeAutore.isEmpty() == true)
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Inserisci il nome di un autore valido", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+
+    QList<Autore> autori = gestore->getAutori();
+    bool check = false;
+    for (auto it = autori.begin(); it != autori.end(); it++)
+    {
+        if(nomeAutore == it->getNome() && cognomeAutore == it->getCognome())
+        {
+            check = true;
+            QString string_autore = "ID: " + QString::number(it->getIdentificativo()) + " " + it->getNome() + " " + it->getCognome();
+            ui->page5_listAutori->addItem(string_autore);
+            idListAutori.push_back(it->getIdentificativo());
+        }
+    }
+    if(check == false)
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Nessun autore con questo nome trovato o l'autore non ha ancora scritto articoli", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+}
+
+void paginaArticolo::on_page5_buttonSeleziona_clicked()
+{
+    if(ui->page5_listAutori->currentRow() == -1)
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima selezionare un autore", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+    int idAutoreSelezionato = idListAutori[ui->page5_listAutori->currentRow()];
+    QList<Articolo> articoli;
+    gestore->getArticoliCostosiAutore(articoli, idAutoreSelezionato);
+    visualizzaArticoliInLista(articoli, ui->page5_listArticoli);
+}
+//Fine metodo
+
+//Sezione C - Visualizzare le keyword la cui somma degli articoli porta al guadagno più alto*
+void paginaArticolo::clearPage6()
+{
+    ui->page6_Guadagno->clear();
+    ui->page6_listKeywords->clear();
+}
+
+void paginaArticolo::on_buttonVisualizzaKeywordsArticoliGuadagnoMax_clicked()
+{
+    if(listArticoliVuota(ui->buttonVisualizzaArticoliCostosiAutore) == true)
+        return;
+    clearPage6();
+    ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaKeywordsArticoliGuadagnoMax);
+    disableRadioButton(ui->buttonVisualizzaKeywordsArticoliGuadagnoMax);
+
+    QList<QString> keywords;
+    int guadagnoMax = gestore->getKeywordsCostose(keywords);
+    ui->page6_Guadagno->setText(QString::number(guadagnoMax));
+    for (auto it = keywords.begin(); it != keywords.end(); it++)
+        ui->page6_listKeywords->addItem(*it);
+}
+
+void paginaArticolo::on_page6_buttonIndietro_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->Home);
+    clearPage6();
+}

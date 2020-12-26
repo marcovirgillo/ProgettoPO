@@ -24,6 +24,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "articolo.h"
 #include <QString>
 #include <QList>
+#include <climits>
 
 class Gestore
 {
@@ -56,9 +57,15 @@ class Gestore
         bool aggiungiRivista(Rivista rivista);
         bool aggiungiArticolo(Articolo articolo);
 
-        void getArticoliDiUnAutore(QList<Articolo>& articoliAutore, Autore autore) const;
+        void getArticoliDiUnAutore(QList<Articolo>& articoliAutore, int idAutore) const;
         void getArticoliDiUnaStruttura(QList<Articolo>& articoliStruttura, QString struttura) const;
-        void getArticoliDiUnaRivista(QList<Articolo>& articoliRivista, QString nomeRivista, int volume, QString data);
+        void getArticoliDiUnaRivista(QList<Articolo>& articoliRivista, QString nomeRivista, int volume, QString data) const;
+        void getArticoliCostosiAutore(QList<Articolo>& articoliAutore, int idAutore) const;
+        float getGuadagnoAnnualeConferenza(QList<Articolo>& articoliConferenza, QString nomeConferenza, QString luogo, QString data) const;
+
+        int getKeywordsCostose(QList<QString>& keywordsCostose) const;
+        int sommaPrezziArticoliStessaKeyword(QString keyword) const;
+
 };
 
 #endif // GESTORE_H

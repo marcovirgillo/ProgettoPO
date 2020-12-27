@@ -32,14 +32,24 @@ QList<Rivista> Gestore::getRiviste() const { return riviste; }
 
 QList<Articolo> Gestore::getArticoli() const { return articoli; }
 
-int Gestore::getIdentificativoAutore()
+int Gestore::getCurrentIdentificativoAutore() const
 {
-    return identificativoAutore++;
+    return identificativoAutore;
 }
 
-int Gestore::getIdentificativoArticolo()
+int Gestore::getCurrentIdentificativoArticolo() const
 {
-    return identificativoArticolo++;
+    return identificativoArticolo;
+}
+
+void Gestore::increaseIdentificativoAutore()
+{
+    identificativoAutore++;
+}
+
+void Gestore::increaseIdentificativoArticolo()
+{
+    identificativoArticolo++;
 }
 
 void Gestore::setArticoloPubblicatoPer(Articolo articolo, QString pubblicatoPer)
@@ -69,6 +79,23 @@ void Gestore::setArticoloInRivista(int idx, Articolo articolo)
             it->setArticoloIniRivista(articolo);
         i++;
     }
+}
+
+int Gestore::getAnnoConferenza(int idx) const
+{
+    QString data = conferenze.at(idx).getData();
+    QList<QString> data_split = data.split("-");
+    int annoConferenza = data_split.at(0).toInt();
+    return annoConferenza;
+
+}
+
+int Gestore::getAnnoRivista(int idx) const
+{
+    QString data = riviste.at(idx).getData();
+    QList<QString> data_split = data.split("-");
+    int annoRivista = data_split.at(0).toInt();
+    return annoRivista;
 }
 
 bool Gestore::aggiungiAutore(Autore autore)
@@ -119,14 +146,15 @@ bool Gestore::aggiungiArticolo(Articolo articolo)
     return true;
 }
 
-void Gestore::getArticoliDiUnAutore(QList<Articolo>& articoliAutore, int idAutore) const
+void Gestore::getArticoliDiUnAutore(QList<Articolo>& articoliAutore, int idxAutore) const
 {
+    Autore autore = autori.at(idxAutore);
     for (auto it = articoli.begin(); it != articoli.end(); it++)
     {
        QList<Autore> autoriArticolo = it->getAutori();
        for (auto it2 = autoriArticolo.begin(); it2 != autoriArticolo.end(); it2++)
        {
-           if (it2->getIdentificativo() == idAutore)
+           if (it2->getIdentificativo() == autore.getIdentificativo())
            {
                articoliAutore.push_back(*it);
                break;
@@ -134,6 +162,18 @@ void Gestore::getArticoliDiUnAutore(QList<Articolo>& articoliAutore, int idAutor
        }
     }
 }
+
+void Gestore::getStrutture(QList<QString>& strutture) const
+{
+    for (auto it = autori.begin(); it != autori.end(); it++)
+    {
+        QList<QString> struttureAutore = it->getAfferenze();
+        for (auto it2 = struttureAutore.begin(); it2 != struttureAutore.end(); it2++)
+            if(strutture.indexOf(*it2) == -1)
+                strutture.push_back(*it2);
+    }
+}
+
 
 void Gestore::getArticoliDiUnaStruttura(QList<Articolo>& articoliStruttura, QString struttura) const
 {
@@ -152,24 +192,18 @@ void Gestore::getArticoliDiUnaStruttura(QList<Articolo>& articoliStruttura, QStr
     }
 }
 
-void Gestore::getArticoliDiUnaRivista(QList<Articolo>& articoliRivista, QString nomeRivista, int volume, QString data) const
+void Gestore::getArticoliDiUnaRivista(QList<Articolo>& articoliRivista, int idxRivista) const
 {
-    for (auto it = riviste.begin(); it != riviste.end(); it++)
-    {
-        if(it->getNome() == nomeRivista && it->getVolume() == volume && it->getData() == data)
-        {
-            articoliRivista = it->getArticoliRivista();
-            break;
-        }
-    }
+    Rivista rivista = riviste.at(idxRivista);
+    articoliRivista = rivista.getArticoliRivista();
 }
 
-void Gestore::getArticoliCostosiAutore(QList<Articolo>& articoliCostosiAutore, int idAutore) const
+int Gestore::getArticoliCostosiAutore(QList<Articolo>& articoliCostosiAutore, int idxAutore) const
 {
     QList<Articolo> articoliAutore;
-    getArticoliDiUnAutore(articoliAutore, idAutore);
+    getArticoliDiUnAutore(articoliAutore, idxAutore);
 
-    int prezzoMax = INT_MIN;
+    float prezzoMax = INT_MIN;
     for (auto it = articoliAutore.begin(); it != articoliAutore.end(); it++)
         if(it->getPrezzo() > prezzoMax)
             prezzoMax = it->getPrezzo();
@@ -177,20 +211,15 @@ void Gestore::getArticoliCostosiAutore(QList<Articolo>& articoliCostosiAutore, i
     for (auto it = articoliAutore.begin(); it != articoliAutore.end(); it++)
         if(prezzoMax == it->getPrezzo())
             articoliCostosiAutore.push_back(*it);
+
+    return prezzoMax;
 }
 
-float Gestore::getGuadagnoAnnualeConferenza(QList<Articolo>& articoliConferenza, QString nomeConferenza, QString luogo, QString data) const
+float Gestore::getGuadagnoAnnualeConferenza(QList<Articolo>& articoliConferenza, int idxConferenza) const
 {
-    for (auto it = conferenze.begin(); it != conferenze.end(); it++)
-    {
-        if(it->getNome() == nomeConferenza && it->getLuogo() == luogo && it->getData() == data)
-        {
-            articoliConferenza = it->getArticoliConferenza();
-            break;
-        }
-    }
-
-    float guadagnoTotale = 0;
+    Conferenza conferenza = conferenze.at(idxConferenza);
+    articoliConferenza = conferenza.getArticoliConferenza();
+    float guadagnoTotale = 0.0;
     for (auto it = articoliConferenza.begin(); it != articoliConferenza.end(); it++)
         guadagnoTotale += it->getPrezzo();
 
@@ -198,9 +227,9 @@ float Gestore::getGuadagnoAnnualeConferenza(QList<Articolo>& articoliConferenza,
 }
 
 //data una keyword, restituisce la somma dei prezzi degli articoli con quella keyword
-int Gestore::sommaPrezziArticoliStessaKeyword(QString keyword) const
+float Gestore::sommaPrezziArticoliStessaKeyword(QString keyword) const
 {
-    int sommaPrezzi = 0;
+    float sommaPrezzi = 0;
     for (auto it = articoli.begin(); it != articoli.end(); it++)
         if(it->getKeywords().indexOf(keyword) != -1)
             sommaPrezzi += it->getPrezzo();
@@ -208,16 +237,16 @@ int Gestore::sommaPrezziArticoliStessaKeyword(QString keyword) const
 }
 
 
-int Gestore::getKeywordsCostose(QList<QString>& keywordsCostose) const
+float Gestore::getKeywordsCostose(QList<QString>& keywordsCostose) const
 {
     //calcolo il massimo guadagno che si può ottenere sommando le keywords
-    int guadagnoMax = 0;
+    int guadagnoMax = 0.0;
     for (auto it = articoli.begin(); it != articoli.end(); it++)
     {
         QList<QString> keywords = it->getKeywords();
         for (auto it2 = keywords.begin(); it2 != keywords.end(); it2++)
         {
-            int sommaPrezzi = sommaPrezziArticoliStessaKeyword(*it2);
+            float sommaPrezzi = sommaPrezziArticoliStessaKeyword(*it2);
             if(sommaPrezzi > guadagnoMax)
                 guadagnoMax = sommaPrezzi;
         }
@@ -229,11 +258,43 @@ int Gestore::getKeywordsCostose(QList<QString>& keywordsCostose) const
         QList<QString> keywords = it->getKeywords();
         for (auto it2 = keywords.begin(); it2 != keywords.end(); it2++)
         {
-            int sommaPrezzi = sommaPrezziArticoliStessaKeyword(*it2);
+            float sommaPrezzi = sommaPrezziArticoliStessaKeyword(*it2);
             if(sommaPrezzi == guadagnoMax)
                 if(keywordsCostose.indexOf(*it2) == -1)
                     keywordsCostose.push_back(*it2);
         }
     }
     return guadagnoMax;
+}
+
+bool ordinaArticoliPerPrezzo(Articolo articolo1, Articolo articolo2)
+{
+    if(articolo1.getPrezzo() < articolo2.getPrezzo())
+        return true;
+    return false;
+}
+
+void Gestore::getArticoliRivistaOrdinatiPerPrezzo(QList<Articolo>& articoliOrdinati, int idxRivista) const
+{
+    articoliOrdinati = riviste.at(idxRivista).getArticoliRivista();
+    std::sort(articoliOrdinati.begin(), articoliOrdinati.end(), ordinaArticoliPerPrezzo);
+}
+
+bool ordinaArticoliD6(Articolo articolo1, Articolo articolo2)
+{
+    if(articolo1.getAnno() < articolo2.getAnno())
+        return true;
+    if(articolo2.getAnno() < articolo1.getAnno())
+        return false;
+    if(articolo1.getPrezzo() > articolo2.getPrezzo())
+        return true;
+    if(articolo2.getPrezzo() > articolo1.getPrezzo())
+        return true;
+    return articolo1.getPrimaKeyword() < articolo2.getPrimaKeyword();
+}
+
+void Gestore::getArticoliAutoreOrdinatiD6(QList<Articolo>& articoliOrdinati, int idxAutore) const
+{
+     getArticoliDiUnAutore(articoliOrdinati, idxAutore);
+     std::sort(articoliOrdinati.begin(), articoliOrdinati.end(), ordinaArticoliD6);
 }

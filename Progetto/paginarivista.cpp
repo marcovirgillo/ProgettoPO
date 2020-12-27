@@ -19,6 +19,8 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "ui_paginarivista.h"
 #include <QMessageBox>
 #include <QtGlobal>
+#include <QFile>
+#include <QTextStream>
 
 paginaRivista::paginaRivista(Gestore* _gestore, QWidget *parent) :
     QWidget(parent),

@@ -50,7 +50,7 @@ private slots:
     void on_buttonVisualizzaGuadagnoAnnualeConferenza_clicked();
     void clearPage2();
     void on_page2_buttonIndietro_clicked();
-    void on_page2_buttonCerca_clicked();
+    void on_page2_buttonSeleziona_clicked();
 
 private:
     Ui::paginaConferenza *ui;

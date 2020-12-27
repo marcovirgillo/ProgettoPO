@@ -49,38 +49,42 @@ private slots:
 
     void disableRadioButton(QRadioButton* radioButton);
     bool listArticoliVuota(QRadioButton* radioButton);
+    void visualizzaAutoriInLista(QList<Autore> articoli, QListWidget* listAutori);
     void visualizzaArticoliInLista(QList<Articolo> articoli, QListWidget* listArticoli);
+    void visualizzaRivisteInLista(QList<Rivista> riviste, QListWidget* listRiviste);
 
     void on_buttonVisualizzaArticoliAutore_clicked();
     void clearPage2();
     void on_page2_buttonIndietro_clicked();
-    void on_page2_buttonCerca_clicked();
     void on_page2_buttonSeleziona_clicked();
 
     void on_buttonVisualizzaArticoliStruttura_clicked();
     void clearPage3();
     void on_page3_buttonIndietro_clicked();
-    void on_page3_buttonCerca_clicked();
+    void on_page3_buttonSeleziona_clicked();
 
     void on_buttonVisualizzaArticoliRivista_clicked();
     void clearPage4();
     void on_page4_buttonIndietro_clicked();
-    void on_page4_buttonCerca_clicked();
+    void on_page4_buttonSeleziona_clicked();
 
     void on_buttonVisualizzaArticoliCostosiAutore_clicked();
     void clearPage5();
     void on_page5_buttonIndietro_clicked();
-    void on_page5_buttonCerca_clicked();
     void on_page5_buttonSeleziona_clicked();
 
     void on_buttonVisualizzaKeywordsArticoliGuadagnoMax_clicked();
     void clearPage6();
     void on_page6_buttonIndietro_clicked();
 
+    void on_buttonVisualizzaArticoliRivistaOrdinatiPerPrezzo_clicked();
+    void clearPage7();
+    void on_page7_buttonIndietro_clicked();
+    void on_page7_buttonSeleziona_clicked();
+
 private:
     Ui::paginaArticolo *ui;
     Gestore* gestore;
-    QVector<int> idListAutori;
 };
 
 #endif // PAGINAARTICOLO_H

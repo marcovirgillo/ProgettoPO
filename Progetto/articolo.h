@@ -35,6 +35,7 @@ class Articolo
         QList<QString> keywords;
         QList<Articolo> articoliCorrelati;
         QString pubblicatoPer;
+        int anno;
 
     public:
         Articolo();
@@ -48,6 +49,8 @@ class Articolo
         QList<QString> getKeywords() const;
         QList<Articolo> getArticoliCorrelati() const;
         QString getPubblicatoPer() const;
+        int getAnno() const;
+        QString getPrimaKeyword() const;
 
         void setIdentificativo(int _identificativo);
         void setTitolo(QString _titolo);
@@ -56,6 +59,7 @@ class Articolo
         void setAutori(QList<Autore> _autori);
         void setKeywords(QList<QString> _keywords);
         void setPubblicatoPer(QString _pubblicatoPer);
+        void setAnno(int _anno);
 
         bool operator==(const Articolo& _articolo) const;
 };

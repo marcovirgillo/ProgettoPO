@@ -46,6 +46,10 @@ QList<Articolo> Articolo::getArticoliCorrelati() const { return articoliCorrelat
 
 QString Articolo::getPubblicatoPer() const { return pubblicatoPer; }
 
+int Articolo::getAnno() const { return anno; }
+
+QString Articolo::getPrimaKeyword() const { return keywords.at(0); }
+
 void Articolo::setIdentificativo(int _identificativo) { identificativo = _identificativo; }
 
 void Articolo::setTitolo(QString _titolo) { titolo = _titolo; }
@@ -59,6 +63,8 @@ void Articolo::setAutori(QList<Autore> _autori) { autori = _autori; }
 void Articolo::setKeywords(QList<QString> _keywords) { keywords = _keywords; }
 
 void Articolo::setPubblicatoPer(QString _pubblicatoPer) { pubblicatoPer = _pubblicatoPer; }
+
+void Articolo::setAnno(int _anno) { anno = _anno; }
 
 bool Articolo::operator==(const Articolo& _articolo) const
 {

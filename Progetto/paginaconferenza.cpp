@@ -18,6 +18,8 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "paginaconferenza.h"
 #include "ui_paginaconferenza.h"
 #include <QMessageBox>
+#include <QFile>
+#include <QTextStream>
 #include <QtGlobal>
 
 paginaConferenza::paginaConferenza(Gestore* _gestore, QWidget *parent) :
@@ -133,9 +135,7 @@ void paginaConferenza::visualizzaArticoliInLista(QList<Articolo> articoli, QList
 //Sezione C - Visualizzare il guadagno annuale di una rivista calcolato come la somma dei prezzi degli articoli presentati per quella rivista in un anno
 void paginaConferenza::clearPage2()
 {
-    ui->page2_NomeConferenza->clear();
-    ui->page2_Luogo->clear();
-    ui->page2_Data->setCurrentPage(QDate::currentDate().year(), QDate::currentDate().month());
+    ui->page2_listConferenze->clear();
     ui->page2_listArticoli->clear();
     ui->page2_GuadagnoTotale->clear();
 }
@@ -147,6 +147,13 @@ void paginaConferenza::on_buttonVisualizzaGuadagnoAnnualeConferenza_clicked()
     clearPage2();
     ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaGuadagnoAnnualeConferenza);
     disableRadioButton(ui->buttonVisualizzaGuadagnoAnnualeConferenza);
+
+    QList<Conferenza> conferenze = gestore->getConferenze();
+    for (auto it = conferenze.begin(); it != conferenze.end(); it++)
+    {
+        QString string_conferenza = it->getNome() + " - " + "Data " + it->getData();
+        ui->page2_listConferenze->addItem(string_conferenza);
+    }
 }
 
 void paginaConferenza::on_page2_buttonIndietro_clicked()
@@ -155,29 +162,24 @@ void paginaConferenza::on_page2_buttonIndietro_clicked()
     clearPage2();
 }
 
-void paginaConferenza::on_page2_buttonCerca_clicked()
+void paginaConferenza::on_page2_buttonSeleziona_clicked()
 {
-    QString nomeConferenza = ui->page2_NomeConferenza->text();
-    QString luogo = ui->page2_Luogo->text();
-    QDate data = ui->page2_Data->selectedDate();
-    QString data_string = (data.toString(Qt::DateFormat::ISODate));
-
-    clearPage2();
-    if(nomeConferenza.isEmpty() == true || luogo.isEmpty() == true)
+    if(ui->page2_listConferenze->currentRow() == -1)
     {
-        QMessageBox errore(QMessageBox::Critical, "Error", "Inserisci una rivista valida", QMessageBox::Ok, this);
+        QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima selezionare una conferenza", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
+    int idxConferenza = ui->page2_listConferenze->currentRow();
     QList<Articolo> articoli;
-    int GuadagnoTotale = gestore->getGuadagnoAnnualeConferenza(articoli, nomeConferenza, luogo, data_string);
-
+    float GuadagnoTotale = gestore->getGuadagnoAnnualeConferenza(articoli, idxConferenza);
     if(articoli.isEmpty() == true)
     {
-        QMessageBox errore(QMessageBox::Critical, "Error", "Nessuna conferenza trovata o la conferenza non ha articoli", QMessageBox::Ok, this);
+        QMessageBox errore(QMessageBox::Critical, "Error", "Non sono stati ancora pubblicati articoli per questa conferenza", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
     visualizzaArticoliInLista(articoli, ui->page2_listArticoli);
     ui->page2_GuadagnoTotale->setText(QString::number(GuadagnoTotale));
 }
+//Fine metodo

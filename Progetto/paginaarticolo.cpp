@@ -20,6 +20,8 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include <QMessageBox>
 #include <QtGlobal>
 #include <QDebug>
+#include <QFile>
+#include <QTextStream>
 //#include <QCommonStyle> va incluso per le frecce sui PushButton
 
 //risolvere problema del seleziona premuto in maniera ossessiva nei metodi
@@ -83,7 +85,7 @@ void paginaArticolo::on_buttonAggiungi_clicked()
             errore.exec();
             return;
         }
-    int identificativo = gestore->getIdentificativoArticolo();
+    int identificativo = gestore->getCurrentIdentificativoArticolo();
     QString titolo = ui->Titolo->text();
 
     QList<QString> lista_keywords;
@@ -112,14 +114,18 @@ void paginaArticolo::on_buttonAggiungi_clicked()
             int idx = ui->PubblicatoPer->currentIndex();
             gestore->setArticoloInConferenza(idx, articolo);
             gestore->setArticoloPubblicatoPer(articolo, "Conferenza");
+            int annoConferenza = gestore->getAnnoConferenza(idx);
+            articolo.setAnno(annoConferenza);
         }
         else if(ui->buttonRiviste->isChecked())
         {
             int idx = ui->PubblicatoPer->currentIndex();
             gestore->setArticoloInRivista(idx, articolo);
             gestore->setArticoloPubblicatoPer(articolo, "Rivista");
+            int annoRivista = gestore->getAnnoRivista(idx);
+            articolo.setAnno(annoRivista);
         }
-
+        gestore->increaseIdentificativoArticolo();
         QMessageBox::information(this, "Success", "Aticolo aggiunto con successo!", QMessageBox::Ok);
         QString string_articolo = "ID: " + QString::number(identificativo) + " " + titolo;
         ui->listArticoli->addItem(string_articolo);
@@ -209,6 +215,15 @@ bool paginaArticolo::listArticoliVuota(QRadioButton* radioButton)
     return false;
 }
 
+void paginaArticolo::visualizzaAutoriInLista(QList<Autore> autori, QListWidget* listAutori)
+{
+    for (auto it = autori.begin(); it != autori.end(); it++)
+    {
+        QString string_autore = "ID: " + QString::number(it->getIdentificativo()) + " " + it->getNome() + " " + it->getCognome();
+        listAutori->addItem(string_autore);
+    }
+}
+
 void paginaArticolo::visualizzaArticoliInLista(QList<Articolo> articoli, QListWidget* listArticoli)
 {
     for (auto it = articoli.begin(); it != articoli.end(); it++)
@@ -217,16 +232,22 @@ void paginaArticolo::visualizzaArticoliInLista(QList<Articolo> articoli, QListWi
         listArticoli->addItem(string_articolo);
     }
 }
+
+void paginaArticolo::visualizzaRivisteInLista(QList<Rivista> riviste, QListWidget* listRiviste)
+{
+    for (auto it = riviste.begin(); it != riviste.end(); it++)
+    {
+        QString string_rivista = it->getNome() + " - " + "Volume " + QString::number(it->getVolume());
+        listRiviste->addItem(string_rivista);
+    }
+}
 //Fine inserimento e visualizzazione articolo
 
 //Sezione B - Visualizzare tutti gli articoli di un autore
 void paginaArticolo::clearPage2()
 {
-    ui->page2_NomeAutore->clear();
-    ui->page2_CognomeAutore->clear();
     ui->page2_listArticoli->clear();
     ui->page2_listAutori->clear();
-    idListAutori.clear();
 }
 
 void paginaArticolo::on_buttonVisualizzaArticoliAutore_clicked()
@@ -236,45 +257,13 @@ void paginaArticolo::on_buttonVisualizzaArticoliAutore_clicked()
     clearPage2();
     ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaArticoliAutore);
     disableRadioButton(ui->buttonVisualizzaArticoliAutore);
+    visualizzaAutoriInLista(gestore->getAutori(), ui->page2_listAutori);
 }
 
 void paginaArticolo::on_page2_buttonIndietro_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->Home);
     clearPage2();
-}
-
-void paginaArticolo::on_page2_buttonCerca_clicked()
-{
-    QString nomeAutore = ui->page2_NomeAutore->text();
-    QString cognomeAutore = ui->page2_CognomeAutore->text();
-
-    clearPage2();
-    if(nomeAutore.isEmpty() == true || cognomeAutore.isEmpty() == true)
-    {
-        QMessageBox errore(QMessageBox::Critical, "Error", "Inserisci il nome di un autore valido", QMessageBox::Ok, this);
-        errore.exec();
-        return;
-    }
-
-    QList<Autore> autori = gestore->getAutori();
-    bool check = false;
-    for (auto it = autori.begin(); it != autori.end(); it++)
-    {
-        if(nomeAutore == it->getNome() && cognomeAutore == it->getCognome())
-        {
-            check = true;
-            QString string_autore = "ID: " + QString::number(it->getIdentificativo()) + " " + it->getNome() + " " + it->getCognome();
-            ui->page2_listAutori->addItem(string_autore);
-            idListAutori.push_back(it->getIdentificativo());
-        }
-    }
-    if(check == false)
-    {
-        QMessageBox errore(QMessageBox::Critical, "Error", "Nessun autore con questo nome trovato o l'autore non ha ancora scritto articoli", QMessageBox::Ok, this);
-        errore.exec();
-        return;
-    }
 }
 
 void paginaArticolo::on_page2_buttonSeleziona_clicked()
@@ -285,9 +274,15 @@ void paginaArticolo::on_page2_buttonSeleziona_clicked()
         errore.exec();
         return;
     }
-    int idAutoreSelezionato = idListAutori[ui->page2_listAutori->currentRow()];
+    int idxAutore = ui->page2_listAutori->currentRow();
     QList<Articolo> articoli;
-    gestore->getArticoliDiUnAutore(articoli, idAutoreSelezionato);
+    gestore->getArticoliDiUnAutore(articoli, idxAutore);
+    if(articoli.isEmpty() == true)
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "L'autore non ha ancora pubblicato articoli", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
     visualizzaArticoliInLista(articoli, ui->page2_listArticoli);
 }
 //Fine metodo
@@ -295,7 +290,7 @@ void paginaArticolo::on_page2_buttonSeleziona_clicked()
 //Sezione B - Visualizzare tutti gli articoli pubblicati dai membri di una struttura
 void paginaArticolo::clearPage3()
 {
-    ui->page3_Struttura->clear();
+    ui->page3_listStrutture->clear();
     ui->page3_listArticoli->clear();
 }
 
@@ -306,6 +301,10 @@ void paginaArticolo::on_buttonVisualizzaArticoliStruttura_clicked()
     clearPage3();
     ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaArticoliStruttura);
     disableRadioButton(ui->buttonVisualizzaArticoliStruttura);
+    QList<QString> strutture;
+    gestore->getStrutture(strutture);
+    for(auto it = strutture.begin(); it != strutture.end(); it++)
+        ui->page3_listStrutture->addItem(*it);
 }
 
 void paginaArticolo::on_page3_buttonIndietro_clicked()
@@ -314,22 +313,22 @@ void paginaArticolo::on_page3_buttonIndietro_clicked()
     clearPage3();
 }
 
-void paginaArticolo::on_page3_buttonCerca_clicked()
+void paginaArticolo::on_page3_buttonSeleziona_clicked()
 {
-    QString struttura = ui->page3_Struttura->text();
-    clearPage3();
-    if(struttura.isEmpty() == true)
+    if(ui->page3_listStrutture->currentRow() == -1)
     {
-        QMessageBox errore(QMessageBox::Critical, "Error", "Inserisci il nome di una struttura valido", QMessageBox::Ok, this);
+        QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima selezionare una struttura", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
-
+    int idxStruttura = ui->page3_listStrutture->currentRow();
+    QListWidgetItem* itemStruttura = ui->page3_listStrutture->item(idxStruttura);
+    QString struttura = itemStruttura->text();
     QList<Articolo> articoli;
     gestore->getArticoliDiUnaStruttura(articoli, struttura);
     if(articoli.isEmpty() == true)
     {
-        QMessageBox errore(QMessageBox::Critical, "Error", "Nessuna struttura con questo nome trovata", QMessageBox::Ok, this);
+        QMessageBox errore(QMessageBox::Critical, "Error", "I membri di questa struttura non hanno ancora pubblicato articoli", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
@@ -340,9 +339,7 @@ void paginaArticolo::on_page3_buttonCerca_clicked()
 //Sezione B - Visualizzare tutti gli articoli relativi a una rivista
 void paginaArticolo::clearPage4()
 {
-    ui->page4_NomeRivista->clear();
-    ui->page4_VolumeRivista->setValue(0);
-    ui->page4_Data->setCurrentPage(QDate::currentDate().year(), QDate::currentDate().month());
+    ui->page4_listRiviste->clear();
     ui->page4_listArticoli->clear();
 }
 
@@ -353,6 +350,8 @@ void paginaArticolo::on_buttonVisualizzaArticoliRivista_clicked()
     clearPage4();
     ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaArticoliRivista);
     disableRadioButton(ui->buttonVisualizzaArticoliRivista);
+    QList<Rivista> riviste = gestore->getRiviste();
+    visualizzaRivisteInLista(riviste, ui->page4_listRiviste);
 }
 
 void paginaArticolo::on_page4_buttonIndietro_clicked()
@@ -361,41 +360,33 @@ void paginaArticolo::on_page4_buttonIndietro_clicked()
    clearPage4();
 }
 
-void paginaArticolo::on_page4_buttonCerca_clicked()
+void paginaArticolo::on_page4_buttonSeleziona_clicked()
 {
-    QString nomeRivista = ui->page4_NomeRivista->text();
-    int volume = ui->page4_VolumeRivista->value();
-    QDate data = ui->page4_Data->selectedDate();
-    QString data_string = (data.toString(Qt::DateFormat::ISODate));
-
-    clearPage4();
-    if(nomeRivista.isEmpty() == true || volume == 0)
+    if(ui->page4_listRiviste->currentRow() == -1)
     {
-        QMessageBox errore(QMessageBox::Critical, "Error", "Inserisci una rivista valida", QMessageBox::Ok, this);
+        QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima selezionare una rivista", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
+    int idxRivista = ui->page4_listRiviste->currentRow();
     QList<Articolo> articoli;
-    gestore->getArticoliDiUnaRivista(articoli, nomeRivista, volume, data_string);
-
+    gestore->getArticoliDiUnaRivista(articoli, idxRivista);
     if(articoli.isEmpty() == true)
     {
-        QMessageBox errore(QMessageBox::Critical, "Error", "Nessuna rivista trovata o la rivista non ha articoli", QMessageBox::Ok, this);
+        QMessageBox errore(QMessageBox::Critical, "Error", "Non sono stati ancora pubblicati articoli per questa rivista", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
-     visualizzaArticoliInLista(articoli, ui->page4_listArticoli);
+    visualizzaArticoliInLista(articoli, ui->page4_listArticoli);
 }
 //Fine metodo
 
 //Sezione C - Visualizzare gli articoli con il prezzo più alto tra tutti gli articoli di un autore
 void paginaArticolo::clearPage5()
 {
-    ui->page5_NomeAutore->clear();
-    ui->page5_CognomeAutore->clear();
     ui->page5_listArticoli->clear();
     ui->page5_listAutori->clear();
-    idListAutori.clear();
+    ui->page5_PrezzoPiuAlto->clear();
 }
 
 void paginaArticolo::on_buttonVisualizzaArticoliCostosiAutore_clicked()
@@ -405,45 +396,13 @@ void paginaArticolo::on_buttonVisualizzaArticoliCostosiAutore_clicked()
     clearPage5();
     ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaArticoliCostosiAutore);
     disableRadioButton(ui->buttonVisualizzaArticoliCostosiAutore);
+    visualizzaAutoriInLista(gestore->getAutori(), ui->page5_listAutori);
 }
 
 void paginaArticolo::on_page5_buttonIndietro_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->Home);
     clearPage5();
-}
-
-void paginaArticolo::on_page5_buttonCerca_clicked()
-{
-    QString nomeAutore = ui->page5_NomeAutore->text();
-    QString cognomeAutore = ui->page5_CognomeAutore->text();
-
-    clearPage5();
-    if(nomeAutore.isEmpty() == true || cognomeAutore.isEmpty() == true)
-    {
-        QMessageBox errore(QMessageBox::Critical, "Error", "Inserisci il nome di un autore valido", QMessageBox::Ok, this);
-        errore.exec();
-        return;
-    }
-
-    QList<Autore> autori = gestore->getAutori();
-    bool check = false;
-    for (auto it = autori.begin(); it != autori.end(); it++)
-    {
-        if(nomeAutore == it->getNome() && cognomeAutore == it->getCognome())
-        {
-            check = true;
-            QString string_autore = "ID: " + QString::number(it->getIdentificativo()) + " " + it->getNome() + " " + it->getCognome();
-            ui->page5_listAutori->addItem(string_autore);
-            idListAutori.push_back(it->getIdentificativo());
-        }
-    }
-    if(check == false)
-    {
-        QMessageBox errore(QMessageBox::Critical, "Error", "Nessun autore con questo nome trovato o l'autore non ha ancora scritto articoli", QMessageBox::Ok, this);
-        errore.exec();
-        return;
-    }
 }
 
 void paginaArticolo::on_page5_buttonSeleziona_clicked()
@@ -454,10 +413,17 @@ void paginaArticolo::on_page5_buttonSeleziona_clicked()
         errore.exec();
         return;
     }
-    int idAutoreSelezionato = idListAutori[ui->page5_listAutori->currentRow()];
+    int idxAutore = ui->page5_listAutori->currentRow();
     QList<Articolo> articoli;
-    gestore->getArticoliCostosiAutore(articoli, idAutoreSelezionato);
+    int prezzoPiuAlto = gestore->getArticoliCostosiAutore(articoli, idxAutore);
+    if(articoli.isEmpty() == true)
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "L'autore non ha ancora pubblicato articoli", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
     visualizzaArticoliInLista(articoli, ui->page5_listArticoli);
+    ui->page5_PrezzoPiuAlto->setText(QString::number(prezzoPiuAlto));
 }
 //Fine metodo
 
@@ -470,14 +436,14 @@ void paginaArticolo::clearPage6()
 
 void paginaArticolo::on_buttonVisualizzaKeywordsArticoliGuadagnoMax_clicked()
 {
-    if(listArticoliVuota(ui->buttonVisualizzaArticoliCostosiAutore) == true)
+    if(listArticoliVuota(ui->buttonVisualizzaKeywordsArticoliGuadagnoMax) == true)
         return;
     clearPage6();
     ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaKeywordsArticoliGuadagnoMax);
     disableRadioButton(ui->buttonVisualizzaKeywordsArticoliGuadagnoMax);
 
     QList<QString> keywords;
-    int guadagnoMax = gestore->getKeywordsCostose(keywords);
+    float guadagnoMax = gestore->getKeywordsCostose(keywords);
     ui->page6_Guadagno->setText(QString::number(guadagnoMax));
     for (auto it = keywords.begin(); it != keywords.end(); it++)
         ui->page6_listKeywords->addItem(*it);
@@ -488,3 +454,56 @@ void paginaArticolo::on_page6_buttonIndietro_clicked()
     ui->stackedWidget->setCurrentWidget(ui->Home);
     clearPage6();
 }
+//Fine metodo
+
+//Sezione D - Visualizzare gli articoli di una rivista ordinati per prezzo
+void paginaArticolo::clearPage7()
+{
+    ui->page7_listRiviste->clear();
+    ui->page7_listArticoli->clear();
+}
+
+void paginaArticolo::on_buttonVisualizzaArticoliRivistaOrdinatiPerPrezzo_clicked()
+{
+    if(listArticoliVuota(ui->buttonVisualizzaArticoliRivistaOrdinatiPerPrezzo) == true)
+        return;
+    clearPage7();
+    ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaArticoliRivistaOrdinatiPerPrezzo);
+    disableRadioButton(ui->buttonVisualizzaArticoliRivistaOrdinatiPerPrezzo);
+    QList<Rivista> riviste = gestore->getRiviste();
+    visualizzaRivisteInLista(riviste, ui->page7_listRiviste);
+}
+
+void paginaArticolo::on_page7_buttonIndietro_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->Home);
+    clearPage7();
+}
+
+void paginaArticolo::on_page7_buttonSeleziona_clicked()
+{
+    if(ui->page7_listRiviste->currentRow() == -1)
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima selezionare una rivista", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+    int idxRivista = ui->page7_listRiviste->currentRow();
+    QList<Articolo> articoli;
+    gestore->getArticoliRivistaOrdinatiPerPrezzo(articoli, idxRivista);
+    if(articoli.isEmpty() == true)
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Non sono stati ancora pubblicati articoli per questa rivista", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+    visualizzaArticoliInLista(articoli, ui->page7_listArticoli);
+}
+//Fine metodo
+
+/* Sezione D - Visualizzare gli articoli relativi a un autore, ordinati per anno crescente, a parità di anno,
+ordinati per prezzo decrescente e a parità di prezzo ordinati in ordine alfabetico per la prima keyword nella lista* */
+
+//Fine metodo
+
+

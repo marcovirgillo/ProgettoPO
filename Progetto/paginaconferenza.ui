@@ -23,14 +23,14 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="Home">
     <widget class="QLineEdit" name="Nome">
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>30</y>
+       <y>60</y>
        <width>211</width>
        <height>20</height>
       </rect>
@@ -40,7 +40,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>30</y>
+       <y>60</y>
        <width>47</width>
        <height>13</height>
       </rect>
@@ -66,7 +66,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>110</y>
+       <y>140</y>
        <width>47</width>
        <height>13</height>
       </rect>
@@ -79,7 +79,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>70</y>
+       <y>100</y>
        <width>71</width>
        <height>16</height>
       </rect>
@@ -92,7 +92,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>400</y>
+       <y>430</y>
        <width>131</width>
        <height>16</height>
       </rect>
@@ -105,7 +105,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>450</y>
+       <y>480</y>
        <width>241</width>
        <height>155</height>
       </rect>
@@ -127,7 +127,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>110</y>
+       <y>140</y>
        <width>211</width>
        <height>20</height>
       </rect>
@@ -137,7 +137,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>400</y>
+       <y>430</y>
        <width>71</width>
        <height>22</height>
       </rect>
@@ -150,7 +150,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>150</y>
+       <y>180</y>
        <width>91</width>
        <height>16</height>
       </rect>
@@ -163,7 +163,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>70</y>
+       <y>100</y>
        <width>211</width>
        <height>20</height>
       </rect>
@@ -173,7 +173,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>450</y>
+       <y>480</y>
        <width>47</width>
        <height>13</height>
       </rect>
@@ -185,10 +185,10 @@
     <widget class="QListWidget" name="listConferenze">
      <property name="geometry">
       <rect>
-       <x>560</x>
-       <y>30</y>
-       <width>310</width>
-       <height>420</height>
+       <x>490</x>
+       <y>50</y>
+       <width>260</width>
+       <height>380</height>
       </rect>
      </property>
     </widget>
@@ -196,7 +196,7 @@
      <property name="geometry">
       <rect>
        <x>150</x>
-       <y>150</y>
+       <y>180</y>
        <width>211</width>
        <height>230</height>
       </rect>
@@ -205,8 +205,8 @@
     <widget class="QLabel" name="labelConferenzeInserite">
      <property name="geometry">
       <rect>
-       <x>560</x>
-       <y>10</y>
+       <x>490</x>
+       <y>30</y>
        <width>131</width>
        <height>16</height>
       </rect>
@@ -218,8 +218,8 @@
     <widget class="QRadioButton" name="buttonVisualizzaGuadagnoAnnualeConferenza">
      <property name="geometry">
       <rect>
-       <x>560</x>
-       <y>470</y>
+       <x>490</x>
+       <y>440</y>
        <width>341</width>
        <height>20</height>
       </rect>
@@ -228,77 +228,65 @@
       <string>Visualizza il guadagno annuale di una conferenza</string>
      </property>
     </widget>
+    <widget class="QLabel" name="labelTitolo">
+     <property name="geometry">
+      <rect>
+       <x>340</x>
+       <y>3</y>
+       <width>311</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>INSERIMENTO E VISUALIZZAZIONE CONFERENZE</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="buttonLeggi">
+     <property name="geometry">
+      <rect>
+       <x>850</x>
+       <y>90</y>
+       <width>91</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Leggi</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="Percorso">
+     <property name="geometry">
+      <rect>
+       <x>780</x>
+       <y>60</y>
+       <width>231</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelLeggiDaFile">
+     <property name="geometry">
+      <rect>
+       <x>820</x>
+       <y>40</y>
+       <width>161</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Leggi Conferenze da File</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="pageVisualizzaGuadagnoAnnualeConferenza">
-    <widget class="QCalendarWidget" name="page2_Data">
-     <property name="geometry">
-      <rect>
-       <x>200</x>
-       <y>230</y>
-       <width>241</width>
-       <height>155</height>
-      </rect>
-     </property>
-     <property name="autoFillBackground">
-      <bool>true</bool>
-     </property>
-     <property name="verticalHeaderFormat">
-      <enum>QCalendarWidget::NoVerticalHeader</enum>
-     </property>
-     <property name="navigationBarVisible">
-      <bool>true</bool>
-     </property>
-     <property name="dateEditEnabled">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QLabel" name="page2_labelData">
-     <property name="geometry">
-      <rect>
-       <x>120</x>
-       <y>230</y>
-       <width>41</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Data</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="page2_labelLuogo">
-     <property name="geometry">
-      <rect>
-       <x>120</x>
-       <y>190</y>
-       <width>51</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Luogo</string>
-     </property>
-    </widget>
     <widget class="QListWidget" name="page2_listArticoli">
      <property name="geometry">
       <rect>
        <x>570</x>
        <y>150</y>
-       <width>279</width>
-       <height>331</height>
+       <width>275</width>
+       <height>370</height>
       </rect>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="page2_buttonCerca">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>420</y>
-       <width>111</width>
-       <height>32</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Cerca</string>
      </property>
     </widget>
     <widget class="QPushButton" name="page2_buttonIndietro">
@@ -314,44 +302,11 @@
       <string>Indietro</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="page2_NomeConferenza">
-     <property name="geometry">
-      <rect>
-       <x>200</x>
-       <y>150</y>
-       <width>241</width>
-       <height>21</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLabel" name="page2_labelConferenza">
-     <property name="geometry">
-      <rect>
-       <x>120</x>
-       <y>150</y>
-       <width>71</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Conferenza</string>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="page2_Luogo">
-     <property name="geometry">
-      <rect>
-       <x>200</x>
-       <y>190</y>
-       <width>241</width>
-       <height>21</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QLabel" name="page2_labelGuadagnoTotale">
      <property name="geometry">
       <rect>
-       <x>460</x>
-       <y>510</y>
+       <x>570</x>
+       <y>573</y>
        <width>111</width>
        <height>16</height>
       </rect>
@@ -363,14 +318,75 @@
     <widget class="QLineEdit" name="page2_GuadagnoTotale">
      <property name="geometry">
       <rect>
-       <x>570</x>
-       <y>510</y>
-       <width>151</width>
+       <x>680</x>
+       <y>570</y>
+       <width>101</width>
        <height>21</height>
       </rect>
      </property>
      <property name="readOnly">
       <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_5">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>150</y>
+       <width>281</width>
+       <height>391</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_9">
+      <item>
+       <widget class="QListWidget" name="page2_listConferenze"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="page2_buttonSeleziona">
+        <property name="text">
+         <string>Seleziona</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QLabel" name="page2_labelTitolo">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>20</y>
+       <width>301</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Visualizza il guadagno annuale di una conferenza</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>130</y>
+       <width>121</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Conferenze inserite</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>570</x>
+       <y>130</y>
+       <width>181</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Articoli relativi alla selezione</string>
      </property>
     </widget>
    </widget>

@@ -19,6 +19,8 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "ui_mainwindow.h"
 #include "gestore.h"
 #include <QMessageBox>
+#include <QFile>
+#include <QTextStream>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -44,6 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->buttonHome, &QPushButton::clicked, pageArticolo, &paginaArticolo::clearCampiArticolo);
     connect(ui->buttonHome, &QPushButton::clicked, pageConferenza, &paginaConferenza::clearCampiConferenza);
     connect(ui->buttonHome, &QPushButton::clicked, pageRivista, &paginaRivista::clearCampiRivista);
+
 
     ui->stackedWidget->setCurrentWidget(ui->Home);
 

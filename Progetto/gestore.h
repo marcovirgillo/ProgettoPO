@@ -44,27 +44,34 @@ class Gestore
         QList<Rivista> getRiviste() const;
         QList<Articolo> getArticoli() const;
 
-        int getIdentificativoAutore();
-        int getIdentificativoArticolo();
+        int getCurrentIdentificativoAutore() const;
+        int getCurrentIdentificativoArticolo() const;
+        void increaseIdentificativoAutore();
+        void increaseIdentificativoArticolo();
 
         void setArticoloPubblicatoPer(Articolo articolo, QString pubblicatoPer);
-
         void setArticoloInConferenza(int idx, Articolo articolo);
         void setArticoloInRivista(int idx, Articolo articolo);
+
+        int getAnnoConferenza(int idx) const;
+        int getAnnoRivista(int idx) const;
 
         bool aggiungiAutore(Autore autore);
         bool aggiungiConferenza(Conferenza conferenza);
         bool aggiungiRivista(Rivista rivista);
         bool aggiungiArticolo(Articolo articolo);
 
-        void getArticoliDiUnAutore(QList<Articolo>& articoliAutore, int idAutore) const;
+        void getArticoliDiUnAutore(QList<Articolo>& articoliAutore, int idxAutore) const;
+        void getStrutture(QList<QString>& strutture) const;
         void getArticoliDiUnaStruttura(QList<Articolo>& articoliStruttura, QString struttura) const;
-        void getArticoliDiUnaRivista(QList<Articolo>& articoliRivista, QString nomeRivista, int volume, QString data) const;
-        void getArticoliCostosiAutore(QList<Articolo>& articoliAutore, int idAutore) const;
-        float getGuadagnoAnnualeConferenza(QList<Articolo>& articoliConferenza, QString nomeConferenza, QString luogo, QString data) const;
-
-        int getKeywordsCostose(QList<QString>& keywordsCostose) const;
-        int sommaPrezziArticoliStessaKeyword(QString keyword) const;
+        void getArticoliDiUnaRivista(QList<Articolo>& articoliRivista, int idxRivista) const;
+        int getArticoliCostosiAutore(QList<Articolo>& articoliAutore, int idxAutore) const;
+        float getGuadagnoAnnualeConferenza(QList<Articolo>& articoliConferenza, int idxConferenza) const;
+        float getKeywordsCostose(QList<QString>& keywordsCostose) const;
+        float sommaPrezziArticoliStessaKeyword(QString keyword) const;
+        void getArticoliRivistaOrdinatiPerPrezzo(QList<Articolo>& articoliOrdinati, int idxRivista) const;
+        void getArticoliAutoreOrdinatiD6(QList<Articolo>& articoliOrdinati, int idxAutore) const;
+        void getRivisteSpecialistiche(QList<Rivista>& rivisteSpecialistiche) const;
 
 };
 

@@ -119,6 +119,8 @@ void paginaRivista::on_buttonLeggi_clicked()
             int volume = parametriRivista.at(3).toInt();
             QString data = parametriRivista.at(4);
 
+            assert(!nome.isEmpty() && !editore.isEmpty() && volume >= 0);
+
             Rivista rivista(nome, acronimo, editore, data, volume);
             if(gestore->aggiungiRivista(rivista) == true)
             {

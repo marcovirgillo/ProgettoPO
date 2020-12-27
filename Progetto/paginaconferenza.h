@@ -42,6 +42,7 @@ public:
 private slots:
     void on_buttonAggiungi_clicked();
     void on_listConferenze_itemDoubleClicked(QListWidgetItem *item);
+    void on_buttonLeggi_clicked();
 
     void disableRadioButton(QRadioButton* radioButton);
     bool listArticoliVuota(QRadioButton* radioButton);
@@ -51,8 +52,6 @@ private slots:
     void clearPage2();
     void on_page2_buttonIndietro_clicked();
     void on_page2_buttonSeleziona_clicked();
-
-    void on_buttonLeggi_clicked();
 
 private:
     Ui::paginaConferenza *ui;

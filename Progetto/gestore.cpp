@@ -240,7 +240,7 @@ float Gestore::sommaPrezziArticoliStessaKeyword(QString keyword) const
 float Gestore::getKeywordsCostose(QList<QString>& keywordsCostose) const
 {
     //calcolo il massimo guadagno che si può ottenere sommando le keywords
-    int guadagnoMax = 0.0;
+    float guadagnoMax = 0.0;
     for (auto it = articoli.begin(); it != articoli.end(); it++)
     {
         QList<QString> keywords = it->getKeywords();

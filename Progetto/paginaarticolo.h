@@ -46,6 +46,7 @@ private slots:
     void on_buttonConferenze_clicked();
     void on_buttonRiviste_clicked();
     void on_listArticoli_itemDoubleClicked(QListWidgetItem *item);
+    void on_buttonLeggi_clicked();
 
     void disableRadioButton(QRadioButton* radioButton);
     bool listArticoliVuota(QRadioButton* radioButton);
@@ -81,6 +82,11 @@ private slots:
     void clearPage7();
     void on_page7_buttonIndietro_clicked();
     void on_page7_buttonSeleziona_clicked();
+
+    void on_buttonVisualizzaArticoliAutoreOrdinatiD6_clicked();
+    void clearPage8();
+    void on_page8_buttonIndietro_clicked();
+    void on_page8_buttonSeleziona_clicked();
 
 private:
     Ui::paginaArticolo *ui;

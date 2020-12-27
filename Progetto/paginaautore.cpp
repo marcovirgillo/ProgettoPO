@@ -22,6 +22,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
+#include <cassert>
 
 paginaAutore::paginaAutore(Gestore* _gestore, QWidget *parent) :
     QWidget(parent),
@@ -121,7 +122,8 @@ void paginaAutore::on_buttonLeggi_clicked()
         {
             int identificativo = gestore->getCurrentIdentificativoAutore();
             QString nome = parametriAutore.at(0);
-            QString cognome = parametriAutore.at(1);
+            QString cognome = parametriAutore.at(1);  
+            assert(!nome.isEmpty() && !cognome.isEmpty());
 
             QList<QString> lista_afferenze;
             if (!parametriAutore.at(2).isEmpty())

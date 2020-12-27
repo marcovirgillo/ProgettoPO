@@ -22,6 +22,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include <QDebug>
 #include <QFile>
 #include <QTextStream>
+#include <cassert>
 //#include <QCommonStyle> va incluso per le frecce sui PushButton
 
 //risolvere problema del seleziona premuto in maniera ossessiva nei metodi
@@ -201,6 +202,97 @@ void paginaArticolo::on_listArticoli_itemDoubleClicked(QListWidgetItem *item)
 {
     Q_UNUSED(item);
     showDialogArticolo();
+}
+
+void paginaArticolo::on_buttonLeggi_clicked()
+{
+    QString pathFileArticoli = ui->Percorso->text();
+    QFile fileArticoli(pathFileArticoli);
+
+    if(!fileArticoli.open(QIODevice::ReadOnly))
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Il percorso specificato non è stato trovato", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+
+    QTextStream stream(&fileArticoli);
+    QString line = stream.readLine();
+    QVector<QString> parametriArticolo;
+    while (!line.isNull())
+    {
+        if (line != "* * * * *")
+            parametriArticolo.push_back(line);
+        else
+        {
+            int identificativo = gestore->getCurrentIdentificativoArticolo();
+            QString titolo = parametriArticolo.at(0);
+
+            QList<QString> lista_keywords;
+            QString keywords = parametriArticolo.at(1);
+            if (!parametriArticolo.at(1).isEmpty())
+                lista_keywords = keywords.split(",");
+
+            int numeroPagine = parametriArticolo.at(2).toInt();
+            float prezzo = parametriArticolo.at(3).toFloat();
+
+
+            QList<QString> lista_idx_autori;
+            if (!parametriArticolo.at(4).isEmpty())
+            {
+                QString autore = parametriArticolo.at(4);
+                lista_idx_autori = autore.split(",");
+            }
+            QList<Autore> autori;
+            for (auto i = 0; i < lista_idx_autori.size(); i++)
+                autori.push_back(gestore->getAutori().at(lista_idx_autori.at(i).toInt()));
+
+
+            QList<QString> lista_idx_articoli;
+            if (!parametriArticolo.at(5).isEmpty())
+            {
+                QString articolo = parametriArticolo.at(5);
+                lista_idx_articoli = articolo.split(",");
+            }
+            QList<Articolo> articoliCorrelati;
+            for (auto i = 0; i < lista_idx_articoli.size(); i++)
+                articoliCorrelati.push_back(gestore->getArticoli().at(lista_idx_articoli.at(i).toInt()));
+
+            QString pubblicatoPer = parametriArticolo.at(6);
+            QString idxConferenza_o_Rivista = parametriArticolo.at(7);
+
+            assert(!titolo.isEmpty() && numeroPagine > 0 && !keywords.isEmpty() && prezzo > 0 && (pubblicatoPer == "Rivista" || pubblicatoPer == "Conferenza") && !autori.isEmpty());
+
+            Articolo articolo(identificativo, titolo, numeroPagine, prezzo, autori, lista_keywords,  articoliCorrelati);
+
+            if(gestore->aggiungiArticolo(articolo) == true)
+            {
+                if(pubblicatoPer == "Conferenza")
+                {
+                    gestore->setArticoloInConferenza(idxConferenza_o_Rivista.toInt(), articolo);
+                    gestore->setArticoloPubblicatoPer(articolo, "Conferenza");
+
+                    int annoConferenza = gestore->getAnnoConferenza(idxConferenza_o_Rivista.toInt());
+                    articolo.setAnno(annoConferenza);
+                }
+                else if(pubblicatoPer == "Rivista")
+                {
+                    gestore->setArticoloInRivista(idxConferenza_o_Rivista.toInt(), articolo);
+                    gestore->setArticoloPubblicatoPer(articolo, "Rivista");
+
+                    int annoRivista = gestore->getAnnoRivista(idxConferenza_o_Rivista.toInt());
+                    articolo.setAnno(annoRivista);
+                }
+
+                gestore->increaseIdentificativoArticolo();
+                QString string_articolo = "ID: " + QString::number(identificativo) + " "  + titolo;
+                ui->listArticoli->addItem(string_articolo);
+            }
+            parametriArticolo.clear();
+        }
+        line = stream.readLine();
+    }
+    ui->Percorso->clear();
 }
 
 bool paginaArticolo::listArticoliVuota(QRadioButton* radioButton)
@@ -427,7 +519,7 @@ void paginaArticolo::on_page5_buttonSeleziona_clicked()
 }
 //Fine metodo
 
-//Sezione C - Visualizzare le keyword la cui somma degli articoli porta al guadagno più alto*
+//Sezione C - Visualizzare le keywords la cui somma degli articoli porta al guadagno più alto*
 void paginaArticolo::clearPage6()
 {
     ui->page6_Guadagno->clear();
@@ -503,7 +595,48 @@ void paginaArticolo::on_page7_buttonSeleziona_clicked()
 
 /* Sezione D - Visualizzare gli articoli relativi a un autore, ordinati per anno crescente, a parità di anno,
 ordinati per prezzo decrescente e a parità di prezzo ordinati in ordine alfabetico per la prima keyword nella lista* */
+void paginaArticolo::clearPage8()
+{
+    ui->page8_listArticoli->clear();
+    ui->page8_listAutori->clear();
+}
 
+void paginaArticolo::on_buttonVisualizzaArticoliAutoreOrdinatiD6_clicked()
+{
+    if (listArticoliVuota(ui->buttonVisualizzaArticoliAutoreOrdinatiD6) == true)
+        return;
+    clearPage8();
+    ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaArticoliAutoreOrdinatiD6);
+    disableRadioButton(ui->buttonVisualizzaArticoliAutoreOrdinatiD6);
+    visualizzaAutoriInLista(gestore->getAutori(), ui->page8_listAutori);
+}
+
+void paginaArticolo::on_page8_buttonIndietro_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->Home);
+    clearPage8();
+}
+
+void paginaArticolo::on_page8_buttonSeleziona_clicked()
+{
+    if(ui->page8_listAutori->currentRow() == -1)
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima selezionare un autore", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+    int idxAutore = ui->page8_listAutori->currentRow();
+    QList<Articolo> articoli;
+    gestore->getArticoliAutoreOrdinatiD6(articoli, idxAutore);
+    if(articoli.isEmpty() == true)
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "L'autore non ha ancora pubblicato articoli", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+    visualizzaArticoliInLista(articoli, ui->page8_listArticoli);
+}
 //Fine metodo
+
 
 

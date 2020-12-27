@@ -42,6 +42,8 @@ private slots:
     void on_buttonAggiungi_clicked();
     void on_listAutori_itemDoubleClicked(QListWidgetItem *item);
 
+    void on_buttonLeggi_clicked();
+
 private:
     Ui::paginaAutore *ui;
     Gestore* gestore;

@@ -91,3 +91,43 @@ void paginaRivista::on_listRiviste_itemDoubleClicked(QListWidgetItem *item)
     Q_UNUSED(item);
     showDialogRivista();
 }
+
+void paginaRivista::on_buttonLeggi_clicked()
+{
+    QString pathFileRiviste = ui->Percorso->text();
+    QFile fileRiviste(pathFileRiviste);
+
+    if(!fileRiviste.open(QIODevice::ReadOnly))
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Il percorso specificato non è stato trovato", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+
+    QTextStream stream(&fileRiviste);
+    QString line = stream.readLine();
+    QVector<QString> parametriRivista;
+    while (!line.isNull())
+    {
+        if (line != "* * * * *")
+            parametriRivista.push_back(line);
+        else
+        {
+            QString nome = parametriRivista.at(0);
+            QString acronimo = parametriRivista.at(1);
+            QString editore = parametriRivista.at(2);
+            int volume = parametriRivista.at(3).toInt();
+            QString data = parametriRivista.at(4);
+
+            Rivista rivista(nome, acronimo, editore, data, volume);
+            if(gestore->aggiungiRivista(rivista) == true)
+            {
+                QString string_rivista = nome + " - " + "Volume " + QString::number(volume);
+                ui->listRiviste->addItem(string_rivista);
+            }
+            parametriRivista.clear();
+        }
+        line = stream.readLine();
+    }
+    ui->Percorso->clear();
+}

@@ -21,7 +21,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include <QtGlobal>
 #include <QFile>
 #include <QTextStream>
-#include "mainwindow.h"
+#include <QDebug>
 
 paginaAutore::paginaAutore(Gestore* _gestore, QWidget *parent) :
     QWidget(parent),
@@ -96,4 +96,51 @@ void paginaAutore::on_listAutori_itemDoubleClicked(QListWidgetItem *item)
 {
     Q_UNUSED(item);
     showDialogAutore();
+}
+
+void paginaAutore::on_buttonLeggi_clicked()
+{
+    QString pathFileAutori = ui->Percorso->text();
+    QFile fileAutori(pathFileAutori);
+
+    if(!fileAutori.open(QIODevice::ReadOnly))
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Il percorso specificato non è stato trovato", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+
+    QTextStream stream(&fileAutori);
+    QString line = stream.readLine();
+    QVector<QString> parametriAutore;
+    while (!line.isNull())
+    {
+        if (line != "* * * * *")
+            parametriAutore.push_back(line);
+        else
+        {
+            int identificativo = gestore->getCurrentIdentificativoAutore();
+            QString nome = parametriAutore.at(0);
+            QString cognome = parametriAutore.at(1);
+
+            QList<QString> lista_afferenze;
+            if (!parametriAutore.at(2).isEmpty())
+            {
+                QString afferenze = parametriAutore.at(2);
+                lista_afferenze = afferenze.split(",");
+                lista_afferenze.sort();
+            }
+
+            Autore autore(identificativo, nome, cognome, lista_afferenze);
+            if(gestore->aggiungiAutore(autore) == true)
+            {
+                gestore->increaseIdentificativoAutore();
+                QString string_autore = "ID: " + QString::number(identificativo) + " " + nome + " " + cognome;
+                ui->listAutori->addItem(string_autore);
+            }
+            parametriAutore.clear();
+        }
+        line = stream.readLine();
+    }
+    ui->Percorso->clear();
 }

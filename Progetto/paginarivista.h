@@ -42,6 +42,8 @@ private slots:
     void on_buttonAggiungi_clicked();
     void on_listRiviste_itemDoubleClicked(QListWidgetItem *item);
 
+    void on_buttonLeggi_clicked();
+
 private:
     Ui::paginaRivista *ui;
     Gestore* gestore;

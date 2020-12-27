@@ -183,3 +183,49 @@ void paginaConferenza::on_page2_buttonSeleziona_clicked()
     ui->page2_GuadagnoTotale->setText(QString::number(GuadagnoTotale));
 }
 //Fine metodo
+
+void paginaConferenza::on_buttonLeggi_clicked()
+{
+    QString pathFileConferenze = ui->Percorso->text();
+    QFile fileConferenze(pathFileConferenze);
+
+    if(!fileConferenze.open(QIODevice::ReadOnly))
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Il percorso specificato non è stato trovato", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+
+    QTextStream stream(&fileConferenze);
+    QString line = stream.readLine();
+    QVector<QString> parametriConferenza;
+    while (!line.isNull())
+    {
+        if (line != "* * * * *")
+            parametriConferenza.push_back(line);
+        else
+        {
+
+            QString nome = parametriConferenza.at(0);
+            QString acronimo = parametriConferenza.at(1);
+            QString luogo = parametriConferenza.at(2);
+
+            QList<QString> lista_organizzatori;
+            QString organizzatori = parametriConferenza.at(3);
+            lista_organizzatori = organizzatori.split(",");
+
+            int numeroPartecipanti = parametriConferenza.at(4).toInt();
+            QString data = parametriConferenza.at(5);
+
+            Conferenza conferenza(nome, acronimo, luogo, data, numeroPartecipanti, lista_organizzatori);
+            if(gestore->aggiungiConferenza(conferenza) == true)
+            {
+                QString string_conferenza = nome + " - " + "Data " + data;
+                ui->listConferenze->addItem(string_conferenza);
+            }
+            parametriConferenza.clear();
+        }
+        line = stream.readLine();
+    }
+    ui->Percorso->clear();
+}

@@ -52,6 +52,8 @@ private slots:
     void on_page2_buttonIndietro_clicked();
     void on_page2_buttonSeleziona_clicked();
 
+    void on_buttonLeggi_clicked();
+
 private:
     Ui::paginaConferenza *ui;
     Gestore* gestore;

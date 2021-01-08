@@ -22,6 +22,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "dialog.h"
 #include <QWidget>
 #include <QListWidgetItem>
+#include <QRadioButton>
 
 namespace Ui {
 class paginaRivista;
@@ -36,12 +37,21 @@ public:
     ~paginaRivista();
 
     void clearCampiRivista();
+
     void showDialogRivista();
+
+
 
 private slots:
     void on_buttonAggiungi_clicked();
     void on_listRiviste_itemDoubleClicked(QListWidgetItem *item);
     void on_buttonLeggi_clicked();
+
+    void disableRadioButton(QRadioButton* radioButton);
+    bool listRivisteVuota(QRadioButton* radioButton);
+    void visualizzaRivisteInLista(QList<Rivista> riviste, QListWidget* listRiviste);
+
+    void on_buttonVisualizzaRivisteSpecialistiche_clicked();
 
 private:
     Ui::paginaRivista *ui;

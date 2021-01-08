@@ -47,11 +47,17 @@ private slots:
     void disableRadioButton(QRadioButton* radioButton);
     bool listArticoliVuota(QRadioButton* radioButton);
     void visualizzaArticoliInLista(QList<Articolo> articoli, QListWidget* listArticoli);
+    void visualizzaConferenzeInLista(QList<Conferenza> conferenze, QListWidget* listConferenze);
 
     void on_buttonVisualizzaGuadagnoAnnualeConferenza_clicked();
     void clearPage2();
     void on_page2_buttonIndietro_clicked();
     void on_page2_buttonSeleziona_clicked();
+
+    void on_buttonVisualizzaConferenzeSimili_clicked();
+    void clearPage3();
+    void on_page3_buttonIndietro_clicked();
+    void on_page3_buttonSeleziona_clicked();
 
 private:
     Ui::paginaConferenza *ui;

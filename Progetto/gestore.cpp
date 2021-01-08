@@ -284,17 +284,117 @@ bool ordinaArticoliD6(Articolo articolo1, Articolo articolo2)
 {
     if(articolo1.getAnno() < articolo2.getAnno())
         return true;
-    if(articolo2.getAnno() < articolo1.getAnno())
-        return false;
-    if(articolo1.getPrezzo() > articolo2.getPrezzo())
-        return true;
-    if(articolo2.getPrezzo() > articolo1.getPrezzo())
-        return true;
-    return articolo1.getPrimaKeyword() < articolo2.getPrimaKeyword();
+    if(articolo2.getAnno() == articolo1.getAnno())
+    {
+        if(articolo1.getPrezzo() > articolo2.getPrezzo())
+            return true;
+        if(articolo1.getPrezzo() == articolo2.getPrezzo())
+            return articolo1.getPrimaKeyword() < articolo2.getPrimaKeyword();
+    }
+    return false;
 }
 
 void Gestore::getArticoliAutoreOrdinatiD6(QList<Articolo>& articoliOrdinati, int idxAutore) const
 {
      getArticoliDiUnAutore(articoliOrdinati, idxAutore);
      std::sort(articoliOrdinati.begin(), articoliOrdinati.end(), ordinaArticoliD6);
+}
+
+//dato l'indice di una conferenza, restituisce le keywords relative agli articoli di quella conferenza
+void Gestore::getKeywordsArticoloDaArticoliRivista(Rivista rivista, QList<QString>& keywordsRivista) const
+{
+    QList<Articolo> articoliRivistaSpecificata = rivista.getArticoliRivista();
+    if(articoliRivistaSpecificata.size() == 0)
+        return;
+
+    for(auto it = articoliRivistaSpecificata.begin(); it != articoliRivistaSpecificata.end(); it++)
+    {
+        QList<QString> keywordsArticoloInRivista = it->getKeywords();
+        for (auto it2 = keywordsArticoloInRivista.begin(); it2 != keywordsArticoloInRivista.end(); it2++)
+            if(keywordsRivista.indexOf(*it2) == -1)
+                keywordsRivista.push_back(*it2);
+    }
+}
+
+void Gestore::getRivisteSpecialistiche(QList<Rivista>& rivisteSpecialistiche) const
+{
+    for (int i = 0; i < riviste.size(); i++)
+    {
+        QList<QString> keywordsRivista1;
+        getKeywordsArticoloDaArticoliRivista(riviste.at(i), keywordsRivista1);
+        for(int j = 0; j < riviste.size(); j++)
+        {
+            if(j != i)
+            {
+                QList<QString> keywordsRivista2;
+                getKeywordsArticoloDaArticoliRivista(riviste.at(i), keywordsRivista2);
+                bool check = true;
+                for (auto it = keywordsRivista1.begin(); it != keywordsRivista1.end(); it++)
+                {
+                    if(keywordsRivista2.indexOf(*it) != -1)
+                    {
+                        check = false;
+                        break;
+                    }
+                }
+                if(check == true)
+                {
+                    for (auto it = keywordsRivista2.begin(); it != keywordsRivista2.end(); it++)
+                    {
+                        if(keywordsRivista1.indexOf(*it) == -1)
+                        {
+                            rivisteSpecialistiche.push_back(riviste.at(i));
+                            break;
+                        }
+                    }
+                }
+             }
+        }
+    }
+}
+
+
+//dato l'indice di una conferenza, restituisce le keywords relative agli articoli di quella conferenza
+void Gestore::getKeywordsArticoloDaArticoliConferenza(int idxConferenza, QList<QString>& keywordsConferenza) const
+{
+    QList<Articolo> articoliConferenzaSpecificata = conferenze.at(idxConferenza).getArticoliConferenza();
+    if(articoliConferenzaSpecificata.size() == 0)
+        return;
+
+    for(auto it = articoliConferenzaSpecificata.begin(); it != articoliConferenzaSpecificata.end(); it++)
+    {
+        QList<QString> keywordsArticoloInConferenza = it->getKeywords();
+        for (auto it2 = keywordsArticoloInConferenza.begin(); it2 != keywordsArticoloInConferenza.end(); it2++)
+            if(keywordsConferenza.indexOf(*it2) == -1)
+                keywordsConferenza.push_back(*it2);
+    }
+}
+
+void Gestore::getConferenzeSimili(QList<Conferenza>& conferenzeSimili, int idx) const
+{
+    QList<QString> keywordsConferenzaSpecificata;
+    getKeywordsArticoloDaArticoliConferenza(idx, keywordsConferenzaSpecificata);
+    if(keywordsConferenzaSpecificata.size() == 0)
+        return;
+
+    int percentuale = (keywordsConferenzaSpecificata.size() * 80) / 100;
+
+    for(int i = 0; i < conferenze.size(); i++)
+    {
+        if(i == idx)
+            continue;
+         int contaKeywordsUguali = 0;
+         QList<QString> keywordsArticoliInConferenza;
+         getKeywordsArticoloDaArticoliConferenza(i, keywordsArticoliInConferenza);
+
+         for (auto it = keywordsArticoliInConferenza.begin(); it != keywordsArticoliInConferenza.end(); it++)
+             for (auto it2 = keywordsConferenzaSpecificata.begin(); it2 != keywordsConferenzaSpecificata.end(); it2++)
+                 if(*it == *it2)
+                     contaKeywordsUguali++;
+
+         if(contaKeywordsUguali >= percentuale)
+             conferenzeSimili.push_back(conferenze.at(i));
+
+         keywordsArticoliInConferenza.clear();
+    }
 }

@@ -180,6 +180,15 @@ void paginaConferenza::visualizzaArticoliInLista(QList<Articolo> articoli, QList
     }
 }
 
+void paginaConferenza::visualizzaConferenzeInLista(QList<Conferenza> conferenze, QListWidget* listConferenze)
+{
+    for (auto it = conferenze.begin(); it != conferenze.end(); it++)
+    {
+        QString string_conferenza = it->getNome() + " - " + "Data " + it->getData();
+        listConferenze->addItem(string_conferenza);
+    }
+}
+
 //Fine inserimento e visualizzazione conferenza
 
 //Sezione C - Visualizzare il guadagno annuale di una rivista calcolato come la somma dei prezzi degli articoli presentati per quella rivista in un anno
@@ -199,11 +208,7 @@ void paginaConferenza::on_buttonVisualizzaGuadagnoAnnualeConferenza_clicked()
     disableRadioButton(ui->buttonVisualizzaGuadagnoAnnualeConferenza);
 
     QList<Conferenza> conferenze = gestore->getConferenze();
-    for (auto it = conferenze.begin(); it != conferenze.end(); it++)
-    {
-        QString string_conferenza = it->getNome() + " - " + "Data " + it->getData();
-        ui->page2_listConferenze->addItem(string_conferenza);
-    }
+    visualizzaConferenzeInLista(conferenze, ui->page2_listConferenze);
 }
 
 void paginaConferenza::on_page2_buttonIndietro_clicked()
@@ -234,3 +239,48 @@ void paginaConferenza::on_page2_buttonSeleziona_clicked()
 }
 //Fine metodo
 
+//Sezione F - Visualizzare le conferenze simili ad una specificata dall’utente. Una conferenza è simile a un’altra conferenza se hanno almeno l’80% delle keyword in comune**
+void paginaConferenza::clearPage3()
+{
+    ui->page3_listConferenze->clear();
+    ui->page3_listConferenzeSimili->clear();
+}
+
+void paginaConferenza::on_buttonVisualizzaConferenzeSimili_clicked()
+{
+    if(listArticoliVuota(ui->buttonVisualizzaConferenzeSimili) == true)
+        return;
+    clearPage3();
+    ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaConferenzeSimili);
+    disableRadioButton(ui->buttonVisualizzaConferenzeSimili);
+
+    QList<Conferenza> conferenze = gestore->getConferenze();
+    visualizzaConferenzeInLista(conferenze, ui->page3_listConferenze);
+}
+
+void paginaConferenza::on_page3_buttonIndietro_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->Home);
+    clearPage3();
+}
+
+void paginaConferenza::on_page3_buttonSeleziona_clicked()
+{
+    if(ui->page3_listConferenze->currentRow() == -1)
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima selezionare una conferenza", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+    int idxConferenza = ui->page3_listConferenze->currentRow();
+    QList<Conferenza> conferenze;
+    gestore->getConferenzeSimili(conferenze, idxConferenza);
+    if(conferenze.isEmpty() == true)
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Non sono state trovate conferenze simili a quella selezionata", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+    visualizzaConferenzeInLista(conferenze, ui->page3_listConferenzeSimili);
+}
+//Fine metodo

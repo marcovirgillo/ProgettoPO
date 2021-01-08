@@ -36,6 +36,7 @@ paginaRivista::~paginaRivista()
     delete ui;
 }
 
+// Inserimento e visualizzazione rivista
 void paginaRivista::clearCampiRivista()
 {
     ui->Nome->clear();
@@ -43,6 +44,13 @@ void paginaRivista::clearCampiRivista()
     ui->Editore->clear();
     ui->Volume->setValue(0);
     ui->Data->setCurrentPage(QDate::currentDate().year(), QDate::currentDate().month());
+}
+
+void paginaRivista::disableRadioButton(QRadioButton* radioButton)
+{
+    radioButton->setAutoExclusive(false);
+    radioButton->setChecked(false);
+    radioButton->setAutoExclusive(true);
 }
 
 void paginaRivista::showDialogRivista()
@@ -132,4 +140,41 @@ void paginaRivista::on_buttonLeggi_clicked()
         line = stream.readLine();
     }
     ui->Percorso->clear();
+}
+
+bool paginaRivista::listRivisteVuota(QRadioButton* radioButton)
+{
+    if(gestore->getRiviste().empty() == true)
+    {
+        QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima inserire almeno una rivista", QMessageBox::Ok, this);
+        errore.exec();
+        disableRadioButton(radioButton);
+        return true;
+    }
+    return false;
+}
+
+void paginaRivista::visualizzaRivisteInLista(QList<Rivista> riviste, QListWidget* listRiviste)
+{
+    for (auto it = riviste.begin(); it != riviste.end(); it++)
+    {
+        QString string_rivista = it->getNome() + " - " + "Volume " + QString::number(it->getVolume());
+        listRiviste->addItem(string_rivista);
+    }
+}
+//Fine inserimento e visualizzazione conferenza
+
+/*Sezione E - Visualizzare le riviste specialistiche. Una rivista R1 è considerata specialistica se esiste
+un’altra rivista R2, tale che le keyword degli articoli di R1 sono un sottoinsieme proprio di tutte le keyword degli articoli di R2* */
+void paginaRivista::on_buttonVisualizzaRivisteSpecialistiche_clicked()
+{
+    if(listRivisteVuota(ui->buttonVisualizzaRivisteSpecialistiche) == true)
+        return;
+    ui->page2_listRiviste->clear();
+    ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaRivisteSpecialistiche);
+    disableRadioButton(ui->buttonVisualizzaRivisteSpecialistiche);
+
+    QList<Rivista> riviste;
+    gestore->getRivisteSpecialistiche(riviste);
+    visualizzaRivisteInLista(riviste, ui->page2_listRiviste);
 }

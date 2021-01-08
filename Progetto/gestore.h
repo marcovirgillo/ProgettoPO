@@ -71,7 +71,10 @@ class Gestore
         float sommaPrezziArticoliStessaKeyword(QString keyword) const;
         void getArticoliRivistaOrdinatiPerPrezzo(QList<Articolo>& articoliOrdinati, int idxRivista) const;
         void getArticoliAutoreOrdinatiD6(QList<Articolo>& articoliOrdinati, int idxAutore) const;
+        void getKeywordsArticoloDaArticoliRivista(Rivista rivista, QList<QString>& keywordsRivista) const;
         void getRivisteSpecialistiche(QList<Rivista>& rivisteSpecialistiche) const;
+        void getKeywordsArticoloDaArticoliConferenza(int idxConferenza, QList<QString>& keywordsConferenza) const;
+        void getConferenzeSimili(QList<Conferenza>& conferenzeSimili, int idx) const;
 
 };
 

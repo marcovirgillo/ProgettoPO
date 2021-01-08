@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="Home">
     <widget class="QSpinBox" name="Volume">
@@ -236,6 +236,58 @@
        <width>231</width>
        <height>21</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QRadioButton" name="buttonVisualizzaRivisteSpecialistiche">
+     <property name="geometry">
+      <rect>
+       <x>490</x>
+       <y>440</y>
+       <width>231</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Visualizza le riviste specialistiche</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="pageVisualizzaRivisteSpecialistiche">
+    <widget class="QListWidget" name="page2_listRiviste">
+     <property name="geometry">
+      <rect>
+       <x>380</x>
+       <y>120</y>
+       <width>281</width>
+       <height>401</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="page2_labelTitolo">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>10</y>
+       <width>651</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Visualizzare le riviste specialistiche. Una rivista R1 è considerata specialistica se esiste un’altra rivista R2, 
+tale che le keyword degli articoli di R1 sono un sottoinsieme proprio di tutte le keyword degli articoli di R2*</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="page2_buttonIndietro">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>101</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Indietro</string>
      </property>
     </widget>
    </widget>

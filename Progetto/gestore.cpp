@@ -146,43 +146,47 @@ bool Gestore::aggiungiArticolo(Articolo articolo)
     return true;
 }
 
-void Gestore::getArticoliDiUnAutore(QList<Articolo>& articoliAutore, int idxAutore) const
+QList<Articolo> Gestore::getArticoliDiUnAutore(int idxAutore) const
 {
+    QList<Articolo> articoliAutore;
     Autore autore = autori.at(idxAutore);
     for (auto it = articoli.begin(); it != articoli.end(); it++)
     {
        QList<Autore> autoriArticolo = it->getAutori();
-       for (auto it2 = autoriArticolo.begin(); it2 != autoriArticolo.end(); it2++)
+       for (int i = 0; i < autoriArticolo.size(); i++)
        {
-           if (it2->getIdentificativo() == autore.getIdentificativo())
+           if (autoriArticolo[i].getIdentificativo() == autore.getIdentificativo())
            {
                articoliAutore.push_back(*it);
                break;
            }
        }
     }
+    return articoliAutore;
 }
 
-void Gestore::getStrutture(QList<QString>& strutture) const
+QVector<QString> Gestore::getStrutture() const
 {
+    QVector<QString> strutture;
     for (auto it = autori.begin(); it != autori.end(); it++)
     {
-        QList<QString> struttureAutore = it->getAfferenze();
-        for (auto it2 = struttureAutore.begin(); it2 != struttureAutore.end(); it2++)
-            if(strutture.indexOf(*it2) == -1)
-                strutture.push_back(*it2);
+        QVector<QString> struttureAutore = it->getAfferenze();
+        for (int i = 0; i < struttureAutore.size(); i++)
+            if(strutture.indexOf(struttureAutore[i]) == -1)
+                strutture.push_back(struttureAutore[i]);
     }
+    return strutture;
 }
 
-
-void Gestore::getArticoliDiUnaStruttura(QList<Articolo>& articoliStruttura, QString struttura) const
+QList<Articolo> Gestore::getArticoliDiUnaStruttura(QString struttura) const
 {
+    QList<Articolo> articoliStruttura;
     for (auto it = articoli.begin(); it != articoli.end(); it++)
     {
        QList<Autore> autoriStruttura = it->getAutori();
        for (auto it2 = autoriStruttura.begin(); it2 != autoriStruttura.end(); it2++)
        {
-           QList<QString> afferenze = it2->getAfferenze();
+           QVector<QString> afferenze = it2->getAfferenze();
            if (afferenze.indexOf(struttura) != -1)
            {
                articoliStruttura.push_back(*it);
@@ -190,18 +194,21 @@ void Gestore::getArticoliDiUnaStruttura(QList<Articolo>& articoliStruttura, QStr
            }
        }
     }
+    return articoliStruttura;
 }
 
-void Gestore::getArticoliDiUnaRivista(QList<Articolo>& articoliRivista, int idxRivista) const
+QList<Articolo> Gestore::getArticoliDiUnaRivista(int idxRivista) const
 {
+    QList<Articolo> articoliRivista;
     Rivista rivista = riviste.at(idxRivista);
     articoliRivista = rivista.getArticoliRivista();
+
+    return articoliRivista;
 }
 
-int Gestore::getArticoliCostosiAutore(QList<Articolo>& articoliCostosiAutore, int idxAutore) const
+float Gestore::getArticoliCostosiAutore(QList<Articolo>& articoliCostosiAutore, int idxAutore) const
 {
-    QList<Articolo> articoliAutore;
-    getArticoliDiUnAutore(articoliAutore, idxAutore);
+    QList<Articolo> articoliAutore = getArticoliDiUnAutore(idxAutore);
 
     float prezzoMax = INT_MIN;
     for (auto it = articoliAutore.begin(); it != articoliAutore.end(); it++)
@@ -237,16 +244,16 @@ float Gestore::sommaPrezziArticoliStessaKeyword(QString keyword) const
 }
 
 
-float Gestore::getKeywordsCostose(QList<QString>& keywordsCostose) const
+float Gestore::getKeywordsCostose(QVector<QString>& keywordsCostose) const
 {
     //calcolo il massimo guadagno che si può ottenere sommando le keywords
     float guadagnoMax = 0.0;
     for (auto it = articoli.begin(); it != articoli.end(); it++)
     {
-        QList<QString> keywords = it->getKeywords();
-        for (auto it2 = keywords.begin(); it2 != keywords.end(); it2++)
+        QVector<QString> keywords = it->getKeywords();
+        for (int i = 0; i < keywords.size(); i++)
         {
-            float sommaPrezzi = sommaPrezziArticoliStessaKeyword(*it2);
+            float sommaPrezzi = sommaPrezziArticoliStessaKeyword(keywords[i]);
             if(sommaPrezzi > guadagnoMax)
                 guadagnoMax = sommaPrezzi;
         }
@@ -255,13 +262,13 @@ float Gestore::getKeywordsCostose(QList<QString>& keywordsCostose) const
     //avendo il guadagno max che si può ottenere sommando i costi degli articoli di una keyword, cerco le keywords che producono quel guadagno
     for (auto it = articoli.begin(); it != articoli.end(); it++)
     {
-        QList<QString> keywords = it->getKeywords();
-        for (auto it2 = keywords.begin(); it2 != keywords.end(); it2++)
+        QVector<QString> keywords = it->getKeywords();
+        for (int i = 0; i < keywords.size(); i++)
         {
-            float sommaPrezzi = sommaPrezziArticoliStessaKeyword(*it2);
+            float sommaPrezzi = sommaPrezziArticoliStessaKeyword(keywords[i]);
             if(sommaPrezzi == guadagnoMax)
-                if(keywordsCostose.indexOf(*it2) == -1)
-                    keywordsCostose.push_back(*it2);
+                if(keywordsCostose.indexOf(keywords[i]) == -1)
+                    keywordsCostose.push_back(keywords[i]);
         }
     }
     return guadagnoMax;
@@ -274,10 +281,14 @@ bool ordinaArticoliPerPrezzo(Articolo articolo1, Articolo articolo2)
     return false;
 }
 
-void Gestore::getArticoliRivistaOrdinatiPerPrezzo(QList<Articolo>& articoliOrdinati, int idxRivista) const
+QList<Articolo> Gestore::getArticoliRivistaOrdinatiPerPrezzo(int idxRivista) const
 {
+    QList<Articolo> articoliOrdinati;
+
     articoliOrdinati = riviste.at(idxRivista).getArticoliRivista();
     std::sort(articoliOrdinati.begin(), articoliOrdinati.end(), ordinaArticoliPerPrezzo);
+
+    return articoliOrdinati;
 }
 
 bool ordinaArticoliD6(Articolo articolo1, Articolo articolo2)
@@ -294,44 +305,46 @@ bool ordinaArticoliD6(Articolo articolo1, Articolo articolo2)
     return false;
 }
 
-void Gestore::getArticoliAutoreOrdinatiD6(QList<Articolo>& articoliOrdinati, int idxAutore) const
+//void Gestore::getArticoliAutoreOrdinatiD6(QList<Articolo>& articoliOrdinati, int idxAutore) const
+QList<Articolo> Gestore::getArticoliAutoreOrdinatiD6(int idxAutore) const
 {
-     getArticoliDiUnAutore(articoliOrdinati, idxAutore);
+     QList<Articolo> articoliOrdinati = getArticoliDiUnAutore(idxAutore);
      std::sort(articoliOrdinati.begin(), articoliOrdinati.end(), ordinaArticoliD6);
+
+     return articoliOrdinati;
 }
 
 //dato l'indice di una conferenza, restituisce le keywords relative agli articoli di quella conferenza
-void Gestore::getKeywordsArticoloDaArticoliRivista(Rivista rivista, QList<QString>& keywordsRivista) const
+QVector<QString> Gestore::getKeywordsArticoloDaArticoliRivista(Rivista rivista) const
 {
+    QVector<QString> keywordsRivista;
     QList<Articolo> articoliRivistaSpecificata = rivista.getArticoliRivista();
-    if(articoliRivistaSpecificata.size() == 0)
-        return;
 
     for(auto it = articoliRivistaSpecificata.begin(); it != articoliRivistaSpecificata.end(); it++)
     {
-        QList<QString> keywordsArticoloInRivista = it->getKeywords();
-        for (auto it2 = keywordsArticoloInRivista.begin(); it2 != keywordsArticoloInRivista.end(); it2++)
-            if(keywordsRivista.indexOf(*it2) == -1)
-                keywordsRivista.push_back(*it2);
+        QVector<QString> keywordsArticoloInRivista = it->getKeywords();
+        for (int i = 0; i < keywordsArticoloInRivista.size(); i++)
+            if(keywordsRivista.indexOf(keywordsArticoloInRivista[i]) == -1)
+                keywordsRivista.push_back(keywordsArticoloInRivista[i]);
     }
+    return keywordsRivista;
 }
 
-void Gestore::getRivisteSpecialistiche(QList<Rivista>& rivisteSpecialistiche) const
+QList<Rivista> Gestore::getRivisteSpecialistiche() const
 {
+    QList<Rivista> rivisteSpecialistiche;
     for (int i = 0; i < riviste.size(); i++)
     {
-        QList<QString> keywordsRivista1;
-        getKeywordsArticoloDaArticoliRivista(riviste.at(i), keywordsRivista1);
+        QVector<QString> keywordsRivista1 = getKeywordsArticoloDaArticoliRivista(riviste.at(i));
         for(int j = 0; j < riviste.size(); j++)
         {
             if(j != i)
             {
-                QList<QString> keywordsRivista2;
-                getKeywordsArticoloDaArticoliRivista(riviste.at(i), keywordsRivista2);
+                QVector<QString> keywordsRivista2 = getKeywordsArticoloDaArticoliRivista(riviste.at(i));
                 bool check = true;
-                for (auto it = keywordsRivista1.begin(); it != keywordsRivista1.end(); it++)
+                for (int k = 0; k < keywordsRivista1.size(); k++)
                 {
-                    if(keywordsRivista2.indexOf(*it) != -1)
+                    if(keywordsRivista2.indexOf(keywordsRivista1[k]) != -1)
                     {
                         check = false;
                         break;
@@ -339,9 +352,9 @@ void Gestore::getRivisteSpecialistiche(QList<Rivista>& rivisteSpecialistiche) co
                 }
                 if(check == true)
                 {
-                    for (auto it = keywordsRivista2.begin(); it != keywordsRivista2.end(); it++)
+                    for (int k = 0; k < keywordsRivista2.size(); k++)
                     {
-                        if(keywordsRivista1.indexOf(*it) == -1)
+                        if(keywordsRivista1.indexOf(keywordsRivista2[k]) == -1)
                         {
                             rivisteSpecialistiche.push_back(riviste.at(i));
                             break;
@@ -351,31 +364,30 @@ void Gestore::getRivisteSpecialistiche(QList<Rivista>& rivisteSpecialistiche) co
              }
         }
     }
+    return rivisteSpecialistiche;
 }
 
 
 //dato l'indice di una conferenza, restituisce le keywords relative agli articoli di quella conferenza
-void Gestore::getKeywordsArticoloDaArticoliConferenza(int idxConferenza, QList<QString>& keywordsConferenza) const
+QVector<QString> Gestore::getKeywordsArticoloDaArticoliConferenza(int idxConferenza) const
 {
+    QVector<QString> keywordsConferenza;
     QList<Articolo> articoliConferenzaSpecificata = conferenze.at(idxConferenza).getArticoliConferenza();
-    if(articoliConferenzaSpecificata.size() == 0)
-        return;
 
     for(auto it = articoliConferenzaSpecificata.begin(); it != articoliConferenzaSpecificata.end(); it++)
     {
-        QList<QString> keywordsArticoloInConferenza = it->getKeywords();
-        for (auto it2 = keywordsArticoloInConferenza.begin(); it2 != keywordsArticoloInConferenza.end(); it2++)
-            if(keywordsConferenza.indexOf(*it2) == -1)
-                keywordsConferenza.push_back(*it2);
+        QVector<QString> keywordsArticoloInConferenza = it->getKeywords();
+        for (int i = 0; i < keywordsArticoloInConferenza.size(); i++)
+            if(keywordsConferenza.indexOf(keywordsArticoloInConferenza[i]) == -1)
+                keywordsConferenza.push_back(keywordsArticoloInConferenza[i]);
     }
+    return keywordsConferenza;
 }
 
-void Gestore::getConferenzeSimili(QList<Conferenza>& conferenzeSimili, int idx) const
+QList<Conferenza> Gestore::getConferenzeSimili(int idx) const
 {
-    QList<QString> keywordsConferenzaSpecificata;
-    getKeywordsArticoloDaArticoliConferenza(idx, keywordsConferenzaSpecificata);
-    if(keywordsConferenzaSpecificata.size() == 0)
-        return;
+    QList<Conferenza> conferenzeSimili;
+    QVector<QString> keywordsConferenzaSpecificata = getKeywordsArticoloDaArticoliConferenza(idx);
 
     int percentuale = (keywordsConferenzaSpecificata.size() * 80) / 100;
 
@@ -384,12 +396,11 @@ void Gestore::getConferenzeSimili(QList<Conferenza>& conferenzeSimili, int idx) 
         if(i == idx)
             continue;
          int contaKeywordsUguali = 0;
-         QList<QString> keywordsArticoliInConferenza;
-         getKeywordsArticoloDaArticoliConferenza(i, keywordsArticoliInConferenza);
+         QVector<QString> keywordsArticoliInConferenza = getKeywordsArticoloDaArticoliConferenza(i);
 
-         for (auto it = keywordsArticoliInConferenza.begin(); it != keywordsArticoliInConferenza.end(); it++)
-             for (auto it2 = keywordsConferenzaSpecificata.begin(); it2 != keywordsConferenzaSpecificata.end(); it2++)
-                 if(*it == *it2)
+         for (int j = 0; j < keywordsArticoliInConferenza.size(); j++)
+             for (int k = 0; k < keywordsConferenzaSpecificata.size(); k++)
+                 if(keywordsArticoliInConferenza[i] == keywordsConferenzaSpecificata[j])
                      contaKeywordsUguali++;
 
          if(contaKeywordsUguali >= percentuale)
@@ -397,4 +408,5 @@ void Gestore::getConferenzeSimili(QList<Conferenza>& conferenzeSimili, int idx) 
 
          keywordsArticoliInConferenza.clear();
     }
+    return conferenzeSimili;
 }

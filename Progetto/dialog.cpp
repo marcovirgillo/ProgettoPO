@@ -60,7 +60,7 @@ void Dialog::visualizzaAutore()
     ui->Autore_Nome->setText(autore.getNome());
     ui->Autore_Cognome->setText(autore.getCognome());
 
-    QList<QString> afferenze = autore.getAfferenze();
+    QVector<QString> afferenze = autore.getAfferenze();
     for (auto it = afferenze.begin(); it != afferenze.end(); it++)
         ui->Autore_listAfferenze->addItem(*it);
 }
@@ -73,7 +73,7 @@ void Dialog::visualizzaConferenza()
     ui->Conferenza_Acronimo->setText(conferenza.getAcronimo());
     ui->Conferenza_Luogo->setText(conferenza.getLuogo());
 
-    QList<QString> organizzatori = conferenza.getOrganizzatori();
+    QVector<QString> organizzatori = conferenza.getOrganizzatori();
     for (auto it = organizzatori.begin(); it != organizzatori.end(); it++)
         ui->Conferenza_listOrganizzatori->addItem(*it);
 
@@ -99,7 +99,7 @@ void Dialog::visualizzaArticolo()
 
     ui->Articolo_Identificativo->setText(QString::number(articolo.getIdentificativo()));
     ui->Articolo_Titolo->setText(articolo.getTitolo());
-    QList<QString> keywords = articolo.getKeywords();
+    QVector<QString> keywords = articolo.getKeywords();
     for (auto it = keywords.begin(); it != keywords.end(); it++)
         ui->Articolo_listKeywords->addItem(*it);
     ui->Articolo_NumeroPagine->setValue(articolo.getNumeroPagine());

@@ -75,7 +75,7 @@ void paginaAutore::on_buttonAggiungi_clicked()
         lista_afferenze.sort();
     }
 
-    Autore autore(identificativo, nome, cognome, lista_afferenze);
+    Autore autore(identificativo, nome, cognome, lista_afferenze.toVector());
 
     if(gestore->aggiungiAutore(autore) == true)
     {
@@ -133,7 +133,7 @@ void paginaAutore::on_buttonLeggi_clicked()
                 lista_afferenze.sort();
             }
 
-            Autore autore(identificativo, nome, cognome, lista_afferenze);
+            Autore autore(identificativo, nome, cognome, lista_afferenze.toVector());
             if(gestore->aggiungiAutore(autore) == true)
             {
                 gestore->increaseIdentificativoAutore();

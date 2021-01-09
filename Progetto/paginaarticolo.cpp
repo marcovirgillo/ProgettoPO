@@ -106,7 +106,7 @@ void paginaArticolo::on_buttonAggiungi_clicked()
         if (ui->listArticoliCorrelati->item(i)->checkState() == Qt::Checked)
             articoliCorrelati.push_back(gestore->getArticoli().at(i));
 
-    Articolo articolo(identificativo, titolo, numeroPagine, prezzo, autori, lista_keywords, articoliCorrelati);
+    Articolo articolo(identificativo, titolo, numeroPagine, prezzo, autori, lista_keywords.toVector(), articoliCorrelati);
 
     if(gestore->aggiungiArticolo(articolo) == true)
     {
@@ -247,7 +247,6 @@ void paginaArticolo::on_buttonLeggi_clicked()
             for (auto i = 0; i < lista_idx_autori.size(); i++)
                 autori.push_back(gestore->getAutori().at(lista_idx_autori.at(i).toInt()));
 
-
             QList<QString> lista_idx_articoli;
             if (!parametriArticolo.at(5).isEmpty())
             {
@@ -256,14 +255,14 @@ void paginaArticolo::on_buttonLeggi_clicked()
             }
             QList<Articolo> articoliCorrelati;
             for (auto i = 0; i < lista_idx_articoli.size(); i++)
-                articoliCorrelati.push_back(gestore->getArticoli().at(lista_idx_articoli.at(i).toInt()));
+                 articoliCorrelati.push_back(gestore->getArticoli().at(lista_idx_articoli.at(i).toInt()));
 
             QString pubblicatoPer = parametriArticolo.at(6);
             QString idxConferenza_o_Rivista = parametriArticolo.at(7);
 
             assert(!titolo.isEmpty() && numeroPagine > 0 && !keywords.isEmpty() && prezzo > 0 && (pubblicatoPer == "Rivista" || pubblicatoPer == "Conferenza") && !autori.isEmpty());
 
-            Articolo articolo(identificativo, titolo, numeroPagine, prezzo, autori, lista_keywords,  articoliCorrelati);
+            Articolo articolo(identificativo, titolo, numeroPagine, prezzo, autori, lista_keywords.toVector(), articoliCorrelati);
 
             if(gestore->aggiungiArticolo(articolo) == true)
             {
@@ -367,8 +366,7 @@ void paginaArticolo::on_page2_buttonSeleziona_clicked()
         return;
     }
     int idxAutore = ui->page2_listAutori->currentRow();
-    QList<Articolo> articoli;
-    gestore->getArticoliDiUnAutore(articoli, idxAutore);
+    QList<Articolo> articoli = gestore->getArticoliDiUnAutore(idxAutore);
     if(articoli.isEmpty() == true)
     {
         QMessageBox errore(QMessageBox::Critical, "Error", "L'autore non ha ancora pubblicato articoli", QMessageBox::Ok, this);
@@ -393,8 +391,7 @@ void paginaArticolo::on_buttonVisualizzaArticoliStruttura_clicked()
     clearPage3();
     ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaArticoliStruttura);
     disableRadioButton(ui->buttonVisualizzaArticoliStruttura);
-    QList<QString> strutture;
-    gestore->getStrutture(strutture);
+    QVector<QString> strutture = gestore->getStrutture();
     for(auto it = strutture.begin(); it != strutture.end(); it++)
         ui->page3_listStrutture->addItem(*it);
 }
@@ -416,8 +413,7 @@ void paginaArticolo::on_page3_buttonSeleziona_clicked()
     int idxStruttura = ui->page3_listStrutture->currentRow();
     QListWidgetItem* itemStruttura = ui->page3_listStrutture->item(idxStruttura);
     QString struttura = itemStruttura->text();
-    QList<Articolo> articoli;
-    gestore->getArticoliDiUnaStruttura(articoli, struttura);
+    QList<Articolo> articoli = gestore->getArticoliDiUnaStruttura(struttura);
     if(articoli.isEmpty() == true)
     {
         QMessageBox errore(QMessageBox::Critical, "Error", "I membri di questa struttura non hanno ancora pubblicato articoli", QMessageBox::Ok, this);
@@ -461,8 +457,7 @@ void paginaArticolo::on_page4_buttonSeleziona_clicked()
         return;
     }
     int idxRivista = ui->page4_listRiviste->currentRow();
-    QList<Articolo> articoli;
-    gestore->getArticoliDiUnaRivista(articoli, idxRivista);
+    QList<Articolo> articoli = gestore->getArticoliDiUnaRivista(idxRivista);
     if(articoli.isEmpty() == true)
     {
         QMessageBox errore(QMessageBox::Critical, "Error", "Non sono stati ancora pubblicati articoli per questa rivista", QMessageBox::Ok, this);
@@ -534,7 +529,7 @@ void paginaArticolo::on_buttonVisualizzaKeywordsArticoliGuadagnoMax_clicked()
     ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaKeywordsArticoliGuadagnoMax);
     disableRadioButton(ui->buttonVisualizzaKeywordsArticoliGuadagnoMax);
 
-    QList<QString> keywords;
+    QVector<QString> keywords;
     float guadagnoMax = gestore->getKeywordsCostose(keywords);
     ui->page6_Guadagno->setText(QString::number(guadagnoMax));
     for (auto it = keywords.begin(); it != keywords.end(); it++)
@@ -581,8 +576,7 @@ void paginaArticolo::on_page7_buttonSeleziona_clicked()
         return;
     }
     int idxRivista = ui->page7_listRiviste->currentRow();
-    QList<Articolo> articoli;
-    gestore->getArticoliRivistaOrdinatiPerPrezzo(articoli, idxRivista);
+    QList<Articolo> articoli = gestore->getArticoliRivistaOrdinatiPerPrezzo(idxRivista);
     if(articoli.isEmpty() == true)
     {
         QMessageBox errore(QMessageBox::Critical, "Error", "Non sono stati ancora pubblicati articoli per questa rivista", QMessageBox::Ok, this);
@@ -626,8 +620,7 @@ void paginaArticolo::on_page8_buttonSeleziona_clicked()
         return;
     }
     int idxAutore = ui->page8_listAutori->currentRow();
-    QList<Articolo> articoli;
-    gestore->getArticoliAutoreOrdinatiD6(articoli, idxAutore);
+    QList<Articolo> articoli = gestore->getArticoliAutoreOrdinatiD6(idxAutore);
     if(articoli.isEmpty() == true)
     {
         QMessageBox errore(QMessageBox::Critical, "Error", "L'autore non ha ancora pubblicato articoli", QMessageBox::Ok, this);

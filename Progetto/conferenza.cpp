@@ -19,7 +19,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 
 Conferenza::Conferenza() {}
 
-Conferenza::Conferenza(QString _nome, QString _acronimo, QString _luogo, QString _data, int _numeroPartecipanti, QList<QString> _organizzatori)
+Conferenza::Conferenza(QString _nome, QString _acronimo, QString _luogo, QString _data, int _numeroPartecipanti, QVector<QString> _organizzatori)
 {
     nome = _nome;
     acronimo = _acronimo;
@@ -39,7 +39,7 @@ QString Conferenza::getData() const{ return data; }
 
 int Conferenza::getNumeroPartecipanti() const { return numeroPartecipanti; }
 
-QList<QString> Conferenza::getOrganizzatori() const { return organizzatori; }
+QVector<QString> Conferenza::getOrganizzatori() const { return organizzatori; }
 
 QList<Articolo> Conferenza::getArticoliConferenza() const { return articoliConferenza; }
 
@@ -53,7 +53,7 @@ void Conferenza::setData(QString _data) { data = _data; }
 
 void Conferenza::setNumeroPartecipanti(int _numeroPartecipanti) { numeroPartecipanti = _numeroPartecipanti; }
 
-void Conferenza::setOrganizzatori(QList<QString> _organizzatori) { organizzatori = _organizzatori; }
+void Conferenza::setOrganizzatori(QVector<QString> _organizzatori) { organizzatori = _organizzatori; }
 
 void Conferenza::setArticoloInConferenza(Articolo articolo) { articoliConferenza.push_back(articolo); }
 

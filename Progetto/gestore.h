@@ -24,6 +24,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "articolo.h"
 #include <QString>
 #include <QList>
+#include <QVector>
 #include <climits>
 
 class Gestore
@@ -61,21 +62,20 @@ class Gestore
         bool aggiungiRivista(Rivista rivista);
         bool aggiungiArticolo(Articolo articolo);
 
-        void getArticoliDiUnAutore(QList<Articolo>& articoliAutore, int idxAutore) const;
-        void getStrutture(QList<QString>& strutture) const;
-        void getArticoliDiUnaStruttura(QList<Articolo>& articoliStruttura, QString struttura) const;
-        void getArticoliDiUnaRivista(QList<Articolo>& articoliRivista, int idxRivista) const;
-        int getArticoliCostosiAutore(QList<Articolo>& articoliAutore, int idxAutore) const;
+        QList<Articolo> getArticoliDiUnAutore(int idxAutore) const;
+        QVector<QString> getStrutture() const;
+        QList<Articolo> getArticoliDiUnaStruttura(QString struttura) const;
+        QList<Articolo> getArticoliDiUnaRivista(int idxRivista) const;
+        float getArticoliCostosiAutore(QList<Articolo>& articoliAutore, int idxAutore) const;
         float getGuadagnoAnnualeConferenza(QList<Articolo>& articoliConferenza, int idxConferenza) const;
-        float getKeywordsCostose(QList<QString>& keywordsCostose) const;
+        float getKeywordsCostose(QVector<QString>& keywordsCostose) const;
         float sommaPrezziArticoliStessaKeyword(QString keyword) const;
-        void getArticoliRivistaOrdinatiPerPrezzo(QList<Articolo>& articoliOrdinati, int idxRivista) const;
-        void getArticoliAutoreOrdinatiD6(QList<Articolo>& articoliOrdinati, int idxAutore) const;
-        void getKeywordsArticoloDaArticoliRivista(Rivista rivista, QList<QString>& keywordsRivista) const;
-        void getRivisteSpecialistiche(QList<Rivista>& rivisteSpecialistiche) const;
-        void getKeywordsArticoloDaArticoliConferenza(int idxConferenza, QList<QString>& keywordsConferenza) const;
-        void getConferenzeSimili(QList<Conferenza>& conferenzeSimili, int idx) const;
+        QList<Articolo> getArticoliRivistaOrdinatiPerPrezzo(int idxRivista) const;
+        QList<Articolo> getArticoliAutoreOrdinatiD6(int idxAutore) const;
+        QVector<QString> getKeywordsArticoloDaArticoliRivista(Rivista rivista) const;
+        QList<Rivista> getRivisteSpecialistiche() const;
+        QVector<QString> getKeywordsArticoloDaArticoliConferenza(int idxConferenza) const;
+        QList<Conferenza> getConferenzeSimili(int idx) const;
 
 };
-
 #endif // GESTORE_H

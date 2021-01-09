@@ -21,6 +21,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "autore.h"
 #include <QString>
 #include <QList>
+#include <QVector>
 #include <iostream>
 using namespace std;
 
@@ -32,21 +33,21 @@ class Articolo
         int numeroPagine;
         float prezzo;
         QList<Autore> autori;
-        QList<QString> keywords;
+        QVector<QString> keywords;
         QList<Articolo> articoliCorrelati;
         QString pubblicatoPer;
         int anno;
 
     public:
         Articolo();
-        Articolo(int _identificativo, QString _titolo, int _numeroPagine, float _prezzo, QList<Autore> _autori, QList<QString> _keywords, QList<Articolo> _articoliCorrelati);
+        Articolo(int _identificativo, QString _titolo, int _numeroPagine, float _prezzo, QList<Autore> _autori, QVector<QString> _keywords, QList<Articolo> _articoliCorrelati);
 
         int getIdentificativo() const;
         QString getTitolo() const;
         int getNumeroPagine() const;
         float getPrezzo() const;
         QList<Autore> getAutori() const;
-        QList<QString> getKeywords() const;
+        QVector<QString> getKeywords() const;
         QList<Articolo> getArticoliCorrelati() const;
         QString getPubblicatoPer() const;
         int getAnno() const;
@@ -57,7 +58,8 @@ class Articolo
         void setNumeroPagine(int _numeroPagine);
         void setPrezzo(float _prezzo);
         void setAutori(QList<Autore> _autori);
-        void setKeywords(QList<QString> _keywords);
+        void setArticoliCorrelati(QList<Articolo> _articoliCorrelati);
+        void setKeywords(QVector<QString> _keywords);
         void setPubblicatoPer(QString _pubblicatoPer);
         void setAnno(int _anno);
 

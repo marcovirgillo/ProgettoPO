@@ -19,7 +19,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 
 Articolo::Articolo() {}
 
-Articolo::Articolo(int _identificativo, QString _titolo, int _numeroPagine, float _prezzo, QList<Autore> _autori, QList<QString> _keywords, QList<Articolo> _articoliCorrelati)
+Articolo::Articolo(int _identificativo, QString _titolo, int _numeroPagine, float _prezzo, QList<Autore> _autori, QVector<QString> _keywords, QList<Articolo> _articoliCorrelati)
 {
     identificativo = _identificativo;
     titolo = _titolo;
@@ -40,7 +40,7 @@ float Articolo::getPrezzo() const { return prezzo; }
 
 QList<Autore> Articolo::getAutori() const { return autori; }
 
-QList<QString> Articolo::getKeywords() const { return keywords; }
+QVector<QString> Articolo::getKeywords() const { return keywords; }
 
 QList<Articolo> Articolo::getArticoliCorrelati() const { return articoliCorrelati; }
 
@@ -60,7 +60,9 @@ void Articolo::setPrezzo(float _prezzo) { prezzo = _prezzo; }
 
 void Articolo::setAutori(QList<Autore> _autori) { autori = _autori; }
 
-void Articolo::setKeywords(QList<QString> _keywords) { keywords = _keywords; }
+void Articolo::setArticoliCorrelati(QList<Articolo> _articoliCorrelati) { articoliCorrelati = _articoliCorrelati; }
+
+void Articolo::setKeywords(QVector<QString> _keywords) { keywords = _keywords; }
 
 void Articolo::setPubblicatoPer(QString _pubblicatoPer) { pubblicatoPer = _pubblicatoPer; }
 

@@ -21,6 +21,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "articolo.h"
 #include <QString>
 #include <QList>
+#include <QVector>
 
 class Conferenza
 {
@@ -30,19 +31,19 @@ class Conferenza
         QString luogo;
         QString data;
         int numeroPartecipanti;
-        QList<QString> organizzatori;
+        QVector<QString> organizzatori;
         QList<Articolo> articoliConferenza;
 
     public:
         Conferenza();
-        Conferenza(QString _nome, QString _acronimo, QString _luogo, QString _data, int _numeroPartecipanti, QList<QString> _organizzatori);
+        Conferenza(QString _nome, QString _acronimo, QString _luogo, QString _data, int _numeroPartecipanti, QVector<QString> _organizzatori);
 
         QString getNome() const;
         QString getAcronimo() const;
         QString getLuogo() const;
         QString getData() const;
         int getNumeroPartecipanti() const;
-        QList<QString> getOrganizzatori() const;
+        QVector<QString> getOrganizzatori() const;
         QList<Articolo> getArticoliConferenza() const;
 
         void setNome(QString _nome);
@@ -50,7 +51,7 @@ class Conferenza
         void setLuogo(QString _luogo);
         void setData(QString _data);
         void setNumeroPartecipanti(int _numeroPartecipanti);
-        void setOrganizzatori(QList<QString> _organizzatori);
+        void setOrganizzatori(QVector<QString> _organizzatori);
         void setArticoloInConferenza(Articolo articolo);
 
         bool operator==(const Conferenza& _conferenza) const;

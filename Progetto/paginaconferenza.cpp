@@ -87,7 +87,7 @@ void paginaConferenza::on_buttonAggiungi_clicked()
     QDate data = ui->Data->selectedDate();
     QString data_string = (data.toString(Qt::DateFormat::ISODate));
 
-    Conferenza conferenza(nome, acronimo, luogo, data_string, numeroPartecipanti, lista_organizzatori);
+    Conferenza conferenza(nome, acronimo, luogo, data_string, numeroPartecipanti, lista_organizzatori.toVector());
 
     if(gestore->aggiungiConferenza(conferenza) == true)
     {
@@ -145,7 +145,7 @@ void paginaConferenza::on_buttonLeggi_clicked()
 
             assert(!nome.isEmpty() && !luogo.isEmpty() && !organizzatori.isEmpty() && numeroPartecipanti >= 0);
 
-            Conferenza conferenza(nome, acronimo, luogo, data, numeroPartecipanti, lista_organizzatori);
+            Conferenza conferenza(nome, acronimo, luogo, data, numeroPartecipanti, lista_organizzatori.toVector());
             if(gestore->aggiungiConferenza(conferenza) == true)
             {
                 QString string_conferenza = nome + " - " + "Data " + data;
@@ -273,8 +273,7 @@ void paginaConferenza::on_page3_buttonSeleziona_clicked()
         return;
     }
     int idxConferenza = ui->page3_listConferenze->currentRow();
-    QList<Conferenza> conferenze;
-    gestore->getConferenzeSimili(conferenze, idxConferenza);
+    QList<Conferenza> conferenze = gestore->getConferenzeSimili(idxConferenza);
     if(conferenze.isEmpty() == true)
     {
         QMessageBox errore(QMessageBox::Critical, "Error", "Non sono state trovate conferenze simili a quella selezionata", QMessageBox::Ok, this);

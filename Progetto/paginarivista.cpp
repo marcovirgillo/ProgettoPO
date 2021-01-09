@@ -174,7 +174,6 @@ void paginaRivista::on_buttonVisualizzaRivisteSpecialistiche_clicked()
     ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaRivisteSpecialistiche);
     disableRadioButton(ui->buttonVisualizzaRivisteSpecialistiche);
 
-    QList<Rivista> riviste;
-    gestore->getRivisteSpecialistiche(riviste);
+    QList<Rivista> riviste = gestore->getRivisteSpecialistiche();
     visualizzaRivisteInLista(riviste, ui->page2_listRiviste);
 }

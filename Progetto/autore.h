@@ -20,6 +20,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <QString>
 #include <QList>
+#include <QVector>
 
 class Autore
 {
@@ -27,21 +28,21 @@ class Autore
         int identificativo;
         QString nome;
         QString cognome;
-        QList<QString> afferenze;
+        QVector<QString> afferenze;
 
     public:
         Autore();
-        Autore(int _identificativo, QString _nome, QString _cognome, QList<QString> _afferenze);
+        Autore(int _identificativo, QString _nome, QString _cognome, QVector<QString> _afferenze);
 
         int getIdentificativo() const;
         QString getNome() const;
         QString getCognome() const;
-        QList<QString> getAfferenze() const;
+        QVector<QString> getAfferenze() const;
 
         void setIdentificativo(int _identificativo);
         void setNome(QString _nome);
         void setCognome(QString _cognome);
-        void setAfferenze(QList<QString> _afferenze);
+        void setAfferenze(QVector<QString> _afferenze);
 
         bool operator==(const Autore& _autore) const;
 };

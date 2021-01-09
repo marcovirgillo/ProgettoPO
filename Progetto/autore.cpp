@@ -19,7 +19,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 
 Autore::Autore() {}
 
-Autore::Autore(int _identificativo, QString _nome, QString _cognome, QList<QString> _afferenze)
+Autore::Autore(int _identificativo, QString _nome, QString _cognome, QVector<QString> _afferenze)
 {
     identificativo = _identificativo;
     nome = _nome;
@@ -33,7 +33,7 @@ QString Autore::getNome() const { return nome; }
 
 QString Autore::getCognome() const { return cognome; }
 
-QList<QString> Autore::getAfferenze() const { return afferenze; }
+QVector<QString> Autore::getAfferenze() const { return afferenze; }
 
 void Autore::setIdentificativo(int _identificativo) { identificativo = _identificativo; }
 
@@ -41,7 +41,7 @@ void Autore::setNome(QString _nome) { nome = _nome; }
 
 void Autore::setCognome(QString _cognome) { cognome = _cognome; }
 
-void Autore::setAfferenze(QList<QString> _afferenze) { afferenze = _afferenze; }
+void Autore::setAfferenze(QVector<QString> _afferenze) { afferenze = _afferenze; }
 
 bool Autore::operator==(const Autore& _autore) const
 {

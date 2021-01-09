@@ -45,7 +45,6 @@ private:
     Ui::Dialog *ui;
     Gestore* gestore;
     int idx;
-    Articolo _articolo;
 };
 
 #endif // DIALOG_H

@@ -631,5 +631,3 @@ void paginaArticolo::on_page8_buttonSeleziona_clicked()
 }
 //Fine metodo
 
-
-

@@ -53,6 +53,8 @@ private slots:
 
     void on_buttonVisualizzaRivisteSpecialistiche_clicked();
 
+    void on_page2_buttonIndietro_clicked();
+
 private:
     Ui::paginaRivista *ui;
     Gestore* gestore;

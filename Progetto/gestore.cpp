@@ -86,8 +86,8 @@ int Gestore::getAnnoConferenza(int idx) const
     QString data = conferenze.at(idx).getData();
     QList<QString> data_split = data.split("-");
     int annoConferenza = data_split.at(0).toInt();
-    return annoConferenza;
 
+    return annoConferenza;
 }
 
 int Gestore::getAnnoRivista(int idx) const
@@ -95,6 +95,7 @@ int Gestore::getAnnoRivista(int idx) const
     QString data = riviste.at(idx).getData();
     QList<QString> data_split = data.split("-");
     int annoRivista = data_split.at(0).toInt();
+
     return annoRivista;
 }
 
@@ -229,7 +230,6 @@ float Gestore::getGuadagnoAnnualeConferenza(QList<Articolo>& articoliConferenza,
     float guadagnoTotale = 0.0;
     for (auto it = articoliConferenza.begin(); it != articoliConferenza.end(); it++)
         guadagnoTotale += it->getPrezzo();
-
     return guadagnoTotale;
 }
 

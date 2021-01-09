@@ -177,3 +177,9 @@ void paginaRivista::on_buttonVisualizzaRivisteSpecialistiche_clicked()
     QList<Rivista> riviste = gestore->getRivisteSpecialistiche();
     visualizzaRivisteInLista(riviste, ui->page2_listRiviste);
 }
+
+void paginaRivista::on_page2_buttonIndietro_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->Home);
+     ui->page2_listRiviste->clear();
+}

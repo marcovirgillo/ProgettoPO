@@ -41,10 +41,7 @@ Dialog::Dialog(Gestore* _gestore, QString TipoClasse, int _idx, QWidget *parent)
     if(TipoClasse == "Rivista")
         visualizzaRivista();
     if(TipoClasse == "Articolo")
-    {
-        _articolo = gestore->getArticoli().at(idx);
         visualizzaArticolo();
-    }
 }
 
 Dialog::~Dialog()
@@ -61,8 +58,8 @@ void Dialog::visualizzaAutore()
     ui->Autore_Cognome->setText(autore.getCognome());
 
     QVector<QString> afferenze = autore.getAfferenze();
-    for (auto it = afferenze.begin(); it != afferenze.end(); it++)
-        ui->Autore_listAfferenze->addItem(*it);
+    for (int i = 0; i < afferenze.size(); i++)
+        ui->Autore_listAfferenze->addItem(afferenze[i]);
 }
 
 void Dialog::visualizzaConferenza()
@@ -74,8 +71,8 @@ void Dialog::visualizzaConferenza()
     ui->Conferenza_Luogo->setText(conferenza.getLuogo());
 
     QVector<QString> organizzatori = conferenza.getOrganizzatori();
-    for (auto it = organizzatori.begin(); it != organizzatori.end(); it++)
-        ui->Conferenza_listOrganizzatori->addItem(*it);
+    for (int i = 0; i < organizzatori.size(); i++)
+        ui->Conferenza_listOrganizzatori->addItem(organizzatori[i]);
 
     ui->Conferenza_NumeroPartecipanti->setValue(conferenza.getNumeroPartecipanti());
     ui->Conferenza_Data->setText(conferenza.getData());
@@ -100,8 +97,8 @@ void Dialog::visualizzaArticolo()
     ui->Articolo_Identificativo->setText(QString::number(articolo.getIdentificativo()));
     ui->Articolo_Titolo->setText(articolo.getTitolo());
     QVector<QString> keywords = articolo.getKeywords();
-    for (auto it = keywords.begin(); it != keywords.end(); it++)
-        ui->Articolo_listKeywords->addItem(*it);
+    for (int i = 0; i < keywords.size(); i++)
+        ui->Articolo_listKeywords->addItem(keywords[i]);
     ui->Articolo_NumeroPagine->setValue(articolo.getNumeroPagine());
     ui->Articolo_Prezzo->setValue(articolo.getPrezzo());
 
@@ -148,9 +145,10 @@ void Dialog::on_AutoriArticoli_activated(const QString &arg1)
     if(ui->listAutoriArticoli->count() != 0)
         ui->listAutoriArticoli->clear();
 
+    Articolo articolo = gestore->getArticoli().at(idx);
     if (arg1 == "Autori")
     {
-        QList<Autore> autori = _articolo.getAutori();
+        QList<Autore> autori = articolo.getAutori();
 
         for(auto it = autori.begin(); it != autori.end(); it++)
         {
@@ -160,7 +158,7 @@ void Dialog::on_AutoriArticoli_activated(const QString &arg1)
     }
     else if (arg1 == "Articoli correlati")
     {
-        QList<Articolo> articoliCorrelati = _articolo.getArticoliCorrelati();
+        QList<Articolo> articoliCorrelati = articolo.getArticoliCorrelati();
         for (auto it = articoliCorrelati.begin(); it != articoliCorrelati.end(); it++)
         {
             QString string_articolo = "ID: " + QString::number(it->getIdentificativo()) + " " + it->getTitolo();

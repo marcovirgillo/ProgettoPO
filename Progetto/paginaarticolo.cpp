@@ -23,7 +23,6 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include <QFile>
 #include <QTextStream>
 #include <cassert>
-//#include <QCommonStyle> va incluso per le frecce sui PushButton
 
 //risolvere problema del seleziona premuto in maniera ossessiva nei metodi
 
@@ -361,6 +360,7 @@ void paginaArticolo::on_page2_buttonSeleziona_clicked()
 {
     if(ui->page2_listAutori->currentRow() == -1)
     {
+        ui->page2_listArticoli->clear();
         QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima selezionare un autore", QMessageBox::Ok, this);
         errore.exec();
         return;
@@ -369,10 +369,12 @@ void paginaArticolo::on_page2_buttonSeleziona_clicked()
     QList<Articolo> articoli = gestore->getArticoliDiUnAutore(idxAutore);
     if(articoli.isEmpty() == true)
     {
+        ui->page2_listArticoli->clear();
         QMessageBox errore(QMessageBox::Critical, "Error", "L'autore non ha ancora pubblicato articoli", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
+    ui->page2_listArticoli->clear();
     visualizzaArticoliInLista(articoli, ui->page2_listArticoli);
 }
 //Fine metodo
@@ -406,6 +408,7 @@ void paginaArticolo::on_page3_buttonSeleziona_clicked()
 {
     if(ui->page3_listStrutture->currentRow() == -1)
     {
+        ui->page3_listArticoli->clear();
         QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima selezionare una struttura", QMessageBox::Ok, this);
         errore.exec();
         return;
@@ -416,10 +419,12 @@ void paginaArticolo::on_page3_buttonSeleziona_clicked()
     QList<Articolo> articoli = gestore->getArticoliDiUnaStruttura(struttura);
     if(articoli.isEmpty() == true)
     {
+        ui->page3_listArticoli->clear();
         QMessageBox errore(QMessageBox::Critical, "Error", "I membri di questa struttura non hanno ancora pubblicato articoli", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
+    ui->page3_listArticoli->clear();
     visualizzaArticoliInLista(articoli, ui->page3_listArticoli);
 }
 //Fine metodo
@@ -452,6 +457,7 @@ void paginaArticolo::on_page4_buttonSeleziona_clicked()
 {
     if(ui->page4_listRiviste->currentRow() == -1)
     {
+        ui->page4_listArticoli->clear();
         QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima selezionare una rivista", QMessageBox::Ok, this);
         errore.exec();
         return;
@@ -460,10 +466,12 @@ void paginaArticolo::on_page4_buttonSeleziona_clicked()
     QList<Articolo> articoli = gestore->getArticoliDiUnaRivista(idxRivista);
     if(articoli.isEmpty() == true)
     {
+        ui->page4_listArticoli->clear();
         QMessageBox errore(QMessageBox::Critical, "Error", "Non sono stati ancora pubblicati articoli per questa rivista", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
+    ui->page4_listArticoli->clear();
     visualizzaArticoliInLista(articoli, ui->page4_listArticoli);
 }
 //Fine metodo
@@ -496,6 +504,8 @@ void paginaArticolo::on_page5_buttonSeleziona_clicked()
 {
     if(ui->page5_listAutori->currentRow() == -1)
     {
+        ui->page5_listArticoli->clear();
+        ui->page5_PrezzoPiuAlto->clear();
         QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima selezionare un autore", QMessageBox::Ok, this);
         errore.exec();
         return;
@@ -505,10 +515,13 @@ void paginaArticolo::on_page5_buttonSeleziona_clicked()
     int prezzoPiuAlto = gestore->getArticoliCostosiAutore(articoli, idxAutore);
     if(articoli.isEmpty() == true)
     {
+        ui->page5_listArticoli->clear();
+        ui->page5_PrezzoPiuAlto->clear();
         QMessageBox errore(QMessageBox::Critical, "Error", "L'autore non ha ancora pubblicato articoli", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
+    ui->page5_listArticoli->clear();
     visualizzaArticoliInLista(articoli, ui->page5_listArticoli);
     ui->page5_PrezzoPiuAlto->setText(QString::number(prezzoPiuAlto));
 }
@@ -571,6 +584,7 @@ void paginaArticolo::on_page7_buttonSeleziona_clicked()
 {
     if(ui->page7_listRiviste->currentRow() == -1)
     {
+        ui->page7_listArticoli->clear();
         QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima selezionare una rivista", QMessageBox::Ok, this);
         errore.exec();
         return;
@@ -579,10 +593,12 @@ void paginaArticolo::on_page7_buttonSeleziona_clicked()
     QList<Articolo> articoli = gestore->getArticoliRivistaOrdinatiPerPrezzo(idxRivista);
     if(articoli.isEmpty() == true)
     {
+        ui->page7_listArticoli->clear();
         QMessageBox errore(QMessageBox::Critical, "Error", "Non sono stati ancora pubblicati articoli per questa rivista", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
+    ui->page7_listArticoli->clear();
     visualizzaArticoliInLista(articoli, ui->page7_listArticoli);
 }
 //Fine metodo
@@ -615,6 +631,7 @@ void paginaArticolo::on_page8_buttonSeleziona_clicked()
 {
     if(ui->page8_listAutori->currentRow() == -1)
     {
+        ui->page8_listArticoli->clear();
         QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima selezionare un autore", QMessageBox::Ok, this);
         errore.exec();
         return;
@@ -623,10 +640,12 @@ void paginaArticolo::on_page8_buttonSeleziona_clicked()
     QList<Articolo> articoli = gestore->getArticoliAutoreOrdinatiD6(idxAutore);
     if(articoli.isEmpty() == true)
     {
+        ui->page8_listArticoli->clear();
         QMessageBox errore(QMessageBox::Critical, "Error", "L'autore non ha ancora pubblicato articoli", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
+    ui->page8_listArticoli->clear();
     visualizzaArticoliInLista(articoli, ui->page8_listArticoli);
 }
 //Fine metodo

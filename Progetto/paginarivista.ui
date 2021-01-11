@@ -169,9 +169,9 @@
     <widget class="QListWidget" name="listRiviste">
      <property name="geometry">
       <rect>
-       <x>490</x>
+       <x>430</x>
        <y>50</y>
-       <width>260</width>
+       <width>331</width>
        <height>380</height>
       </rect>
      </property>
@@ -179,7 +179,7 @@
     <widget class="QLabel" name="labelRivisteInserite">
      <property name="geometry">
       <rect>
-       <x>490</x>
+       <x>430</x>
        <y>30</y>
        <width>91</width>
        <height>16</height>
@@ -205,7 +205,7 @@
     <widget class="QPushButton" name="buttonLeggi">
      <property name="geometry">
       <rect>
-       <x>850</x>
+       <x>860</x>
        <y>90</y>
        <width>91</width>
        <height>31</height>
@@ -218,7 +218,7 @@
     <widget class="QLabel" name="labelLeggiDaFile">
      <property name="geometry">
       <rect>
-       <x>830</x>
+       <x>840</x>
        <y>40</y>
        <width>131</width>
        <height>16</height>
@@ -231,7 +231,7 @@
     <widget class="QLineEdit" name="Percorso">
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>60</y>
        <width>231</width>
        <height>21</height>
@@ -241,7 +241,7 @@
     <widget class="QRadioButton" name="buttonVisualizzaRivisteSpecialistiche">
      <property name="geometry">
       <rect>
-       <x>490</x>
+       <x>430</x>
        <y>440</y>
        <width>231</width>
        <height>20</height>
@@ -258,8 +258,8 @@
       <rect>
        <x>380</x>
        <y>150</y>
-       <width>281</width>
-       <height>401</height>
+       <width>350</width>
+       <height>370</height>
       </rect>
      </property>
     </widget>

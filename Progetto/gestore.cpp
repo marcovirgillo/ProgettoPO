@@ -233,7 +233,6 @@ float Gestore::getGuadagnoAnnualeConferenza(QList<Articolo>& articoliConferenza,
     return guadagnoTotale;
 }
 
-//data una keyword, restituisce la somma dei prezzi degli articoli con quella keyword
 float Gestore::sommaPrezziArticoliStessaKeyword(QString keyword) const
 {
     float sommaPrezzi = 0;
@@ -242,7 +241,6 @@ float Gestore::sommaPrezziArticoliStessaKeyword(QString keyword) const
             sommaPrezzi += it->getPrezzo();
     return sommaPrezzi;
 }
-
 
 float Gestore::getKeywordsCostose(QVector<QString>& keywordsCostose) const
 {
@@ -291,7 +289,7 @@ QList<Articolo> Gestore::getArticoliRivistaOrdinatiPerPrezzo(int idxRivista) con
     return articoliOrdinati;
 }
 
-bool ordinaArticoliD6(Articolo articolo1, Articolo articolo2)
+bool ordinaArticoliD6(Articolo articolo1, Articolo articolo2) // funzione compara da passare al sort per l'ordinamento richiesto nel metodo D 6
 {
     if(articolo1.getAnno() < articolo2.getAnno())
         return true;
@@ -305,7 +303,6 @@ bool ordinaArticoliD6(Articolo articolo1, Articolo articolo2)
     return false;
 }
 
-//void Gestore::getArticoliAutoreOrdinatiD6(QList<Articolo>& articoliOrdinati, int idxAutore) const
 QList<Articolo> Gestore::getArticoliAutoreOrdinatiD6(int idxAutore) const
 {
      QList<Articolo> articoliOrdinati = getArticoliDiUnAutore(idxAutore);
@@ -314,8 +311,7 @@ QList<Articolo> Gestore::getArticoliAutoreOrdinatiD6(int idxAutore) const
      return articoliOrdinati;
 }
 
-//dato l'indice di una conferenza, restituisce le keywords relative agli articoli di quella conferenza
-QVector<QString> Gestore::getKeywordsArticoloDaArticoliRivista(Rivista rivista) const
+QVector<QString> Gestore::getKeywordsArticoliRivista(Rivista rivista) const
 {
     QVector<QString> keywordsRivista;
     QList<Articolo> articoliRivistaSpecificata = rivista.getArticoliRivista();
@@ -335,12 +331,12 @@ QList<Rivista> Gestore::getRivisteSpecialistiche() const
     QList<Rivista> rivisteSpecialistiche;
     for (int i = 0; i < riviste.size(); i++)
     {
-        QVector<QString> keywordsRivista1 = getKeywordsArticoloDaArticoliRivista(riviste.at(i));
+        QVector<QString> keywordsRivista1 = getKeywordsArticoliRivista(riviste.at(i));
         for(int j = 0; j < riviste.size(); j++)
         {
             if(j != i)
             {
-                QVector<QString> keywordsRivista2 = getKeywordsArticoloDaArticoliRivista(riviste.at(i));
+                QVector<QString> keywordsRivista2 = getKeywordsArticoliRivista(riviste.at(i));
                 bool check = true;
                 for (int k = 0; k < keywordsRivista1.size(); k++)
                 {
@@ -367,9 +363,7 @@ QList<Rivista> Gestore::getRivisteSpecialistiche() const
     return rivisteSpecialistiche;
 }
 
-
-//dato l'indice di una conferenza, restituisce le keywords relative agli articoli di quella conferenza
-QVector<QString> Gestore::getKeywordsArticoloDaArticoliConferenza(int idxConferenza) const
+QVector<QString> Gestore::getKeywordsArticoliConferenza(int idxConferenza) const
 {
     QVector<QString> keywordsConferenza;
     QList<Articolo> articoliConferenzaSpecificata = conferenze.at(idxConferenza).getArticoliConferenza();
@@ -387,26 +381,29 @@ QVector<QString> Gestore::getKeywordsArticoloDaArticoliConferenza(int idxConfere
 QList<Conferenza> Gestore::getConferenzeSimili(int idx) const
 {
     QList<Conferenza> conferenzeSimili;
-    QVector<QString> keywordsConferenzaSpecificata = getKeywordsArticoloDaArticoliConferenza(idx);
-
-    int percentuale = (keywordsConferenzaSpecificata.size() * 80) / 100;
+    QVector<QString> keywordsConferenzaSpecificata = getKeywordsArticoliConferenza(idx);
+    QVector<QString> keywordsTotali;
 
     for(int i = 0; i < conferenze.size(); i++)
     {
         if(i == idx)
             continue;
-         int contaKeywordsUguali = 0;
-         QVector<QString> keywordsArticoliInConferenza = getKeywordsArticoloDaArticoliConferenza(i);
+        float contaKeywordsUguali = 0;
 
-         for (int j = 0; j < keywordsArticoliInConferenza.size(); j++)
-             for (int k = 0; k < keywordsConferenzaSpecificata.size(); k++)
-                 if(keywordsArticoliInConferenza[i] == keywordsConferenzaSpecificata[j])
-                     contaKeywordsUguali++;
+        keywordsTotali = keywordsConferenzaSpecificata;
+        QVector<QString> keywordsArticoliInConferenza = getKeywordsArticoliConferenza(i);
+        for (int j = 0; j < keywordsArticoliInConferenza.size(); j++)
+            if(keywordsTotali.indexOf(keywordsArticoliInConferenza[j]) == -1)
+                keywordsTotali.push_back(keywordsArticoliInConferenza[j]);
 
-         if(contaKeywordsUguali >= percentuale)
-             conferenzeSimili.push_back(conferenze.at(i));
+        for(int j = 0; j < keywordsTotali.size(); j++)
+            if(keywordsConferenzaSpecificata.indexOf(keywordsTotali[j]) != -1 && keywordsArticoliInConferenza.indexOf(keywordsTotali[j]) != -1)
+                contaKeywordsUguali++;
 
-         keywordsArticoliInConferenza.clear();
+        if(((contaKeywordsUguali / keywordsTotali.size()) * 100) >= 80)
+            conferenzeSimili.push_back(conferenze.at(i));
+
+        keywordsTotali.clear();
     }
     return conferenzeSimili;
 }

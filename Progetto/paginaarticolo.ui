@@ -124,9 +124,9 @@
     <widget class="QListWidget" name="listArticoli">
      <property name="geometry">
       <rect>
-       <x>490</x>
+       <x>430</x>
        <y>50</y>
-       <width>260</width>
+       <width>341</width>
        <height>380</height>
       </rect>
      </property>
@@ -240,7 +240,7 @@
     <widget class="QLabel" name="labelArticoliInseriti">
      <property name="geometry">
       <rect>
-       <x>490</x>
+       <x>430</x>
        <y>30</y>
        <width>91</width>
        <height>20</height>
@@ -253,7 +253,7 @@
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>490</x>
+       <x>430</x>
        <y>440</y>
        <width>494</width>
        <height>191</height>
@@ -327,7 +327,7 @@
     <widget class="QLineEdit" name="Percorso">
      <property name="geometry">
       <rect>
-       <x>780</x>
+       <x>790</x>
        <y>60</y>
        <width>231</width>
        <height>21</height>
@@ -337,7 +337,7 @@
     <widget class="QPushButton" name="buttonLeggi">
      <property name="geometry">
       <rect>
-       <x>850</x>
+       <x>860</x>
        <y>90</y>
        <width>91</width>
        <height>31</height>
@@ -350,7 +350,7 @@
     <widget class="QLabel" name="labelLeggiDaFile">
      <property name="geometry">
       <rect>
-       <x>830</x>
+       <x>840</x>
        <y>40</y>
        <width>131</width>
        <height>16</height>
@@ -367,7 +367,7 @@
       <rect>
        <x>570</x>
        <y>150</y>
-       <width>275</width>
+       <width>350</width>
        <height>370</height>
       </rect>
      </property>
@@ -377,8 +377,8 @@
       <rect>
        <x>150</x>
        <y>150</y>
-       <width>281</width>
-       <height>371</height>
+       <width>311</width>
+       <height>381</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -466,8 +466,8 @@
       <rect>
        <x>550</x>
        <y>150</y>
-       <width>279</width>
-       <height>358</height>
+       <width>350</width>
+       <height>370</height>
       </rect>
      </property>
     </widget>
@@ -476,8 +476,8 @@
       <rect>
        <x>130</x>
        <y>150</y>
-       <width>281</width>
-       <height>361</height>
+       <width>291</width>
+       <height>381</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_7">
@@ -539,7 +539,7 @@
       <rect>
        <x>570</x>
        <y>150</y>
-       <width>275</width>
+       <width>331</width>
        <height>370</height>
       </rect>
      </property>
@@ -562,8 +562,8 @@
       <rect>
        <x>150</x>
        <y>150</y>
-       <width>281</width>
-       <height>371</height>
+       <width>311</width>
+       <height>381</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -638,8 +638,8 @@
       <rect>
        <x>150</x>
        <y>150</y>
-       <width>281</width>
-       <height>371</height>
+       <width>311</width>
+       <height>381</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -660,7 +660,7 @@
       <rect>
        <x>570</x>
        <y>150</y>
-       <width>275</width>
+       <width>350</width>
        <height>370</height>
       </rect>
      </property>
@@ -776,7 +776,7 @@
       <rect>
        <x>470</x>
        <y>180</y>
-       <width>275</width>
+       <width>291</width>
        <height>370</height>
       </rect>
      </property>
@@ -827,7 +827,7 @@
       <rect>
        <x>570</x>
        <y>150</y>
-       <width>275</width>
+       <width>350</width>
        <height>370</height>
       </rect>
      </property>
@@ -837,8 +837,8 @@
       <rect>
        <x>170</x>
        <y>150</y>
-       <width>281</width>
-       <height>371</height>
+       <width>311</width>
+       <height>381</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -900,7 +900,7 @@
       <rect>
        <x>570</x>
        <y>150</y>
-       <width>275</width>
+       <width>350</width>
        <height>370</height>
       </rect>
      </property>
@@ -936,7 +936,7 @@
       <rect>
        <x>180</x>
        <y>20</y>
-       <width>691</width>
+       <width>681</width>
        <height>31</height>
       </rect>
      </property>
@@ -944,6 +944,9 @@
       <string>Visualizzare gli articoli relativi a un autore, ordinati per anno crescente, a parità di anno,
 ordinati per prezzo decrescente e a parità di prezzo ordinati in ordine alfabetico per la prima keyword nella lista*
 </string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="page8_labelListAutori">
@@ -964,8 +967,8 @@ ordinati per prezzo decrescente e a parità di prezzo ordinati in ordine alfabet
       <rect>
        <x>150</x>
        <y>150</y>
-       <width>281</width>
-       <height>371</height>
+       <width>311</width>
+       <height>381</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_10">

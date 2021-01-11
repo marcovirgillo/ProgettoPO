@@ -191,7 +191,7 @@ void paginaConferenza::visualizzaConferenzeInLista(QList<Conferenza> conferenze,
 
 //Fine inserimento e visualizzazione conferenza
 
-//Sezione C - Visualizzare il guadagno annuale di una rivista calcolato come la somma dei prezzi degli articoli presentati per quella rivista in un anno
+//Sezione C - Visualizzare il guadagno annuale di una conferenza calcolato come la somma dei prezzi degli articoli presentati per quella rivista in un anno
 void paginaConferenza::clearPage2()
 {
     ui->page2_listConferenze->clear();
@@ -221,6 +221,8 @@ void paginaConferenza::on_page2_buttonSeleziona_clicked()
 {
     if(ui->page2_listConferenze->currentRow() == -1)
     {
+        ui->page2_listArticoli->clear();
+        ui->page2_GuadagnoTotale->clear();
         QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima selezionare una conferenza", QMessageBox::Ok, this);
         errore.exec();
         return;
@@ -230,10 +232,13 @@ void paginaConferenza::on_page2_buttonSeleziona_clicked()
     float GuadagnoTotale = gestore->getGuadagnoAnnualeConferenza(articoli, idxConferenza);
     if(articoli.isEmpty() == true)
     {
+        ui->page2_listArticoli->clear();
+        ui->page2_GuadagnoTotale->clear();
         QMessageBox errore(QMessageBox::Critical, "Error", "Non sono stati ancora pubblicati articoli per questa conferenza", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
+    ui->page2_listArticoli->clear();
     visualizzaArticoliInLista(articoli, ui->page2_listArticoli);
     ui->page2_GuadagnoTotale->setText(QString::number(GuadagnoTotale));
 }
@@ -268,6 +273,7 @@ void paginaConferenza::on_page3_buttonSeleziona_clicked()
 {
     if(ui->page3_listConferenze->currentRow() == -1)
     {
+        ui->page3_listConferenzeSimili->clear();
         QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima selezionare una conferenza", QMessageBox::Ok, this);
         errore.exec();
         return;
@@ -276,10 +282,12 @@ void paginaConferenza::on_page3_buttonSeleziona_clicked()
     QList<Conferenza> conferenze = gestore->getConferenzeSimili(idxConferenza);
     if(conferenze.isEmpty() == true)
     {
+        ui->page3_listConferenzeSimili->clear();
         QMessageBox errore(QMessageBox::Critical, "Error", "Non sono state trovate conferenze simili a quella selezionata", QMessageBox::Ok, this);
         errore.exec();
         return;
     }
+    ui->page3_listConferenzeSimili->clear();
     visualizzaConferenzeInLista(conferenze, ui->page3_listConferenzeSimili);
 }
 //Fine metodo

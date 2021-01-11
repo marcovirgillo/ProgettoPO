@@ -47,35 +47,36 @@ class Gestore
 
         int getCurrentIdentificativoAutore() const;
         int getCurrentIdentificativoArticolo() const;
-        void increaseIdentificativoAutore();
-        void increaseIdentificativoArticolo();
+        void increaseIdentificativoAutore(); //incrementa l'ID di un autore dopo l'inserimento
+        void increaseIdentificativoArticolo(); //incrementa l'ID di un articolo dopo l'inserimento
 
         void setArticoloPubblicatoPer(Articolo articolo, QString pubblicatoPer);
         void setArticoloInConferenza(int idx, Articolo articolo);
         void setArticoloInRivista(int idx, Articolo articolo);
 
-        int getAnnoConferenza(int idx) const;
-        int getAnnoRivista(int idx) const;
+        int getAnnoConferenza(int idx) const; //metodo che ritorna l'anno di una conferenza specificata
+        int getAnnoRivista(int idx) const; //metodo che ritorna l'anno di una rivista specificata
 
+        // Metodi per l'aggiunta dei dati:
         bool aggiungiAutore(Autore autore);
         bool aggiungiConferenza(Conferenza conferenza);
         bool aggiungiRivista(Rivista rivista);
         bool aggiungiArticolo(Articolo articolo);
 
-        QList<Articolo> getArticoliDiUnAutore(int idxAutore) const;
-        QVector<QString> getStrutture() const;
-        QList<Articolo> getArticoliDiUnaStruttura(QString struttura) const;
-        QList<Articolo> getArticoliDiUnaRivista(int idxRivista) const;
-        float getArticoliCostosiAutore(QList<Articolo>& articoliAutore, int idxAutore) const;
-        float getGuadagnoAnnualeConferenza(QList<Articolo>& articoliConferenza, int idxConferenza) const;
-        float getKeywordsCostose(QVector<QString>& keywordsCostose) const;
-        float sommaPrezziArticoliStessaKeyword(QString keyword) const;
-        QList<Articolo> getArticoliRivistaOrdinatiPerPrezzo(int idxRivista) const;
-        QList<Articolo> getArticoliAutoreOrdinatiD6(int idxAutore) const;
-        QVector<QString> getKeywordsArticoloDaArticoliRivista(Rivista rivista) const;
-        QList<Rivista> getRivisteSpecialistiche() const;
-        QVector<QString> getKeywordsArticoloDaArticoliConferenza(int idxConferenza) const;
-        QList<Conferenza> getConferenzeSimili(int idx) const;
+        QList<Articolo> getArticoliDiUnAutore(int idxAutore) const; // Sezione B - 1
+        QVector<QString> getStrutture() const; // metodo ausiliario che ritorna le strutture (afferenze) caricate
+        QList<Articolo> getArticoliDiUnaStruttura(QString struttura) const; // Sezione B - 3
+        QList<Articolo> getArticoliDiUnaRivista(int idxRivista) const; // Sezione B - 5
+        float getArticoliCostosiAutore(QList<Articolo>& articoliAutore, int idxAutore) const; // Sezione C - 2
+        float getGuadagnoAnnualeConferenza(QList<Articolo>& articoliConferenza, int idxConferenza) const; // Sezione C - 4
+        float getKeywordsCostose(QVector<QString>& keywordsCostose) const; // Sezione C - 6 *
+        float sommaPrezziArticoliStessaKeyword(QString keyword) const; // metodo ausiliario che data una keyword, restituisce la somma dei prezzi degli articoli con quella keyword
+        QList<Articolo> getArticoliRivistaOrdinatiPerPrezzo(int idxRivista) const; // Sezione D - 4
+        QList<Articolo> getArticoliAutoreOrdinatiD6(int idxAutore) const; // Sezione D - 6 *
+        QVector<QString> getKeywordsArticoliRivista(Rivista rivista) const; // metodo ausiliario che ritorna le keywords degli articoli di una rivista specificata
+        QList<Rivista> getRivisteSpecialistiche() const; // Sezione E - 6 *
+        QVector<QString> getKeywordsArticoliConferenza(int idxConferenza) const; // metodo ausiliario che ritorna le keywords degli articoli di una conferenza specificata
+        QList<Conferenza> getConferenzeSimili(int idx) const; // Sezione F - 5 **
 
 };
 #endif // GESTORE_H

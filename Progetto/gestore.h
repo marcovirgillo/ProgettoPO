@@ -53,6 +53,7 @@ class Gestore
         void setArticoloPubblicatoPer(Articolo articolo, QString pubblicatoPer);
         void setArticoloInConferenza(int idx, Articolo articolo);
         void setArticoloInRivista(int idx, Articolo articolo);
+        void setAnnoArticolo(int idx, int anno);
 
         int getAnnoConferenza(int idx) const; //metodo che ritorna l'anno di una conferenza specificata
         int getAnnoRivista(int idx) const; //metodo che ritorna l'anno di una rivista specificata

@@ -102,6 +102,8 @@ void Dialog::visualizzaArticolo()
     ui->Articolo_NumeroPagine->setValue(articolo.getNumeroPagine());
     ui->Articolo_Prezzo->setValue(articolo.getPrezzo());
 
+    ui->lineEdit->setText(QString::number(articolo.getAnno()));
+
     if(articolo.getPubblicatoPer() == "Conferenza")
     {
         QList<Conferenza> conferenze = gestore->getConferenze();

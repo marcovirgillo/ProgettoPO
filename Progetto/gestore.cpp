@@ -69,6 +69,17 @@ void Gestore::setArticoloInRivista(int idx, Articolo articolo)
     }
 }
 
+void Gestore::setAnnoArticolo(int idx, int anno)
+{
+    int i = 0;
+    for(auto it = articoli.begin(); it != articoli.end(); it++)
+    {
+        if (i == idx)
+            it->setAnno(anno);
+        i++;
+    }
+}
+
 int Gestore::getAnnoConferenza(int idx) const
 {
     QString data = conferenze.at(idx).getData();
@@ -396,7 +407,6 @@ QList<Conferenza> Gestore::getConferenzeSimili(int idx) const
     return conferenzeSimili;
 }
 
-
 QList<Articolo> Gestore::getArticoliInfluenzati(int idxArticolo) const
 {
     Articolo articolo = articoli.at(idxArticolo);
@@ -411,20 +421,28 @@ QList<Articolo> Gestore::getArticoliInfluenzati(int idxArticolo) const
         articoliCorrelati = articoli.at(i).getArticoliCorrelati();
 
         for (auto it = articoliCorrelati.begin(); it != articoliCorrelati.end(); it++)
-            if(it->getIdentificativo() == articolo.getIdentificativo() && articolo.getAnno() < articoli.at(i).getAnno())
+            if(articolo.getIdentificativo() == it->getIdentificativo() && articolo.getAnno() < articoli.at(i).getAnno())
+             {
+                //qDebug() << articolo.getIdentificativo() <<" " << it->getIdentificativo() << " " << articolo.getAnno() << " " << articoli.at(i).getAnno() << "\n";
                 if(articoliInfluenzati.indexOf(articoli.at(i)) == -1)
                     articoliInfluenzati.push_back(articoli.at(i));
+             }
 
         articoliCorrelati.clear();
     }
+
+    articoliCorrelati.clear();
 
     for(int i = 0; i < articoliInfluenzati.size(); i++)
     {
         for (auto it = articoli.begin(); it != articoli.end(); it++)
         {
+            if(articoliInfluenzati.at(i).getIdentificativo() == it->getIdentificativo())
+                continue;
+
             articoliCorrelati = it->getArticoliCorrelati();
             for (auto it2 = articoliCorrelati.begin(); it2 != articoliCorrelati.end(); it2++)
-                if(it2->getIdentificativo() == articoliInfluenzati.at(i).getIdentificativo() && articoliInfluenzati.at(i).getAnno() < it->getAnno())
+                if(articoliInfluenzati.at(i).getIdentificativo() == it2->getIdentificativo() && articoliInfluenzati.at(i).getAnno() < it->getAnno())
                     if(articoliInfluenzati.indexOf(*it) == -1)
                         articoliInfluenzati.push_back(*it);
 

@@ -115,7 +115,7 @@ void paginaArticolo::on_buttonAggiungi_clicked()
             gestore->setArticoloInConferenza(idx, articolo);
             gestore->setArticoloPubblicatoPer(articolo, "Conferenza");
             int annoConferenza = gestore->getAnnoConferenza(idx);
-            articolo.setAnno(annoConferenza);
+            gestore->setAnnoArticolo(articolo.getIdentificativo(), annoConferenza);
         }
         else if(ui->buttonRiviste->isChecked())
         {
@@ -123,7 +123,7 @@ void paginaArticolo::on_buttonAggiungi_clicked()
             gestore->setArticoloInRivista(idx, articolo);
             gestore->setArticoloPubblicatoPer(articolo, "Rivista");
             int annoRivista = gestore->getAnnoRivista(idx);
-            articolo.setAnno(annoRivista);
+            gestore->setAnnoArticolo(articolo.getIdentificativo(), annoRivista);
         }
         gestore->increaseIdentificativoArticolo();
         QMessageBox::information(this, "Success", "Aticolo aggiunto con successo!", QMessageBox::Ok);
@@ -271,7 +271,7 @@ void paginaArticolo::on_buttonLeggi_clicked()
                     gestore->setArticoloPubblicatoPer(articolo, "Conferenza");
 
                     int annoConferenza = gestore->getAnnoConferenza(idxConferenza_o_Rivista.toInt());
-                    articolo.setAnno(annoConferenza);
+                    gestore->setAnnoArticolo(articolo.getIdentificativo(), annoConferenza);
                 }
                 else if(pubblicatoPer == "Rivista")
                 {
@@ -279,7 +279,7 @@ void paginaArticolo::on_buttonLeggi_clicked()
                     gestore->setArticoloPubblicatoPer(articolo, "Rivista");
 
                     int annoRivista = gestore->getAnnoRivista(idxConferenza_o_Rivista.toInt());
-                    articolo.setAnno(annoRivista);
+                    gestore->setAnnoArticolo(articolo.getIdentificativo(), annoRivista);
                 }
 
                 gestore->increaseIdentificativoArticolo();
@@ -654,7 +654,7 @@ void paginaArticolo::on_page8_buttonSeleziona_clicked()
 void paginaArticolo::clearPage9()
 {
     ui->page9_listArticoliInseriti->clear();
-    ui->page9_labelListArticoliInfluenzati->clear();
+    ui->page9_listArticoliInfluenzati->clear();
 }
 
 void paginaArticolo::on_buttonVisualizzaArticoliInfluenzati_clicked()
@@ -694,4 +694,4 @@ void paginaArticolo::on_page9_buttonSeleziona_clicked()
     ui->page9_listArticoliInfluenzati->clear();
     visualizzaArticoliInLista(articoli, ui->page9_listArticoliInfluenzati);
 }
-
+//Fine metodo

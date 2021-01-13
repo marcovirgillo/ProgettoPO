@@ -494,6 +494,16 @@
       </rect>
      </property>
     </widget>
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>560</x>
+       <y>240</y>
+       <width>113</width>
+       <height>21</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="detailsConferenza">
     <widget class="QLineEdit" name="Conferenza_Acronimo">

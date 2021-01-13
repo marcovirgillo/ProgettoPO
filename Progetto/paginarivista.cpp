@@ -21,6 +21,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include <QtGlobal>
 #include <QFile>
 #include <QTextStream>
+#include <QDebug>
 
 paginaRivista::paginaRivista(Gestore* _gestore, QWidget *parent) :
     QWidget(parent),

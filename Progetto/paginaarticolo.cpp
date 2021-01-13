@@ -650,3 +650,48 @@ void paginaArticolo::on_page8_buttonSeleziona_clicked()
 }
 //Fine metodo
 
+// Sezione F - Visualizzare tutti gli articoli influenzati da un dato articolo*
+void paginaArticolo::clearPage9()
+{
+    ui->page9_listArticoliInseriti->clear();
+    ui->page9_labelListArticoliInfluenzati->clear();
+}
+
+void paginaArticolo::on_buttonVisualizzaArticoliInfluenzati_clicked()
+{
+    if (listArticoliVuota(ui->buttonVisualizzaArticoliInfluenzati) == true)
+        return;
+    clearPage9();
+    ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaArticoliInfluenzati);
+    disableRadioButton(ui->buttonVisualizzaArticoliInfluenzati);
+    visualizzaArticoliInLista(gestore->getArticoli(), ui->page9_listArticoliInseriti);
+}
+
+void paginaArticolo::on_page9_buttonIndietro_clicked()
+{
+    ui->stackedWidget->setCurrentWidget(ui->Home);
+    clearPage9();
+}
+
+void paginaArticolo::on_page9_buttonSeleziona_clicked()
+{
+    if(ui->page9_listArticoliInseriti->currentRow() == -1)
+    {
+        ui->page9_listArticoliInseriti->clear();
+        QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima selezionare un articolo", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+    int idxArticolo = ui->page9_listArticoliInseriti->currentRow();
+    QList<Articolo> articoli = gestore->getArticoliInfluenzati(idxArticolo);
+    if(articoli.isEmpty() == true)
+    {
+        ui->page9_listArticoliInfluenzati->clear();
+        QMessageBox errore(QMessageBox::Critical, "Error", "L'articolo selezionato non influenza nessun articolo", QMessageBox::Ok, this);
+        errore.exec();
+        return;
+    }
+    ui->page9_listArticoliInfluenzati->clear();
+    visualizzaArticoliInLista(articoli, ui->page9_listArticoliInfluenzati);
+}
+

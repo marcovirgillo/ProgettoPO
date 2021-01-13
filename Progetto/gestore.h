@@ -77,6 +77,7 @@ class Gestore
         QList<Rivista> getRivisteSpecialistiche() const; // Sezione E - 6 *
         QVector<QString> getKeywordsArticoliConferenza(int idxConferenza) const; // metodo ausiliario che ritorna le keywords degli articoli di una conferenza specificata
         QList<Conferenza> getConferenzeSimili(int idx) const; // Sezione F - 5 **
+        QList<Articolo> getArticoliInfluenzati(int idxArticolo) const;
 
 };
 #endif // GESTORE_H

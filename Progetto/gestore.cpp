@@ -32,25 +32,13 @@ QList<Rivista> Gestore::getRiviste() const { return riviste; }
 
 QList<Articolo> Gestore::getArticoli() const { return articoli; }
 
-int Gestore::getCurrentIdentificativoAutore() const
-{
-    return identificativoAutore;
-}
+int Gestore::getCurrentIdentificativoAutore() const { return identificativoAutore; }
 
-int Gestore::getCurrentIdentificativoArticolo() const
-{
-    return identificativoArticolo;
-}
+int Gestore::getCurrentIdentificativoArticolo() const { return identificativoArticolo; }
 
-void Gestore::increaseIdentificativoAutore()
-{
-    identificativoAutore++;
-}
+void Gestore::increaseIdentificativoAutore() { identificativoAutore++; }
 
-void Gestore::increaseIdentificativoArticolo()
-{
-    identificativoArticolo++;
-}
+void Gestore::increaseIdentificativoArticolo() { identificativoArticolo++; }
 
 void Gestore::setArticoloPubblicatoPer(Articolo articolo, QString pubblicatoPer)
 {
@@ -336,11 +324,11 @@ QList<Rivista> Gestore::getRivisteSpecialistiche() const
         {
             if(j != i)
             {
-                QVector<QString> keywordsRivista2 = getKeywordsArticoliRivista(riviste.at(i));
+                QVector<QString> keywordsRivista2 = getKeywordsArticoliRivista(riviste.at(j));
                 bool check = true;
                 for (int k = 0; k < keywordsRivista1.size(); k++)
                 {
-                    if(keywordsRivista2.indexOf(keywordsRivista1[k]) != -1)
+                    if(keywordsRivista2.indexOf(keywordsRivista1[k]) == -1)
                     {
                         check = false;
                         break;
@@ -406,4 +394,42 @@ QList<Conferenza> Gestore::getConferenzeSimili(int idx) const
         keywordsTotali.clear();
     }
     return conferenzeSimili;
+}
+
+
+QList<Articolo> Gestore::getArticoliInfluenzati(int idxArticolo) const
+{
+    Articolo articolo = articoli.at(idxArticolo);
+    QList<Articolo> articoliCorrelati;
+    QList<Articolo> articoliInfluenzati;
+
+    for (int i = 0; i < articoli.size(); i++)
+    {
+        if(i == idxArticolo)
+            continue;
+
+        articoliCorrelati = articoli.at(i).getArticoliCorrelati();
+
+        for (auto it = articoliCorrelati.begin(); it != articoliCorrelati.end(); it++)
+            if(it->getIdentificativo() == articolo.getIdentificativo() && articolo.getAnno() < articoli.at(i).getAnno())
+                if(articoliInfluenzati.indexOf(articoli.at(i)) == -1)
+                    articoliInfluenzati.push_back(articoli.at(i));
+
+        articoliCorrelati.clear();
+    }
+
+    for(int i = 0; i < articoliInfluenzati.size(); i++)
+    {
+        for (auto it = articoli.begin(); it != articoli.end(); it++)
+        {
+            articoliCorrelati = it->getArticoliCorrelati();
+            for (auto it2 = articoliCorrelati.begin(); it2 != articoliCorrelati.end(); it2++)
+                if(it2->getIdentificativo() == articoliInfluenzati.at(i).getIdentificativo() && articoliInfluenzati.at(i).getAnno() < it->getAnno())
+                    if(articoliInfluenzati.indexOf(*it) == -1)
+                        articoliInfluenzati.push_back(*it);
+
+            articoliCorrelati.clear();
+        }
+    }
+    return articoliInfluenzati;
 }

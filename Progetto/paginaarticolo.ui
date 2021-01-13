@@ -309,6 +309,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QRadioButton" name="buttonVisualizzaArticoliInfluenzati">
+        <property name="text">
+         <string>Visualizza articoli influenzati</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
     <widget class="QLabel" name="labelTitolo_2">
@@ -942,7 +949,7 @@
      </property>
      <property name="text">
       <string>Visualizzare gli articoli relativi a un autore, ordinati per anno crescente, a parità di anno,
-ordinati per prezzo decrescente e a parità di prezzo ordinati in ordine alfabetico per la prima keyword nella lista*
+ordinati per prezzo decrescente e a parità di prezzo ordinati in ordine alfabetico per la prima keyword nella lista
 </string>
      </property>
      <property name="alignment">
@@ -983,6 +990,95 @@ ordinati per prezzo decrescente e a parità di prezzo ordinati in ordine alfabet
        </widget>
       </item>
      </layout>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="pageVisualizzaArticoliInfluenzati">
+    <widget class="QPushButton" name="page9_buttonIndietro">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>101</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Indietro</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="page9_labelTitolo">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>10</y>
+       <width>181</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Visualizza articoli influenzati</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="page9_labelListArticoliInfluenzati">
+     <property name="geometry">
+      <rect>
+       <x>560</x>
+       <y>140</y>
+       <width>181</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Articoli relativi alla selezione</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget_7">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>160</y>
+       <width>311</width>
+       <height>381</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_11">
+      <item>
+       <widget class="QListWidget" name="page9_listArticoliInseriti"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="page9_buttonSeleziona">
+        <property name="text">
+         <string>Seleziona</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QListWidget" name="page9_listArticoliInfluenzati">
+     <property name="geometry">
+      <rect>
+       <x>560</x>
+       <y>160</y>
+       <width>350</width>
+       <height>370</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="page9_labelListArticoliInseriti">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>140</y>
+       <width>91</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Articoli Inseriti</string>
+     </property>
     </widget>
    </widget>
   </widget>

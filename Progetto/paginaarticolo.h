@@ -88,6 +88,11 @@ private slots:
     void on_page8_buttonIndietro_clicked();
     void on_page8_buttonSeleziona_clicked();
 
+    void on_buttonVisualizzaArticoliInfluenzati_clicked();
+    void clearPage9();
+    void on_page9_buttonIndietro_clicked();
+    void on_page9_buttonSeleziona_clicked();
+
 private:
     Ui::paginaArticolo *ui;
     Gestore* gestore;

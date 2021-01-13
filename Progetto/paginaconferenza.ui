@@ -486,7 +486,7 @@
      </property>
      <property name="text">
       <string>Visualizzare le conferenze simili ad una specificata dall’utente.  
- Una conferenza è simile a un’altra conferenza se hanno almeno l’80% delle keyword in comune**</string>
+ Una conferenza è simile a un’altra conferenza se hanno almeno l’80% delle keyword in comune</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

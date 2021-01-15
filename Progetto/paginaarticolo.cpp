@@ -24,8 +24,6 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include <QTextStream>
 #include <cassert>
 
-//risolvere problema del seleziona premuto in maniera ossessiva nei metodi
-
 paginaArticolo::paginaArticolo(Gestore* _gestore, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::paginaArticolo)
@@ -222,6 +220,9 @@ void paginaArticolo::on_buttonLeggi_clicked()
     {
         if (line != "* * * * *")
             parametriArticolo.push_back(line);
+        else if(line == "TITOLO" || line == "KEYWORDS" || line == "NUMERO PAGINE" || line == "PREZZO" || line == "AUTORI" || line == "ARTICOLI CORRELATI"
+                || line == "PUBBLICATO PER" || line == "CONFERENZA o RIVISTA")
+            continue;
         else
         {
             int identificativo = gestore->getCurrentIdentificativoArticolo();

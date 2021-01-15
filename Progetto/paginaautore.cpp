@@ -118,6 +118,8 @@ void paginaAutore::on_buttonLeggi_clicked()
     {
         if (line != "* * * * *")
             parametriAutore.push_back(line);
+        else if(line == "NOME" || line == "COGNOME" || line == "AFFERENZE")
+            continue;
         else
         {
             int identificativo = gestore->getCurrentIdentificativoAutore();
@@ -132,6 +134,7 @@ void paginaAutore::on_buttonLeggi_clicked()
                 lista_afferenze = afferenze.split(",");
                 lista_afferenze.sort();
             }
+            assert(!nome.isEmpty() && !nome.isEmpty());
 
             Autore autore(identificativo, nome, cognome, lista_afferenze.toVector());
             if(gestore->aggiungiAutore(autore) == true)

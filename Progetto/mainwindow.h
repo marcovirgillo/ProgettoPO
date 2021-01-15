@@ -24,7 +24,6 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include "paginarivista.h"
 #include "gestore.h"
 #include <QMainWindow>
-#include <QPixmap>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

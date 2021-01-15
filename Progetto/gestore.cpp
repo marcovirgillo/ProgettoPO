@@ -125,11 +125,11 @@ bool Gestore::aggiungiConferenza(Conferenza conferenza)
 bool Gestore::aggiungiRivista(Rivista rivista)
 {
     for (auto it = riviste.begin(); it != riviste.end(); it++)
-        {
-            Rivista tmp = *it;
-            if (tmp == rivista)
-                return false;
-        }
+    {
+        Rivista tmp = *it;
+        if (tmp == rivista)
+            return false;
+    }
         riviste.push_back(rivista);
         return true;
 }
@@ -155,7 +155,7 @@ QList<Articolo> Gestore::getArticoliDiUnAutore(int idxAutore) const
        QList<Autore> autoriArticolo = it->getAutori();
        for (int i = 0; i < autoriArticolo.size(); i++)
        {
-           if (autoriArticolo[i].getIdentificativo() == autore.getIdentificativo())
+           if (autoriArticolo.at(i).getIdentificativo() == autore.getIdentificativo())
            {
                articoliAutore.push_back(*it);
                break;
@@ -422,11 +422,8 @@ QList<Articolo> Gestore::getArticoliInfluenzati(int idxArticolo) const
 
         for (auto it = articoliCorrelati.begin(); it != articoliCorrelati.end(); it++)
             if(articolo.getIdentificativo() == it->getIdentificativo() && articolo.getAnno() < articoli.at(i).getAnno())
-             {
-                //qDebug() << articolo.getIdentificativo() <<" " << it->getIdentificativo() << " " << articolo.getAnno() << " " << articoli.at(i).getAnno() << "\n";
                 if(articoliInfluenzati.indexOf(articoli.at(i)) == -1)
                     articoliInfluenzati.push_back(articoli.at(i));
-             }
 
         articoliCorrelati.clear();
     }

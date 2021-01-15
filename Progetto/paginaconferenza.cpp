@@ -129,6 +129,8 @@ void paginaConferenza::on_buttonLeggi_clicked()
     {
         if (line != "* * * * *")
             parametriConferenza.push_back(line);
+        else if(line == "NOME" || "ACRONIMO" || line == "LUOGO" || line == "ORGANIZZATORI" || line == "NUMERO PARTEICPANTI" || line == "DATA")
+            continue;
         else
         {
 
@@ -143,7 +145,7 @@ void paginaConferenza::on_buttonLeggi_clicked()
             int numeroPartecipanti = parametriConferenza.at(4).toInt();
             QString data = parametriConferenza.at(5);
 
-            assert(!nome.isEmpty() && !luogo.isEmpty() && !organizzatori.isEmpty() && numeroPartecipanti >= 0);
+            assert(!nome.isEmpty() && !luogo.isEmpty() && !organizzatori.isEmpty() && numeroPartecipanti > 0);
 
             Conferenza conferenza(nome, acronimo, luogo, data, numeroPartecipanti, lista_organizzatori.toVector());
             if(gestore->aggiungiConferenza(conferenza) == true)

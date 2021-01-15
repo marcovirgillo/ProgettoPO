@@ -51,6 +51,11 @@ Dialog::~Dialog()
 
 void Dialog::visualizzaAutore()
 {
+    QPixmap pix(":/img/Resources/Autore.png");
+    int w = ui->Autore_labelLogo->width();
+    int h = ui->Autore_labelLogo->height();
+    ui->Autore_labelLogo->setPixmap(pix.scaled(w, h, Qt::KeepAspectRatio));
+
     ui->stackedWidget->setCurrentWidget(ui->detailsAutore);
     Autore autore = gestore->getAutori().at(idx);
     ui->Autore_Identificativo->setText(QString::number(autore.getIdentificativo()));
@@ -64,6 +69,11 @@ void Dialog::visualizzaAutore()
 
 void Dialog::visualizzaConferenza()
 {
+    QPixmap pix(":/img/Resources/Conferenza.jpg");
+    int w = ui->Conferenza_labelLogo->width();
+    int h = ui->Conferenza_labelLogo->height();
+    ui->Conferenza_labelLogo->setPixmap(pix.scaled(w, h, Qt::KeepAspectRatio));
+
     ui->stackedWidget->setCurrentWidget(ui->detailsConferenza);
     Conferenza conferenza = gestore->getConferenze().at(idx);
     ui->Conferenza_Nome->setText(conferenza.getNome());
@@ -80,6 +90,11 @@ void Dialog::visualizzaConferenza()
 
 void Dialog::visualizzaRivista()
 {
+    QPixmap pix(":/img/Resources/Rivista.png");
+    int w = ui->Rivista_labelLogo->width();
+    int h = ui->Rivista_labelLogo->height();
+    ui->Rivista_labelLogo->setPixmap(pix.scaled(w, h, Qt::KeepAspectRatio));
+
     ui->stackedWidget->setCurrentWidget(ui->detailsRivista);
     Rivista rivista = gestore->getRiviste().at(idx);
     ui->Rivista_Nome->setText(rivista.getNome());
@@ -91,6 +106,11 @@ void Dialog::visualizzaRivista()
 
 void Dialog::visualizzaArticolo()
 {
+    QPixmap pix(":/img/Resources/Articolo.png");
+    int w = ui->Articolo_labelLogo->width();
+    int h = ui->Articolo_labelLogo->height();
+    ui->Articolo_labelLogo->setPixmap(pix.scaled(w, h, Qt::KeepAspectRatio));
+
     ui->stackedWidget->setCurrentWidget(ui->detailsArticolo);
     Articolo articolo = gestore->getArticoli().at(idx);
 
@@ -101,8 +121,6 @@ void Dialog::visualizzaArticolo()
         ui->Articolo_listKeywords->addItem(keywords[i]);
     ui->Articolo_NumeroPagine->setValue(articolo.getNumeroPagine());
     ui->Articolo_Prezzo->setValue(articolo.getPrezzo());
-
-    ui->lineEdit->setText(QString::number(articolo.getAnno()));
 
     if(articolo.getPubblicatoPer() == "Conferenza")
     {

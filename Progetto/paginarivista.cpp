@@ -22,6 +22,7 @@ along with ProgettoPO.  If not, see <http://www.gnu.org/licenses/>.
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
+#include <cassert>
 
 paginaRivista::paginaRivista(Gestore* _gestore, QWidget *parent) :
     QWidget(parent),
@@ -120,6 +121,8 @@ void paginaRivista::on_buttonLeggi_clicked()
     {
         if (line != "* * * * *")
             parametriRivista.push_back(line);
+        else if (line == "NOME" || line == "ACRONIMO" || line == "EDITORE" || line == "VOLUME" || line == "DATA")
+            continue;
         else
         {
             QString nome = parametriRivista.at(0);
@@ -128,7 +131,7 @@ void paginaRivista::on_buttonLeggi_clicked()
             int volume = parametriRivista.at(3).toInt();
             QString data = parametriRivista.at(4);
 
-            assert(!nome.isEmpty() && !editore.isEmpty() && volume >= 0);
+            assert(!nome.isEmpty() && !editore.isEmpty() && volume > 0);
 
             Rivista rivista(nome, acronimo, editore, data, volume);
             if(gestore->aggiungiRivista(rivista) == true)

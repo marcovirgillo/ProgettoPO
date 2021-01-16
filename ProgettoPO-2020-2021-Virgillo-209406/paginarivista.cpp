@@ -149,11 +149,11 @@ void paginaRivista::on_buttonLeggi_clicked()
     ui->Percorso->clear();
 }
 
-bool paginaRivista::listRivisteVuota(QRadioButton* radioButton)
+bool paginaRivista::listArticoliVuota(QRadioButton* radioButton)
 {
-    if(gestore->getRiviste().empty() == true)
+    if(gestore->getArticoli().empty() == true)
     {
-        QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima inserire almeno una rivista", QMessageBox::Ok, this);
+        QMessageBox errore(QMessageBox::Critical, "Error", "Devi prima inserire almeno un articolo", QMessageBox::Ok, this);
         errore.exec();
         disableRadioButton(radioButton);
         return true;
@@ -175,7 +175,7 @@ void paginaRivista::visualizzaRivisteInLista(QList<Rivista> riviste, QListWidget
 un’altra rivista R2, tale che le keyword degli articoli di R1 sono un sottoinsieme proprio di tutte le keyword degli articoli di R2* */
 void paginaRivista::on_buttonVisualizzaRivisteSpecialistiche_clicked()
 {
-    if(listRivisteVuota(ui->buttonVisualizzaRivisteSpecialistiche) == true)
+    if(listArticoliVuota(ui->buttonVisualizzaRivisteSpecialistiche) == true)
         return;
     ui->page2_listRiviste->clear();
     ui->stackedWidget->setCurrentWidget(ui->pageVisualizzaRivisteSpecialistiche);

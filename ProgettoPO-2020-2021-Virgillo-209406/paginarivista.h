@@ -48,7 +48,7 @@ private slots:
     void on_buttonLeggi_clicked();
 
     void disableRadioButton(QRadioButton* radioButton);
-    bool listRivisteVuota(QRadioButton* radioButton);
+    bool listArticoliVuota(QRadioButton* radioButton);
     void visualizzaRivisteInLista(QList<Rivista> riviste, QListWidget* listRiviste);
 
     void on_buttonVisualizzaRivisteSpecialistiche_clicked();

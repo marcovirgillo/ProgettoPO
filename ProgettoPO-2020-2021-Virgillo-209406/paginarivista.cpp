@@ -72,9 +72,9 @@ void paginaRivista::on_buttonAggiungi_clicked()
         return;
     }
 
-    QString nome = ui->Nome->text();
-    QString acronimo = ui->Acronimo->text();
-    QString editore = ui->Editore->text();
+    QString nome = ui->Nome->text().trimmed();
+    QString acronimo = ui->Acronimo->text().trimmed();
+    QString editore = ui->Editore->text().trimmed();
     int volume = ui->Volume->value();
     QDate data = ui->Data->selectedDate();
     QString data_string = (data.toString(Qt::DateFormat::ISODate));
@@ -119,17 +119,20 @@ void paginaRivista::on_buttonLeggi_clicked()
     QVector<QString> parametriRivista;
     while (!line.isNull())
     {
-        if (line != "* * * * *")
-            parametriRivista.push_back(line);
-        else if (line == "NOME" || line == "ACRONIMO" || line == "EDITORE" || line == "VOLUME" || line == "DATA")
+        if(line == "NOME" || line == "ACRONIMO" || line == "EDITORE" || line == "VOLUME" || line == "DATA")
+        {
+            line = stream.readLine();
             continue;
+        }
+        else if (line != "* * * * *")
+            parametriRivista.push_back(line);
         else
         {
-            QString nome = parametriRivista.at(0);
-            QString acronimo = parametriRivista.at(1);
-            QString editore = parametriRivista.at(2);
-            int volume = parametriRivista.at(3).toInt();
-            QString data = parametriRivista.at(4);
+            QString nome = parametriRivista.at(0).trimmed();
+            QString acronimo = parametriRivista.at(1).trimmed();
+            QString editore = parametriRivista.at(2).trimmed();
+            int volume = parametriRivista.at(3).trimmed().toInt();
+            QString data = parametriRivista.at(4).trimmed();
 
             assert(!nome.isEmpty() && !editore.isEmpty() && volume > 0);
 

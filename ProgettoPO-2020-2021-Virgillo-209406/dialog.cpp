@@ -69,7 +69,7 @@ void Dialog::visualizzaAutore()
 
 void Dialog::visualizzaConferenza()
 {
-    QPixmap pix(":/img/Resources/Conferenza.jpg");
+    QPixmap pix(":/img/Resources/Conferenza.png");
     int w = ui->Conferenza_labelLogo->width();
     int h = ui->Conferenza_labelLogo->height();
     ui->Conferenza_labelLogo->setPixmap(pix.scaled(w, h, Qt::KeepAspectRatio));

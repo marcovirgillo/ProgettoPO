@@ -64,13 +64,13 @@ void paginaAutore::on_buttonAggiungi_clicked()
     }
 
     int identificativo = gestore->getCurrentIdentificativoAutore();
-    QString nome = ui->Nome->text();
-    QString cognome = ui->Cognome->text();
+    QString nome = ui->Nome->text().trimmed();
+    QString cognome = ui->Cognome->text().trimmed();
 
     QList<QString> lista_afferenze;
     if (!ui->Afferenze->toPlainText().isEmpty())
     {
-        QString afferenze = ui->Afferenze->toPlainText();
+        QString afferenze = ui->Afferenze->toPlainText().trimmed();
         lista_afferenze = afferenze.split("\n");
         lista_afferenze.sort();
     }
@@ -116,15 +116,18 @@ void paginaAutore::on_buttonLeggi_clicked()
     QVector<QString> parametriAutore;
     while (!line.isNull())
     {
-        if (line != "* * * * *")
-            parametriAutore.push_back(line);
-        else if(line == "NOME" || line == "COGNOME" || line == "AFFERENZE")
+        if (line == "NOME" || line == "COGNOME" || line == "AFFERENZE")
+        {
+            line = stream.readLine();
             continue;
+        }
+        else if (line != "* * * * *")
+            parametriAutore.push_back(line);
         else
         {
             int identificativo = gestore->getCurrentIdentificativoAutore();
-            QString nome = parametriAutore.at(0);
-            QString cognome = parametriAutore.at(1);  
+            QString nome = parametriAutore.at(0).trimmed();
+            QString cognome = parametriAutore.at(1).trimmed();
             assert(!nome.isEmpty() && !cognome.isEmpty());
 
             QList<QString> lista_afferenze;

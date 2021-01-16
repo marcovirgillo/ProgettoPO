@@ -74,12 +74,12 @@ void paginaConferenza::on_buttonAggiungi_clicked()
         return;
     }
 
-    QString nome = ui->Nome->text();
-    QString acronimo = ui->Acronimo->text();
-    QString luogo = ui->Luogo->text();
+    QString nome = ui->Nome->text().trimmed();
+    QString acronimo = ui->Acronimo->text().trimmed();
+    QString luogo = ui->Luogo->text().trimmed();
 
     QList<QString> lista_organizzatori;
-    QString organizzatori = ui->Organizzatori->toPlainText();
+    QString organizzatori = ui->Organizzatori->toPlainText().trimmed();
     lista_organizzatori = organizzatori.split("\n");
 
     int numeroPartecipanti = ui->NumeroPartecipanti->value();
@@ -127,23 +127,26 @@ void paginaConferenza::on_buttonLeggi_clicked()
     QVector<QString> parametriConferenza;
     while (!line.isNull())
     {
-        if (line != "* * * * *")
-            parametriConferenza.push_back(line);
-        else if(line == "NOME" || "ACRONIMO" || line == "LUOGO" || line == "ORGANIZZATORI" || line == "NUMERO PARTEICPANTI" || line == "DATA")
+        if(line == "NOME" || line == "ACRONIMO" || line == "LUOGO" || line == "ORGANIZZATORI" || line == "NUMERO PARTECIPANTI" || line == "DATA")
+        {
+            line = stream.readLine();
             continue;
+        }
+        else if (line != "* * * * *")
+            parametriConferenza.push_back(line);
         else
         {
 
-            QString nome = parametriConferenza.at(0);
-            QString acronimo = parametriConferenza.at(1);
-            QString luogo = parametriConferenza.at(2);
+            QString nome = parametriConferenza.at(0).trimmed();
+            QString acronimo = parametriConferenza.at(1).trimmed();
+            QString luogo = parametriConferenza.at(2).trimmed();
 
             QList<QString> lista_organizzatori;
-            QString organizzatori = parametriConferenza.at(3);
+            QString organizzatori = parametriConferenza.at(3).trimmed();
             lista_organizzatori = organizzatori.split(",");
 
-            int numeroPartecipanti = parametriConferenza.at(4).toInt();
-            QString data = parametriConferenza.at(5);
+            int numeroPartecipanti = parametriConferenza.at(4).trimmed().toInt();
+            QString data = parametriConferenza.at(5).trimmed();
 
             assert(!nome.isEmpty() && !luogo.isEmpty() && !organizzatori.isEmpty() && numeroPartecipanti > 0);
 

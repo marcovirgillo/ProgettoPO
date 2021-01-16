@@ -84,10 +84,10 @@ void paginaArticolo::on_buttonAggiungi_clicked()
             return;
         }
     int identificativo = gestore->getCurrentIdentificativoArticolo();
-    QString titolo = ui->Titolo->text();
+    QString titolo = ui->Titolo->text().trimmed();
 
     QList<QString> lista_keywords;
-    QString keywords = ui->Keywords->text();
+    QString keywords = ui->Keywords->text().trimmed();
     lista_keywords = keywords.split(",");
 
     int numeroPagine = ui->NumeroPagine->value();
@@ -218,29 +218,32 @@ void paginaArticolo::on_buttonLeggi_clicked()
     QVector<QString> parametriArticolo;
     while (!line.isNull())
     {
-        if (line != "* * * * *")
-            parametriArticolo.push_back(line);
-        else if(line == "TITOLO" || line == "KEYWORDS" || line == "NUMERO PAGINE" || line == "PREZZO" || line == "AUTORI" || line == "ARTICOLI CORRELATI"
-                || line == "PUBBLICATO PER" || line == "CONFERENZA o RIVISTA")
+        if(line == "TITOLO" || line == "KEYWORDS" || line == "NUMERO PAGINE" || line == "PREZZO" || line == "AUTORI"
+                || line == "ARTICOLI CORRELATI" || line == "PUBBLICATO PER" || line == "CONFERENZA o RIVISTA")
+        {
+            line = stream.readLine();
             continue;
+        }
+        else if (line != "* * * * *")
+            parametriArticolo.push_back(line);
         else
         {
             int identificativo = gestore->getCurrentIdentificativoArticolo();
-            QString titolo = parametriArticolo.at(0);
+            QString titolo = parametriArticolo.at(0).trimmed();
 
             QList<QString> lista_keywords;
-            QString keywords = parametriArticolo.at(1);
+            QString keywords = parametriArticolo.at(1).trimmed();
             if (!parametriArticolo.at(1).isEmpty())
                 lista_keywords = keywords.split(",");
 
-            int numeroPagine = parametriArticolo.at(2).toInt();
-            float prezzo = parametriArticolo.at(3).toFloat();
+            int numeroPagine = parametriArticolo.at(2).trimmed().toInt();
+            float prezzo = parametriArticolo.at(3).trimmed().toFloat();
 
 
             QList<QString> lista_idx_autori;
             if (!parametriArticolo.at(4).isEmpty())
             {
-                QString autore = parametriArticolo.at(4);
+                QString autore = parametriArticolo.at(4).trimmed();
                 lista_idx_autori = autore.split(",");
             }
             QList<Autore> autori;
@@ -250,15 +253,15 @@ void paginaArticolo::on_buttonLeggi_clicked()
             QList<QString> lista_idx_articoli;
             if (!parametriArticolo.at(5).isEmpty())
             {
-                QString articolo = parametriArticolo.at(5);
+                QString articolo = parametriArticolo.at(5).trimmed();
                 lista_idx_articoli = articolo.split(",");
             }
             QList<Articolo> articoliCorrelati;
             for (auto i = 0; i < lista_idx_articoli.size(); i++)
                  articoliCorrelati.push_back(gestore->getArticoli().at(lista_idx_articoli.at(i).toInt()));
 
-            QString pubblicatoPer = parametriArticolo.at(6);
-            QString idxConferenza_o_Rivista = parametriArticolo.at(7);
+            QString pubblicatoPer = parametriArticolo.at(6).trimmed();
+            QString idxConferenza_o_Rivista = parametriArticolo.at(7).trimmed();
 
             assert(!titolo.isEmpty() && numeroPagine > 0 && !keywords.isEmpty() && prezzo > 0 && (pubblicatoPer == "Rivista" || pubblicatoPer == "Conferenza") && !autori.isEmpty());
 

@@ -46,6 +46,8 @@ void paginaRivista::clearCampiRivista()
     ui->Editore->clear();
     ui->Volume->setValue(0);
     ui->Data->setCurrentPage(QDate::currentDate().year(), QDate::currentDate().month());
+
+    ui->stackedWidget->setCurrentWidget(ui->Home);
 }
 
 void paginaRivista::disableRadioButton(QRadioButton* radioButton)
@@ -188,5 +190,5 @@ void paginaRivista::on_buttonVisualizzaRivisteSpecialistiche_clicked()
 void paginaRivista::on_page2_buttonIndietro_clicked()
 {
     ui->stackedWidget->setCurrentWidget(ui->Home);
-     ui->page2_listRiviste->clear();
+    ui->page2_listRiviste->clear();
 }

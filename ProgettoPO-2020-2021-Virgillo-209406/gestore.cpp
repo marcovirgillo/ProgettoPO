@@ -328,36 +328,40 @@ QVector<QString> Gestore::getKeywordsArticoliRivista(Rivista rivista) const
 QList<Rivista> Gestore::getRivisteSpecialistiche() const
 {
     QList<Rivista> rivisteSpecialistiche;
+
     for (int i = 0; i < riviste.size(); i++)
     {
         QVector<QString> keywordsRivista1 = getKeywordsArticoliRivista(riviste.at(i));
         for(int j = 0; j < riviste.size(); j++)
         {
-            if(j != i)
+            if (j == i)
+                continue;
+
+            QVector<QString> keywordsRivista2 = getKeywordsArticoliRivista(riviste.at(j));
+            bool check = true;
+            for (int k = 0; k < keywordsRivista1.size(); k++)
             {
-                QVector<QString> keywordsRivista2 = getKeywordsArticoliRivista(riviste.at(j));
-                bool check = true;
-                for (int k = 0; k < keywordsRivista1.size(); k++)
+                if(keywordsRivista2.indexOf(keywordsRivista1[k]) == -1)
                 {
-                    if(keywordsRivista2.indexOf(keywordsRivista1[k]) == -1)
-                    {
-                        check = false;
-                        break;
-                    }
+                    check = false;
+                    break;
                 }
-                if(check == true)
+            }
+            if(check == true)
+            {
+                for (int k = 0; k < keywordsRivista2.size(); k++)
                 {
-                    for (int k = 0; k < keywordsRivista2.size(); k++)
+                    if(keywordsRivista1.indexOf(keywordsRivista2[k]) == -1)
                     {
-                        if(keywordsRivista1.indexOf(keywordsRivista2[k]) == -1)
+                        if(rivisteSpecialistiche.indexOf(riviste.at(i)) == -1)
                         {
                             rivisteSpecialistiche.push_back(riviste.at(i));
                             break;
                         }
                     }
                 }
-             }
-        }
+            }
+         }
     }
     return rivisteSpecialistiche;
 }

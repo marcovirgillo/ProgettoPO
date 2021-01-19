@@ -30,6 +30,8 @@ paginaRivista::paginaRivista(Gestore* _gestore, QWidget *parent) :
 {
     ui->setupUi(this);
     gestore = _gestore;
+
+    ui->listRiviste->setToolTip("Fai doppio click su una rivista per visualizzarne le informazioni dettagliate");
     ui->stackedWidget->setCurrentWidget(ui->Home);
 }
 

@@ -29,6 +29,8 @@ paginaConferenza::paginaConferenza(Gestore* _gestore, QWidget *parent) :
 {
     ui->setupUi(this);
     gestore = _gestore;
+
+    ui->listConferenze->setToolTip("Fai doppio click su una conferenza per visualizzarne le informazioni dettagliate");
     ui->stackedWidget->setCurrentWidget(ui->Home);
 }
 

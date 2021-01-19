@@ -31,6 +31,7 @@ paginaAutore::paginaAutore(Gestore* _gestore, QWidget *parent) :
     ui->setupUi(this); 
     gestore = _gestore;
 
+    ui->listAutori->setToolTip("Fai doppio click su un autore per visualizzarne le informazioni dettagliate");
     ui->stackedWidget->setCurrentWidget(ui->Home);
 }
 

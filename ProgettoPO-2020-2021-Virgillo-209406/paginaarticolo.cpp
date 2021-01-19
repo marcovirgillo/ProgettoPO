@@ -30,6 +30,8 @@ paginaArticolo::paginaArticolo(Gestore* _gestore, QWidget *parent) :
 {
     ui->setupUi(this);
     gestore = _gestore;
+
+    ui->listArticoli->setToolTip("Fai doppio click su un articolo per visualizzarne le informazioni dettagliate");
     ui->stackedWidget->setCurrentWidget(ui->Home);
 }
 

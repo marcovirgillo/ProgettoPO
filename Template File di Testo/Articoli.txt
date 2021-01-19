@@ -1,0 +1,48 @@
+TITOLO
+Articolo Prova
+KEYWORDS
+keyword1,keyword2,keyword3
+NUMERO PAGINE
+10
+PREZZO
+14.99
+AUTORI
+0
+ARTICOLI CORRELATI
+
+PUBBLICATO PER
+Rivista
+0
+* * * * *
+TITOLO
+Articolo Prova 2
+KEYWORDS
+keyword1,keyword2,keyword3
+NUMERO PAGINE
+5
+PREZZO
+10.00
+AUTORI
+0
+ARTICOLI CORRELATI
+0
+PUBBLICATO PER
+Conferenza
+0
+* * * * *
+TITOLO
+Articolo Prova 3
+KEYWORDS
+keyword1,keyword2,keyword3
+NUMERO PAGINE
+20
+PREZZO
+35.00
+AUTORI
+0
+ARTICOLI CORRELATI
+0,1
+PUBBLICATO PER
+Rivista
+0
+* * * * *

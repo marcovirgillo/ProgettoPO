@@ -1,0 +1,13 @@
+NOME
+Conferenza Prova
+ACRONIMO
+cp
+LUOGO
+Italia
+ORGANIZZATORI
+Organizzatore1,Organizzatore2,Organizzatore3
+NUMERO PARTECIPANTI
+200
+DATA
+2020-12-01
+* * * * *

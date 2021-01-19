@@ -1,0 +1,11 @@
+NOME
+Rivista 1
+ACRONIMO
+r1
+EDITORE
+Giuseppe Verdi
+VOLUME
+1
+DATA
+2020-12-01
+* * * * *

@@ -1,0 +1,7 @@
+NOME
+Mario
+COGNOME
+Rossi
+AFFERENZE
+afferenza1,afferenza2,afferenza3
+* * * * *

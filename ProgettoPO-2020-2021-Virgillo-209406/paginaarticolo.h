@@ -36,8 +36,8 @@ public:
     explicit paginaArticolo(Gestore* _gestore, QWidget *parent = nullptr);
     ~paginaArticolo();
 
-    void clearCampiArticolo();
-    void showDialogArticolo();
+    void clearCampiArticolo(); //pulisce i campi di paginaArticolo
+    void showDialogArticolo(); //mostra i dettagli di un articolo facendo doppio click su di esso nella QListWidget contenente tutti gli articoli
 
 private slots:
     void on_buttonAggiungi_clicked();
@@ -48,11 +48,11 @@ private slots:
     void on_listArticoli_itemDoubleClicked(QListWidgetItem *item);
     void on_buttonLeggi_clicked();
 
-    void disableRadioButton(QRadioButton* radioButton);
-    bool listArticoliVuota(QRadioButton* radioButton);
-    void visualizzaAutoriInLista(QList<Autore> articoli, QListWidget* listAutori);
-    void visualizzaArticoliInLista(QList<Articolo> articoli, QListWidget* listArticoli);
-    void visualizzaRivisteInLista(QList<Rivista> riviste, QListWidget* listRiviste);
+    void disableRadioButton(QRadioButton* radioButton); //consente di disattivare un Radio Button senza che rimanga selezionato
+    bool listArticoliVuota(QRadioButton* radioButton); //verifica se la lista di Articoli è vuota e richiama la funzione disableRadioButton
+    void visualizzaAutoriInLista(QList<Autore> articoli, QListWidget* listAutori); //mostra una lista specificata di autori in una QListWidget
+    void visualizzaArticoliInLista(QList<Articolo> articoli, QListWidget* listArticoli); //mostra una lista specificata di articoli in una QListWidget
+    void visualizzaRivisteInLista(QList<Rivista> riviste, QListWidget* listRiviste); //mostra una lista specificata di riviste in una QListWidget
 
     void on_buttonVisualizzaArticoliAutore_clicked();
     void clearPage2();

@@ -35,8 +35,8 @@ public:
     explicit paginaAutore(Gestore* _gestore, QWidget *parent = nullptr);
     ~paginaAutore();
 
-    void clearCampiAutore();
-    void showDialogAutore();
+    void clearCampiAutore(); //pulisce i campi di paginaAutore
+    void showDialogAutore(); //mostra i dettagli di un autore facendo doppio click su di esso nella QListWidget contenente tutti gli autori
 
 private slots:
     void on_buttonAggiungi_clicked();

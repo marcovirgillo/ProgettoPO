@@ -36,8 +36,8 @@ public:
     explicit paginaConferenza(Gestore* _gestore, QWidget *parent = nullptr);
     ~paginaConferenza();
 
-    void showDialogConferenza();
-    void clearCampiConferenza();
+    void showDialogConferenza(); //mostra i dettagli di una conferenza facendo doppio click su di essa nella QListWidget contenente tutte le conferenze
+    void clearCampiConferenza(); //pulisce i campi di paginaConferenza
 
 private slots:
     void on_buttonAggiungi_clicked();

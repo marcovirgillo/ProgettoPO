@@ -40,6 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     pageRivista = new paginaRivista(gestore);
     ui->stackedWidget->addWidget(pageRivista);
 
+    //funzioni connect che consentono di pulire le varie pagine di inserimento quando si torna alla home
     connect(ui->buttonHome, &QPushButton::clicked, pageAutore, &paginaAutore::clearCampiAutore);
     connect(ui->buttonHome, &QPushButton::clicked, pageArticolo, &paginaArticolo::clearCampiArticolo);
     connect(ui->buttonHome, &QPushButton::clicked, pageConferenza, &paginaConferenza::clearCampiConferenza);

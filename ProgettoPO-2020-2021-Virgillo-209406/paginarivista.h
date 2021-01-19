@@ -36,11 +36,8 @@ public:
     explicit paginaRivista(Gestore* _gestore, QWidget *parent = nullptr);
     ~paginaRivista();
 
-    void clearCampiRivista();
-
-    void showDialogRivista();
-
-
+    void clearCampiRivista(); //pulisce i campi di paginaRivista
+    void showDialogRivista(); //mostra i dettagli di una rivista facendo doppio click su di essa nella QListWidget contenente tutte le riviste
 
 private slots:
     void on_buttonAggiungi_clicked();
@@ -52,7 +49,6 @@ private slots:
     void visualizzaRivisteInLista(QList<Rivista> riviste, QListWidget* listRiviste);
 
     void on_buttonVisualizzaRivisteSpecialistiche_clicked();
-
     void on_page2_buttonIndietro_clicked();
 
 private:

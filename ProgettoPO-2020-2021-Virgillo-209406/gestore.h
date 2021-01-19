@@ -45,24 +45,24 @@ class Gestore
         QList<Rivista> getRiviste() const;
         QList<Articolo> getArticoli() const;
 
-        int getCurrentIdentificativoAutore() const;
-        int getCurrentIdentificativoArticolo() const;
+        int getCurrentIdentificativoAutore() const; //ritorna l'ID corrente (assegnabile) ad un autore
+        int getCurrentIdentificativoArticolo() const; //ritorna l'ID corrente (assegnabile) ad un articolo
         void increaseIdentificativoAutore(); //incrementa l'ID di un autore dopo l'inserimento
         void increaseIdentificativoArticolo(); //incrementa l'ID di un articolo dopo l'inserimento
 
-        void setArticoloPubblicatoPer(Articolo articolo, QString pubblicatoPer);
-        void setArticoloInConferenza(int idx, Articolo articolo);
-        void setArticoloInRivista(int idx, Articolo articolo);
-        void setAnnoArticolo(int idx, int anno);
+        void setArticoloPubblicatoPer(Articolo articolo, QString pubblicatoPer); //setta il campo pubblicatoPer di un articolo con una stringa "Conferenza" o "Rivista"
+        void setArticoloInConferenza(int idx, Articolo articolo); //inserisce un articolo all'interno della lista di articoli della conferenza scelta
+        void setArticoloInRivista(int idx, Articolo articolo); //inserisce un articolo all'interno della lista di articoli della rivista scelta
+        void setAnnoArticolo(int idx, int anno); //setta il campo anno di articolo con lo stesso anno della conferenza o della rivista per cui è stato pubblicato
 
         int getAnnoConferenza(int idx) const; //metodo che ritorna l'anno di una conferenza specificata
         int getAnnoRivista(int idx) const; //metodo che ritorna l'anno di una rivista specificata
 
         // Metodi per l'aggiunta dei dati:
-        bool aggiungiAutore(Autore autore);
-        bool aggiungiConferenza(Conferenza conferenza);
-        bool aggiungiRivista(Rivista rivista);
-        bool aggiungiArticolo(Articolo articolo);
+        bool aggiungiAutore(Autore autore); //metodo per l'aggiunta di un autore
+        bool aggiungiConferenza(Conferenza conferenza); //metodo per l'aggiunta di una conferenza
+        bool aggiungiRivista(Rivista rivista); //metodo per l'aggiunta di una rivista
+        bool aggiungiArticolo(Articolo articolo); //metodo per l'aggiunta di un articolo
 
         QList<Articolo> getArticoliDiUnAutore(int idxAutore) const; // Sezione B - 1
         QVector<QString> getStrutture() const; // metodo ausiliario che ritorna le strutture (afferenze) caricate
@@ -78,6 +78,6 @@ class Gestore
         QList<Rivista> getRivisteSpecialistiche() const; // Sezione E - 6 *
         QVector<QString> getKeywordsArticoliConferenza(int idxConferenza) const; // metodo ausiliario che ritorna le keywords degli articoli di una conferenza specificata
         QList<Conferenza> getConferenzeSimili(int idx) const; // Sezione F - 5 **
-        QList<Articolo> getArticoliInfluenzati(int idxArticolo) const;
+        QList<Articolo> getArticoliInfluenzati(int idxArticolo) const; // Sezione F - 1*
 };
 #endif // GESTORE_H

@@ -1,0 +1,21 @@
+Sezione B:
+Metodo 1 -> Linea 149 file gestore.cpp
+Metodo 3 -> Linea 181 file gestore.cpp
+Metodo 5 -> Linea 200 file gestore.cpp
+
+Sezione C:
+Metodo 2 -> Linea 209 file gestore.cpp
+Metodo 4 -> Linea 225 file gestore.cpp
+Metodo 6 -> Linea 245 file gestore.cpp
+
+Sezione D:
+Metodo 4 -> Linea 283 file gestore.cpp
+Metodo 6 -> Linea 308 file gestore.cpp
+
+Sezione E:
+Metodo 6 -> Linea 331 file gestore.cpp
+
+Sezione F:
+Metodo 1 -> Linea 423 file gestore.cpp
+Metodo 4 -> Linea 103 file paginaautore.cpp / Linea 109 file paginarivista.cpp / Linea 115 file paginaconferenza.cpp / Linea 206 file paginaarticolo.cpp
+Metodo 5 -> Linea 390 file gestore.cpp

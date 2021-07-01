@@ -1,9 +1,0 @@
-<RCC>
-    <qresource prefix="/img">
-        <file>Resources/Articolo.png</file>
-        <file>Resources/Autore.png</file>
-        <file>Resources/Rivista.png</file>
-        <file>Resources/Conferenza.png</file>
-        <file>Resources/iconaApplicazione.png</file>
-    </qresource>
-</RCC>
